@@ -17,15 +17,17 @@ import org.json.JSONObject;
 public class BaseRequest {
 
     private Context context;
-    private String endPoint;
     OnResponseListener onResponseListener;
-    public BaseRequest(Context context, String endPoint) {
+
+    public BaseRequest(Context context) {
         this.context = context;
-        this.endPoint = endPoint;
     }
 
     public void execute(){
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, endPoint,
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, getEndpoint() + "&key=" + context.getString(R.string.googleToken),
+        //final StringRequest stringRequest = new StringRequest(Request.Method.GET, getEndpoint()+"&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU",
+
+
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -49,5 +51,9 @@ public class BaseRequest {
 
     public void setOnResponseListener(OnResponseListener onResponseListener) {
         this.onResponseListener = onResponseListener;
+    }
+
+    public String getEndpoint(){
+        return "";
     }
 }

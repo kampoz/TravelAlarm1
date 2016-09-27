@@ -5,147 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:weightSum="2">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical"
-        android:background="@android:color/holo_blue_dark">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="Wpisz skad:"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
-
-            <fragment
-                android:id="@+id/from_autocomplete_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wpisz dokad:"
-            android:textColor="@android:color/white"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
-            <fragment
-                android:id="@+id/to_autocomplete_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                />
-        </RelativeLayout>
-
-    </LinearLayout>
 
     <com.mapbox.mapboxsdk.maps.MapView
+        android:layout_weight="1"
         android:id="@+id/mapview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         mapbox:style_url="@string/style_emerald"
         mapbox:zoom="12"/>
 
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@android:color/holo_blue_dark">
 
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/lISearch"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@android:color/white">-->
+        <fragment
+            android:id="@+id/from_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
+            />
 
-    <!--<fragment-->
-    <!--android:visibility="invisible"-->
-    <!--android:id="@+id/place_autocomplete_fragment"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
-    <!--/>-->
-    <!--</RelativeLayout>-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#ffff00" />
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/lLOrigin"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="100px"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:background="#000"-->
-    <!--android:layout_below="@+id/lISearch"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingLeft="20px">-->
+        <fragment
+            android:id="@+id/to_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
+            />
 
-    <!---->
-    <!--<fragment-->
-    <!--android:visibility="invisible"-->
-    <!--android:id="@+id/origin_autocomplete_fragment"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
-    <!--/>-->
+        <Button
+            android:id="@+id/bStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="START"
+            android:padding="20dp"
+            android:layout_gravity="center_vertical"
+            />
 
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="100px"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:background="#006600"-->
-    <!--android:layout_below="@+id/lLOrigin"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingLeft="20px">-->
-
-    <!--<EditText-->
-    <!--android:layout_width="200dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/etGoal"-->
-    <!--android:background="#fff"/>-->
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:id="@+id/bDirectionsRequest"-->
-    <!--android:text="Direct. Request"/>-->
-
-    <!--</LinearLayout>-->
-
-
-
-
-
-
-
-
-
-
-    <!--<com.mapbox.services.android.geocoder.ui.GeocoderAutoCompleteView-->
-    <!--android:id="@+id/query"-->
-    <!--android:singleLine="true"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_marginStart="18dp"-->
-    <!--android:layout_marginEnd="18dp"-->
-    <!--android:layout_marginTop="14dp"-->
-    <!--android:padding="10dp"-->
-    <!--android:hint="Search Location"-->
-    <!--android:textColor="@android:color/darker_gray"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:elevation="12dp"/>-->
+    </LinearLayout>
 
 </LinearLayout>

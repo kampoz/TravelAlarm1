@@ -1,47 +1,34 @@
 package com.kaseka.boxmaptest1;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.mapbox.geocoder.MapboxGeocoder;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.MarkerView;
 import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
-import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-import android.location.Geocoder;
-import android.text.TextUtils;
+
 import android.util.Log;
-import com.mapbox.services.android.geocoder.ui.GeocoderAutoCompleteView;
-import com.mapbox.geocoder.android.AndroidGeocoder;
-import com.mapbox.services.commons.models.Position;
-import com.mapbox.services.commons.utils.PolylineUtils;
-import com.mapbox.services.geocoding.v5.GeocodingCriteria;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 //+import com.mapbox.services.geocoding.v5.models.GeocodingFeature;
-import com.mapbox.services.geocoding.v5.models.CarmenFeature;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,23 +42,36 @@ public class MainActivity extends AppCompatActivity {
 
     private MapView mapView;
     private MapboxMap map;
+    private MarkerView markerViewFrom;
+    private MarkerView markerViewTo;
+    private Button bStart;
 
+    private String fromLocationId = "";
+    private String toLocationId = "";
+    GetRouteDetailsRequest getRouteDetailsRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
 
+
+
+//        // "https://maps.googleapis.com/maps/api/" +
+//        "directions/json?origin=place_id:ChIJ8b5DJgJaIkcRqtOAYilxmD4&destination=place_id:" +
+//                "ChIJncLRe9ZZIkcRtBg-8THvidU&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU"
+
+        bStart = (Button) findViewById(R.id.bStart);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
+
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 // Customize map with markers, polylines, etc.
                 map = mapboxMap;
-
                 CameraPosition position = new CameraPosition.Builder()
                         .target(new LatLng(51.248975, 22.551762)) // Sets the new camera position
                         .zoom(12) // Sets the zoom
@@ -82,27 +82,17 @@ public class MainActivity extends AppCompatActivity {
                 mapboxMap.animateCamera(CameraUpdateFactory
                         .newCameraPosition(position), 7000);
 
-//                map.addPolyline(new PolylineOptions()
-//                        .add(responsePoints.toArray(new LatLng[responsePoints.size()]))
-//                        .color(Color.parseColor("#ff0000"))
-//                        .alpha(1.0f)
-//                        .width(10));
-
-                drawSimplify(responsePoints);
-
-//                MarkerViewOptions marker = new MarkerViewOptions()
-//                        .position(new LatLng(51.248975, 22.551762));
-//                marker.title("LUBLIN!!!");
-                //mapboxMap.addMarker(marker);
-                //mapboxMap.setPadding(20,20,20,20);
+                map.addPolyline(new PolylineOptions()
+                        .add(responsePoints.toArray(new LatLng[responsePoints.size()]))
+                        .color(Color.parseColor("#ff0000"))
+                        .alpha(1.0f)
+                        .width(10));
             }
         });
 
 
 
-
-
-        PlaceAutocompleteFragment fromAutocompleteFragment = (PlaceAutocompleteFragment)
+        final CustomAutocompleteFragment fromAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.from_autocomplete_fragment);
 
         fromAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -114,20 +104,20 @@ public class MainActivity extends AppCompatActivity {
                 MarkerViewOptions marker = new MarkerViewOptions()
                         .position(new LatLng(place.getLatLng().latitude, place.getLatLng().longitude));
                 marker.title(place.getName().toString());
-                map.addMarker(marker);
-
+                markerViewFrom = map.addMarker(marker);
+                Log.d("punkty", "wspolrzedne z: " + place.getLatLng());
+                fromLocationId = place.getId();
                 setCameraPosition(place.getLatLng().latitude, place.getLatLng().longitude);
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i("TAG", "An error occurred: " + status);
             }
         });
 
 
-        PlaceAutocompleteFragment toAutocompleteFragment = (PlaceAutocompleteFragment)
+        final CustomAutocompleteFragment toAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.to_autocomplete_fragment);
         toAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -137,9 +127,12 @@ public class MainActivity extends AppCompatActivity {
                 MarkerViewOptions marker = new MarkerViewOptions()
                         .position(new LatLng(place.getLatLng().latitude, place.getLatLng().longitude));
                 marker.title(place.getName().toString());
-                map.addMarker(marker);
-
+                markerViewTo = map.addMarker(marker);
+                Log.d("punkty", "wspolrzedne do: " + place.getLatLng());
+                toLocationId = place.getId();
                 setCameraPosition(place.getLatLng().latitude, place.getLatLng().longitude);
+
+
             }
 
             @Override
@@ -148,16 +141,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        BaseRequest baseRequest = new BaseRequest(this, "https://maps.googleapis.com/maps/api/" +
-                "directions/json?origin=place_id:ChIJ8b5DJgJaIkcRqtOAYilxmD4&destination=place_id:" +
-                "ChIJncLRe9ZZIkcRtBg-8THvidU&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU");
-        baseRequest.setOnResponseListener(new OnResponseListener() {
+        bStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fromLocationId.isEmpty() && !toLocationId.isEmpty() )
+                {
+                    setRequest();
+                    //Parser parser = new Parser();
+                    //ArrayList<LatLng> points = parser.parseWayPoints();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Brak lokalizacji", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+
+    private void setRequest(){
+        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId);
+        getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
+
+            String dupa;
+
             @Override
             public void onSuccess(JSONObject response) {
                 Log.d("Wykonana metoda","onSuccess");
-                responsePoints = decodePoly(Parser.parseWayPoints(response));//= Parser.parseDirections(response);
+                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseWayPoints(response));//= Parser.parseDirections(response);
 
+                //map.clear();
+                MapBoxHelper mapBoxHelper = new MapBoxHelper();
 
+//                MarkerViewOptions markerFrom = new MarkerViewOptions()
+//                        .position(responsePoints.get(0));
+//                MarkerViewOptions markerTo = new MarkerViewOptions()
+//                        .position(responsePoints.get(responsePoints.size()-1));
+
+                markerViewFrom.setPosition(responsePoints.get(0));
+                markerViewFrom
+                markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1));
+                //mapBoxHelper.drawSimplify(responsePoints, map);
+                mapBoxHelper.drawBeforeSimplify(responsePoints, map);
 
 
             }
@@ -167,61 +193,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("INTERFEJS","ERROR");
             }
         });
-        baseRequest.execute();
-
+        getRouteDetailsRequest.execute();
     }
 
-    private ArrayList<LatLng> decodePoly(String encoded) {
-
-        ArrayList<LatLng> poly = new ArrayList<LatLng>();
-        int index = 0, len = encoded.length();
-        int lat = 0, lng = 0;
-
-        while (index < len) {
-            int b, shift = 0, result = 0;
-            do {
-                b = encoded.charAt(index++) - 63;
-                result |= (b & 0x1f) << shift;
-                shift += 5;
-            } while (b >= 0x20);
-            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-            lat += dlat;
-
-            shift = 0;
-            result = 0;
-            do {
-                b = encoded.charAt(index++) - 63;
-                result |= (b & 0x1f) << shift;
-                shift += 5;
-            } while (b >= 0x20);
-            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-            lng += dlng;
-
-            LatLng p = new LatLng((((double) lat / 1E5)),
-                    (((double) lng / 1E5)));
-            poly.add(p);
-        }
-
-        return poly;
-    }
-
-    private void drawSimplify(ArrayList<LatLng> points) {
-
-        Position[] before = new Position[points.size()];
-        for (int i = 0; i < points.size(); i++) before[i] = Position.fromCoordinates(points.get(i).getLongitude(), points.get(i).getLatitude());
-
-        Position[] after = PolylineUtils.simplify(before, 0.001);
-
-        LatLng[] result = new LatLng[after.length];
-        for (int i = 0; i < after.length; i++)
-            result[i] = new LatLng(after[i].getLatitude(), after[i].getLongitude());
-
-        map.addPolyline(new PolylineOptions()
-                .add(result)
-                .color(Color.parseColor("#3bb2d0"))
-                .width(4));
-
-    }
 
     @Override
     public void onPause()  {

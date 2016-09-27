@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BoxMapTest1</string>
     <string name="accessToken">sk.eyJ1Ijoia2FtcG96IiwiYSI6ImNpdDF1NTA1aTAwYWsyeXBkcXJ1YjE0NnQifQ._LxovDvbArQg2_RGyc0Q6w</string>
-    <string name="googleToken">AIzaSyB1Lkeazd9vuDEM3WeZDZe8tVdrk9fplSs</string>
+    <string name="googleToken">AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU</string>
+    <!--<string name="googleToken">AIzaSyB1Lkeazd9vuDEM3WeZDZe8tVdrk9fplSs</string>-->
+
 </resources>

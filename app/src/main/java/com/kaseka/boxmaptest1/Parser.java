@@ -34,14 +34,22 @@ public class Parser {
         return new ArrayList<LatLng>(new LinkedHashSet<LatLng>(points));
     }
 
-    public static String parseWayPoints(JSONObject response){
 
+    public static String parseRoutePoints(JSONObject response){
         ArrayList<LatLng> points = new ArrayList<>();
-
         JSONArray routes = response.optJSONArray("routes");
         JSONObject overviewPolyline = routes.optJSONObject(0).optJSONObject("overview_polyline");
         String wayPoints = overviewPolyline.optString("points");
-
         return wayPoints;
+    }
+
+
+    public static String parseWholeRouteTime(JSONObject response){
+        ArrayList<LatLng> points = new ArrayList<>();
+        JSONArray routes = response.optJSONArray("routes");
+        JSONArray legs = routes.optJSONObject(0).optJSONArray("legs");
+        JSONObject duration = legs.optJSONObject(0).optJSONObject("duration");
+        String wholeRouteTime = duration.optString("text");
+        return wholeRouteTime;
     }
 }

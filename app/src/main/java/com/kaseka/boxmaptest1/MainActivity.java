@@ -21,10 +21,10 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //+import com.mapbox.services.geocoding.v5.models.GeocodingFeature;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 
 import org.json.JSONObject;
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private MarkerView markerViewFrom;
     private MarkerView markerViewTo;
     private Button bStart;
-
+    private TextView tvRouteTime;
     private String fromLocationId = "";
     private String toLocationId = "";
     GetRouteDetailsRequest getRouteDetailsRequest;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         bStart = (Button) findViewById(R.id.bStart);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
-
+        tvRouteTime = (TextView) findViewById(R.id.tvRouteTime);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
 
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     setRequest();
                     //Parser parser = new Parser();
-                    //ArrayList<LatLng> points = parser.parseWayPoints();
+                    //ArrayList<LatLng> points = parser.parseRoutePoints();
 
                 } else {
                     Toast.makeText(MainActivity.this, "Brak lokalizacji", Toast.LENGTH_SHORT).show();
@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 Log.d("Wykonana metoda","onSuccess");
-                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseWayPoints(response));//= Parser.parseDirections(response);
-
+                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
+                String routeTime = Parser.parseWholeRouteTime(response);
                 //map.clear();
                 MapBoxHelper mapBoxHelper = new MapBoxHelper();
 
@@ -180,10 +180,12 @@ public class MainActivity extends AppCompatActivity {
 //                        .position(responsePoints.get(responsePoints.size()-1));
 
                 markerViewFrom.setPosition(responsePoints.get(0));
-                markerViewFrom
+                markerViewFrom.setAnchor(0.5f,1.0f);
                 markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1));
+                markerViewTo.setAnchor(0.5f,1.0f);
                 //mapBoxHelper.drawSimplify(responsePoints, map);
                 mapBoxHelper.drawBeforeSimplify(responsePoints, map);
+                tvRouteTime.setText(routeTime);
 
 
             }

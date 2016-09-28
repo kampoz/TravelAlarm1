@@ -1,5 +1,6 @@
 package com.kaseka.boxmaptest1;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,10 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String API_KEY = "AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU";
 
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
-
+    private ScrollView scrollView;
     private MapView mapView;
     private MapboxMap map;
     private MarkerView markerViewFrom;
     private MarkerView markerViewTo;
     private Button bStart;
+    private Button bDalej;
     private TextView tvRouteTime;
     private String fromLocationId = "";
     private String toLocationId = "";
@@ -55,16 +60,17 @@ public class MainActivity extends AppCompatActivity {
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
 
-
-
 //        // "https://maps.googleapis.com/maps/api/" +
 //        "directions/json?origin=place_id:ChIJ8b5DJgJaIkcRqtOAYilxmD4&destination=place_id:" +
 //                "ChIJncLRe9ZZIkcRtBg-8THvidU&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU"
-
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
         bStart = (Button) findViewById(R.id.bStart);
+        bDalej = (Button) findViewById(R.id.bDalej);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
         tvRouteTime = (TextView) findViewById(R.id.tvRouteTime);
+
+        //tworzenie mapy
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
 
@@ -87,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                         .color(Color.parseColor("#ff0000"))
                         .alpha(1.0f)
                         .width(10));
+
             }
         });
 
 
-
         final CustomAutocompleteFragment fromAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.from_autocomplete_fragment);
-
+        fromAutocompleteFragment.setHintText("Skąd...");
         fromAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         final CustomAutocompleteFragment toAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.to_autocomplete_fragment);
+        toAutocompleteFragment.setHintText("Dokąd...");
         toAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -156,8 +163,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
 
+        bDalej.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, AlarmClockActivity.class);
+                MainActivity.this.startActivity(startAlarmClockActivityIntent);
+            }
+        });
+    }
 
 
     private void setRequest(){
@@ -172,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
                 String routeTime = Parser.parseWholeRouteTime(response);
                 //map.clear();
-                MapBoxHelper mapBoxHelper = new MapBoxHelper();
+                MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
 
 //                MarkerViewOptions markerFrom = new MarkerViewOptions()
 //                        .position(responsePoints.get(0));
@@ -184,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
                 markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1));
                 markerViewTo.setAnchor(0.5f,1.0f);
                 //mapBoxHelper.drawSimplify(responsePoints, map);
-                mapBoxHelper.drawBeforeSimplify(responsePoints, map);
-                tvRouteTime.setText(routeTime);
+                mapBoxHelper.drawBeforeSimplify(responsePoints);
+                tvRouteTime.setText("Czas przejazdu: "+routeTime);
 
-
+                mapBoxHelper.fitZoom(markerViewFrom.getPosition(),markerViewTo.getPosition());
             }
 
             @Override
@@ -238,15 +252,13 @@ public class MainActivity extends AppCompatActivity {
     public void setCameraPosition(double latitude, double longitude){
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)) // Sets the new camera position
-                .zoom(10) // Sets the zoom
-                .bearing(90) // Rotate the camera
-                .tilt(30) // Set the camera tilt
+                .zoom(13) // Sets the zoom
+                .bearing(380) // Rotate the camera
+                .tilt(90) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
 
         map.animateCamera(CameraUpdateFactory
                 .newCameraPosition(position), 7000);
     }
-
-
 
 }

@@ -6,67 +6,85 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:weightSum="2">
-
-
-
-
-    <com.mapbox.mapboxsdk.maps.MapView
-        android:layout_weight="1"
-        android:id="@+id/mapview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        mapbox:style_url="@string/style_emerald"
-        mapbox:zoom="12"/>
+    android:background="@color/black">
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:background="@android:color/black">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/from_autocomplete_fragment"
+        <com.mapbox.mapboxsdk.maps.MapView
+            android:id="@+id/mapview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
-            />
+            android:layout_height="250dp"
+            mapbox:style_url="mapbox://styles/kampoz/cit3frch4005l2xovh4ok8a18"
+            mapbox:zoom="12"/>
 
-        <View
+        <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#ffff00" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:background="@android:color/black">
 
-        <fragment
-            android:id="@+id/to_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
-            />
+                <fragment
+                    android:id="@+id/from_autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
+                    />
 
-        <Button
-            android:id="@+id/bStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="START"
-            android:padding="20dp"
-            android:layout_gravity="center_vertical"
-            />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#ffff00" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:hint="TU MA BYC CZAS PRZEJAZDU"
-            android:id="@+id/tvRouteTime" />
+                <fragment
+                    android:id="@+id/to_autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.kaseka.boxmaptest1.CustomAutocompleteFragment"
+                    />
+
+                <Button
+                    android:id="@+id/bStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wyznacz trasę"
+                    android:background="@color/black"
+                    android:textColor="@color/colorMyYellow"
+                    android:padding="20dp"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:hint="TU MA BYC CZAS PRZEJAZDU"
+                    android:id="@+id/tvRouteTime" />
+
+                <Button
+                    android:id="@+id/bDalej"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:textColor="@color/colorMyYellow"
+                    android:text="DALEJ"
+                    android:padding="20dp"
+                    android:layout_gravity="center_vertical"
+                    />
 
 
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-
 </LinearLayout>

@@ -32,16 +32,17 @@ public class AlarmClockActivity extends AppCompatActivity {
     private View vClockCenterCircle;
     private Point centerPt, targetPt;
     private boolean isMinuteHand = true;
+    private float minuteAngle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_clock);
-
+        minuteAngle = 300.0f;
         ivHourHand = (ImageView) findViewById(R.id.ivHourHand);
-        ivHourHand.setAlpha(0.5f);
+        ivHourHand.setAlpha(0.7f);
         ivMinuteHand = (ImageView) findViewById(R.id.ivMinuteHand);
-        ivHourHand.setAlpha(0.5f);
+        ivMinuteHand.setAlpha(0.7f);
         rlClockParent = (RelativeLayout) findViewById(R.id.rlClockParent);
         vClockCenterCircle = findViewById(R.id.vClockCenterCircle);
 
@@ -61,10 +62,11 @@ public class AlarmClockActivity extends AppCompatActivity {
                 ivMinuteHand.setLayoutParams(params);
 
                 ivHourHand.setPivotX(0);
-                ivMinuteHand.setPivotX(0);
                 ivHourHand.setPivotY(ivHourHand.getHeight()/2);
-                ivMinuteHand.setPivotY(ivHourHand.getHeight()/2);
-                //ivHourHand.setRotation(30);
+
+                ivMinuteHand.setPivotX(0);
+                ivMinuteHand.setPivotY(ivMinuteHand.getHeight()/2);
+                ivMinuteHand.setRotation(minuteAngle);
             }
         });
 
@@ -83,7 +85,6 @@ public class AlarmClockActivity extends AppCompatActivity {
                         int eventY = (int)event.getY();
                         Log.d("Point touchX", String.valueOf(eventX));
                         Log.d("Point touchY", String.valueOf(eventY));
-
                         centerPt = new Point(middleX, middleY);
                         targetPt = new Point(eventX, eventY);
                         float angle = (float)AlarmClockActivity.calcRotationAngleInDegrees(centerPt,targetPt);

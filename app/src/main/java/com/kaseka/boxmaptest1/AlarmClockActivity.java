@@ -30,6 +30,7 @@ public class AlarmClockActivity extends AppCompatActivity {
     private RelativeLayout rlClockParent;
     private View vClockCenterCircle;
     private Point centerPt, targetPt;
+    private boolean isMinuteHand = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,6 @@ public class AlarmClockActivity extends AppCompatActivity {
         ivHourHand = (ImageView) findViewById(R.id.ivHourHand);
         rlClockParent = (RelativeLayout) findViewById(R.id.rlClockParent);
         vClockCenterCircle = findViewById(R.id.vClockCenterCircle);
-
-
 
         ViewTreeObserver vto = rlClockParent.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -62,38 +61,69 @@ public class AlarmClockActivity extends AppCompatActivity {
             }
         });
 
-        rlClockParent.setOnTouchListener(new View.OnTouchListener() {
+//        rlClockParent.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+////                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+////                    public void onLongPress(MotionEvent e) {
+////                        Log.e("", "Longpress detected");
+////                    }
+////                });
+//                int middleX = (int)vClockCenterCircle.getLeft() + (vClockCenterCircle.getLayoutParams().width / 2);
+//                int middleY = (int)vClockCenterCircle.getTop() + (vClockCenterCircle.getLayoutParams().height / 2) - (ivHourHand.getHeight()/2);
+//                Log.d("Point middleX", String.valueOf(middleX));
+//                Log.d("Point middleY", String.valueOf(middleY));
+//                int eventX = (int)event.getX();
+//                int eventY = (int)event.getY();
+//                Log.d("Point touchX", String.valueOf(eventX));
+//                Log.d("Point touchY", String.valueOf(eventY));
+//
+//                centerPt = new Point(middleX, middleY);
+//                targetPt = new Point(eventX, eventY);
+//                float angle = (float)AlarmClockActivity.calcRotationAngleInDegrees(centerPt,targetPt);
+//                ivHourHand.setRotation(angle);
+//
+//
+//
+//             //return true;
+//             return true;
+//            }
+//        });
+
+        ivHourHand.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onLongClick(View v) {
+                ivHourHand.setAlpha(0.5f);
+                rlClockParent.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
 //                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 //                    public void onLongPress(MotionEvent e) {
 //                        Log.e("", "Longpress detected");
 //                    }
 //                });
-                int middleX = (int)vClockCenterCircle.getLeft() + (vClockCenterCircle.getLayoutParams().width / 2);
-                int middleY = (int)vClockCenterCircle.getTop() + (vClockCenterCircle.getLayoutParams().height / 2) - (ivHourHand.getHeight()/2);
-                Log.d("Point middleX", String.valueOf(middleX));
-                Log.d("Point middleY", String.valueOf(middleY));
-                int eventX = (int)event.getX();
-                int eventY = (int)event.getY();
-                Log.d("Point touchX", String.valueOf(eventX));
-                Log.d("Point touchY", String.valueOf(eventY));
+                        int middleX = (int)vClockCenterCircle.getLeft() + (vClockCenterCircle.getLayoutParams().width / 2);
+                        int middleY = (int)vClockCenterCircle.getTop() + (vClockCenterCircle.getLayoutParams().height / 2) - (ivHourHand.getHeight()/2);
+                        Log.d("Point middleX", String.valueOf(middleX));
+                        Log.d("Point middleY", String.valueOf(middleY));
+                        int eventX = (int)event.getX();
+                        int eventY = (int)event.getY();
+                        Log.d("Point touchX", String.valueOf(eventX));
+                        Log.d("Point touchY", String.valueOf(eventY));
 
-                centerPt = new Point(middleX, middleY);
-                targetPt = new Point(eventX, eventY);
-                float angle = (float)AlarmClockActivity.calcRotationAngleInDegrees(centerPt,targetPt);
-                ivHourHand.setRotation(angle);
+                        centerPt = new Point(middleX, middleY);
+                        targetPt = new Point(eventX, eventY);
+                        float angle = (float)AlarmClockActivity.calcRotationAngleInDegrees(centerPt,targetPt);
+                        ivHourHand.setRotation(angle);
 
 
 
-             //return true;
-             return true;
-            }
-        });
+                        //return true;
+                        return true;
+                    }
+                });
 
-        ivHourHand.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+                isMinuteHand = false;
                 return false;
             }
         });

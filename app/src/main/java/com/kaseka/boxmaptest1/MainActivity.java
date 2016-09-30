@@ -177,9 +177,6 @@ public class MainActivity extends AppCompatActivity {
     private void setRequest(){
         getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
-
-            String dupa;
-
             @Override
             public void onSuccess(JSONObject response) {
                 Log.d("Wykonana metoda","onSuccess");

@@ -20,6 +20,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     private ImageView activeHand = null;
     private ImageView inactiveHand = null;
     private Point centerPt, targetPt;
+    private OnClockChangeListener onClockChangeListener;
 
     public ClockView(Context context) {
         super(context);
@@ -68,12 +69,58 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 targetPt = new Point(eventX, eventY);
                 float angle = (float)ClockView.calcRotationAngleInDegrees(centerPt,targetPt);
                 if (activeHand != null) {
-                    activeHand.setRotation(angle);
+                    activeHand.setRotation(angle-90);
+                    onClockChangeListener.onTimeChange(getHour() +":" + getMinute());
                 }
                 return true;
             }
         });
 
+    }
+
+    public void setOnClockChangeListener(OnClockChangeListener onClockChangeListener) {
+        this.onClockChangeListener = onClockChangeListener;
+    }
+
+    public float getMinuteAngle(){
+        float minuteAngle = ivMinuteHand.getRotation();
+        Log.d("godz getrota()", String.valueOf(minuteAngle));
+        if (minuteAngle<0){
+            minuteAngle = 360+minuteAngle;
+        }
+        if (minuteAngle>360){
+            minuteAngle = minuteAngle-360;
+        }
+
+        if (minuteAngle > 270 && minuteAngle <= 360) {
+            return minuteAngle - 270;
+        } else {
+            return minuteAngle + 90;
+        }
+    }
+
+    public float getHourAngle(){
+        float hourAngle = ivHourHand.getRotation();
+        if (hourAngle<0){
+            hourAngle = 360+hourAngle;
+        }
+        if (hourAngle>360){
+            hourAngle = hourAngle-360;
+        }
+
+        if (hourAngle > 270 && hourAngle < 360) {
+            return hourAngle - 270;
+        } else {
+            return hourAngle + 90;
+        }
+    }
+
+    public String getMinute(){
+        return String.valueOf((int)(getMinuteAngle()*60/360));
+    }
+
+    public String getHour(){
+        return String.valueOf((int)(getHourAngle()*12/360));
     }
 
     private void setHandsStartPosition(){
@@ -93,7 +140,6 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 ivMinuteHand.setY(vClockCenterCircle.getY() + (vClockCenterCircle.getHeight() / 2) - ivMinuteHand.getHeight() /2);
                 ivMinuteHand.setPivotX(0);
                 ivMinuteHand.setPivotY(ivMinuteHand.getHeight()/2);
-                ivMinuteHand.setRotation(300.0f);
             }
         });
     }
@@ -108,7 +154,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
             angle += 360;
         }
         Log.d("Angle is", String.valueOf(angle));
-        return angle-90;
+        return angle;
     }
 
     @Override
@@ -118,5 +164,4 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
         activeHand.setAlpha(1.0f);
         inactiveHand.setAlpha(0.7f);
     }
-
 }

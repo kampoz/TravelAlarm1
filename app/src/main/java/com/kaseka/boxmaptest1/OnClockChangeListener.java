@@ -3,10 +3,18 @@ package com.kaseka.boxmaptest1;
 
 public interface OnClockChangeListener {
 
-    void onMinuteHandChange();
+//    void onMinuteHandChange();
+//
+//    void onHourHandCHange();
 
-    void onHourHandCHange();
-
-    void onTimeChange();
+    void onTimeChange(String timeString);
 
 }
+
+/*
+
+@override
+ void onTimeChange(String timeString) {
+    timeTextView.setText(timeString);
+ }
+ */

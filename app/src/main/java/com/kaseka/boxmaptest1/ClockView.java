@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
-    private ImageView ivHourHand;
-    private ImageView ivMinuteHand;
+    private ClockHandImageView ivHourHand;
+    private ClockHandImageView ivMinuteHand;
 
     private View vClockCenterCircle;
     private ImageView activeHand = null;
@@ -43,9 +43,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     private void init() {
         inflate(getContext(), R.layout.clock, this);
 
-        this.ivHourHand = (ImageView)findViewById(R.id.ivHourHand);
-        this.ivMinuteHand = (ImageView)findViewById(R.id.ivMinuteHand);
-
+        this.ivHourHand = (ClockHandImageView)findViewById(R.id.ivHourHand);
+        this.ivMinuteHand = (ClockHandImageView)findViewById(R.id.ivMinuteHand);
         this.vClockCenterCircle = (View)findViewById(R.id.vClockCenterCircle);
 
         ivHourHand.setOnClickListener(this);
@@ -60,9 +59,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 int middleX = vClockCenterCircle.getLeft() + (vClockCenterCircle.getLayoutParams().width / 2);
-                int middleY = vClockCenterCircle.getTop() + (vClockCenterCircle.getLayoutParams().height / 2) - (ivHourHand.getHeight()/2);
+                int middleY = vClockCenterCircle.getTop() + (vClockCenterCircle.getLayoutParams().height / 2);
                 int eventX = (int)event.getX();
                 int eventY = (int)event.getY();
                 Log.d("Point touchX", String.valueOf(eventX));
@@ -100,6 +98,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     }
 
     public Integer getHour(float angle){
+
         return (int)(angle*12/360);
     }
 
@@ -114,40 +113,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     public void setOnClockChangeListener(OnClockChangeListener onClockChangeListener) {
         this.onClockChangeListener = onClockChangeListener;
     }
-/*
-    public float getMinuteAngle(){
-        float minuteAngle = ivMinuteHand.getRotation();
-        Log.d("godz getrota()", String.valueOf(minuteAngle));
-        if (minuteAngle<0){
-            minuteAngle = 360+minuteAngle;
-        }
-        if (minuteAngle>360){
-            minuteAngle = minuteAngle-360;
-        }
 
-        if (minuteAngle >= 270 && minuteAngle <= 360) {
-            return minuteAngle - 270;
-        } else {
-            return minuteAngle + 90;
-        }
-    }
-
-    public float getHourAngle(){
-        float hourAngle = ivHourHand.getRotation();
-        if (hourAngle<0){
-            hourAngle = 360+hourAngle;
-        }
-        if (hourAngle>360){
-            hourAngle = hourAngle-360;
-        }
-
-        if (hourAngle >= 270 && hourAngle < 360) {
-            return hourAngle - 270;
-        } else {
-            return hourAngle + 90;
-        }
-    }
-*/
 
     private void setHandsStartPosition(){
         ViewTreeObserver vto = this.getViewTreeObserver();
@@ -177,10 +143,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
         theta += Math.PI/2.0;
         double angle = Math.toDegrees(theta);
 
+        angle=(angle+360)%360;
 
-        if (angle < 0) {
-            angle += 360;
-        }
         Log.d("Angle is", String.valueOf(angle));
         return angle;
     }

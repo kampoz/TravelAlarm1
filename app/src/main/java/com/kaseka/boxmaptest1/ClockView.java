@@ -52,7 +52,6 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
         ivHourHand.setAlpha(0.7f);
         ivMinuteHand.setAlpha(0.7f);
-        //this.setBackground(getContext().getDrawable());
 
         setHandsStartPosition();
 
@@ -98,7 +97,6 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     }
 
     public Integer getHour(float angle){
-
         return (int)(angle*12/360);
     }
 

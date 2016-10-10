@@ -26,17 +26,32 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+
+        <TextView
+            android:text="--00:00--"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="113dp"
+            android:id="@+id/tvHourDisplay"
+            android:textColor="#cccccc"
+            android:textSize="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+
     </com.kaseka.boxmaptest1.ClockView>
 
-    <TextView
-        android:text="---00:00---"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:id="@+id/tvHourDisplay"
-        android:textColor="#cccccc"
-        android:textSize="40dp"
-        />
+        android:inputType="time"
+        android:textColor="#fff"
+        android:textSize="25dp"
+        android:hint="Prepare time in mins"
+        android:textColorHint="#777"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/etPreparingTimeInMins" />
 
     <Button
         android:text="Ustaw budzik"

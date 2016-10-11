@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -30,15 +31,22 @@ public class AlarmClockActivity extends AppCompatActivity {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private EditText etPreparingTimeInMins;
+    private Switch switchAmPm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_clock);
+
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
         etPreparingTimeInMins = (EditText)findViewById(R.id.etPreparingTimeInMins);
         bSetAlarm = (Button) findViewById(R.id.bSetAlarm);
+        etPreparingTimeInMins.setText("30");
+        switchAmPm = (Switch)findViewById(R.id.switchAmPm);
+        switchAmPm.setTextOn("PM");
+        switchAmPm.setTextOff("AM");
+        switchAmPm.setChecked(false);
 
         clockView.setOnClockChangeListener(new OnClockChangeListener() {
             @Override
@@ -52,12 +60,13 @@ public class AlarmClockActivity extends AppCompatActivity {
             }
         });
 
+
         bSetAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 float arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
                 float arriveMinute = clockView.getMinute(clockView.getIvMinuteHand().getRotation());
+
                 Integer preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
                 final int HALF_DAY_MILLIS = 43200000;
 
@@ -65,20 +74,26 @@ public class AlarmClockActivity extends AppCompatActivity {
                 long arriveMinutesInMillis = (long)arriveMinute*60*1000;
                 long arriveTimeInMillis = arriveHourInMillis + arriveMinutesInMillis;
                 long preparingTimeInMillis = (long)preparingTimeInMins*60*1000;
-                long currentTimeInMillis = System.currentTimeMillis();
+                long alarmHourLong;
 
                         Log.d("Long type", "arriveHourInMillis "+String.valueOf(arriveHourInMillis));
-                    float arriveHourInMillisFloat = (arriveHourInMillis / (1000 * 60 * 60)) % 12;
-                        Log.d("Long type", "arriveHourInMillisFloat "+String.valueOf(arriveHourInMillisFloat));
                         Log.d("Long type", "arriveMinutesInMillis "+String.valueOf(arriveMinutesInMillis));
                         Log.d("Long type", "arriveTimeInMillis "+String.valueOf(arriveTimeInMillis));
                         Log.d("Long type", "preparingTimeInMillis "+String.valueOf(preparingTimeInMillis));
 
-                long arriveTimeInMillisLong = (HALF_DAY_MILLIS+arriveTimeInMillis)%HALF_DAY_MILLIS;
+                long arriveTimeInMillisLong = (HALF_DAY_MILLIS + arriveTimeInMillis)%HALF_DAY_MILLIS;
                 long prepareTimeCorrection = HALF_DAY_MILLIS - preparingTimeInMillis;
                 long alarmTimeInMillis = arriveTimeInMillisLong + prepareTimeCorrection;
 
-                long alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 12;
+                if (switchAmPm.isChecked()){
+                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 24;
+                }
+                else{
+                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 12;
+                }
+
+
+
                 long alarmMinuteLong = (alarmTimeInMillis / (1000 * 60)) % 60;
                     Log.d("Long type", "alarmHourLong "+String.valueOf(alarmHourLong));
                     Log.d("Long type", "alarmMinuteLong "+String.valueOf(alarmMinuteLong));

@@ -37,21 +37,42 @@
             android:textSize="40dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
-
-
     </com.kaseka.boxmaptest1.ClockView>
 
-    <EditText
+    <Switch
+        android:text="Switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:textColor="#fff"
-        android:textSize="25dp"
-        android:hint="Prepare time in mins"
-        android:textColorHint="#777"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/etPreparingTimeInMins" />
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/switchAmPm"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvPreparingTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preparing time (min)"
+            android:textColor="#999"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:textColor="#fff"
+            android:textSize="25dp"
+            android:hint="Prepare time in mins"
+            android:textColorHint="#777"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/etPreparingTimeInMins" />
+
+    </LinearLayout>
 
     <Button
         android:text="Ustaw budzik"

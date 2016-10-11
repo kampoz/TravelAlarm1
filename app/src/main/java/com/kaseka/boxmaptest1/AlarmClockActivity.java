@@ -19,6 +19,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 
 public class AlarmClockActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class AlarmClockActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_alarm_clock);
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
@@ -44,8 +47,9 @@ public class AlarmClockActivity extends AppCompatActivity {
         bSetAlarm = (Button) findViewById(R.id.bSetAlarm);
         etPreparingTimeInMins.setText("30");
         switchAmPm = (Switch)findViewById(R.id.switchAmPm);
-        switchAmPm.setTextOn("PM");
         switchAmPm.setTextOff("AM");
+        switchAmPm.setTextOn("PM");
+
         switchAmPm.setChecked(false);
 
         clockView.setOnClockChangeListener(new OnClockChangeListener() {
@@ -64,58 +68,64 @@ public class AlarmClockActivity extends AppCompatActivity {
         bSetAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
-                float arriveMinute = clockView.getMinute(clockView.getIvMinuteHand().getRotation());
+//                float arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
+//                float arriveMinute = clockView.getMinute(clockView.getIvMinuteHand().getRotation());
+//
+//                Integer preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
+//                final int HALF_DAY_MILLIS = 43200000;
+//
+//                long arriveHourInMillis = (long)arriveHour*60*60*1000;
+//                long arriveMinutesInMillis = (long)arriveMinute*60*1000;
+//                long arriveTimeInMillis = arriveHourInMillis + arriveMinutesInMillis;
+//                long preparingTimeInMillis = (long)preparingTimeInMins*60*1000;
+//                long alarmHourLong;
+////
+//                long arriveTimeInMillisLong = (HALF_DAY_MILLIS + arriveTimeInMillis) % HALF_DAY_MILLIS;
+//                long prepareTimeCorrection = HALF_DAY_MILLIS - preparingTimeInMillis;
+//                long alarmTimeInMillis = arriveTimeInMillisLong + prepareTimeCorrection;
+//
+//                if (switchAmPm.isChecked()){
+//                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 24;
+//                }
+//                else{
+//                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 12;
+//                }
+//
+//
+//
+//                long alarmMinuteLong = (alarmTimeInMillis / (1000 * 60)) % 60;
+//                    Log.d("Long type", "alarmHourLong "+String.valueOf(alarmHourLong));
+//                    Log.d("Long type", "alarmMinuteLong "+String.valueOf(alarmMinuteLong));
+//
+//                int alarmHour = (int)alarmHourLong;
+//                int alarmMinute = (int)alarmMinuteLong;
 
-                Integer preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
-                final int HALF_DAY_MILLIS = 43200000;
+//////////////////////////////////
+                final int HALF_DAY_MINUTES = 12*60;
+                int arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
+                int arriveHourInMinutes = arriveHour*60;
+                int arriveMinutesInMins = clockView.getMinute(clockView.getIvMinuteHand().getRotation());
+                int arriveTimeInMins = arriveHourInMinutes + arriveMinutesInMins;
+                int preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
 
-                long arriveHourInMillis = (long)arriveHour*60*60*1000;
-                long arriveMinutesInMillis = (long)arriveMinute*60*1000;
-                long arriveTimeInMillis = arriveHourInMillis + arriveMinutesInMillis;
-                long preparingTimeInMillis = (long)preparingTimeInMins*60*1000;
-                long alarmHourLong;
-
-                        Log.d("Long type", "arriveHourInMillis "+String.valueOf(arriveHourInMillis));
-                        Log.d("Long type", "arriveMinutesInMillis "+String.valueOf(arriveMinutesInMillis));
-                        Log.d("Long type", "arriveTimeInMillis "+String.valueOf(arriveTimeInMillis));
-                        Log.d("Long type", "preparingTimeInMillis "+String.valueOf(preparingTimeInMillis));
-
-                long arriveTimeInMillisLong = (HALF_DAY_MILLIS + arriveTimeInMillis)%HALF_DAY_MILLIS;
-                long prepareTimeCorrection = HALF_DAY_MILLIS - preparingTimeInMillis;
-                long alarmTimeInMillis = arriveTimeInMillisLong + prepareTimeCorrection;
+                int prepareTimeCorrection = HALF_DAY_MINUTES - preparingTimeInMins;
+                int alarmTimeInMinutes = arriveTimeInMins + prepareTimeCorrection;
+                int alarmHour;
 
                 if (switchAmPm.isChecked()){
-                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 24;
+                    alarmHour = (alarmTimeInMinutes / 60) % 12 + 12;
                 }
                 else{
-                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 12;
+                    alarmHour = (alarmTimeInMinutes / 60) % 12;
                 }
 
-
-
-                long alarmMinuteLong = (alarmTimeInMillis / (1000 * 60)) % 60;
-                    Log.d("Long type", "alarmHourLong "+String.valueOf(alarmHourLong));
-                    Log.d("Long type", "alarmMinuteLong "+String.valueOf(alarmMinuteLong));
-
-                int alarmHour = (int)alarmHourLong;
-                int alarmMinute = (int)alarmMinuteLong;
+                int alarmMinute = alarmTimeInMinutes % 60;
 
                 Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
                 i.putExtra(AlarmClock.EXTRA_HOUR, alarmHour);
                 i.putExtra(AlarmClock.EXTRA_MINUTES, alarmMinute);
+                i.putExtra(AlarmClock.EXTRA_DAYS, alarmMinute);
                 startActivity(i);
-
-//                String displayTime = String.valueOf(ivHourDisplay.getText());
-//                String systemTime = String.valueOf(SystemClock.elapsedRealtime());
-//                Log.d("bSetAlarm systemTime",systemTime);
-//
-//                alarmMgr = (AlarmManager)getSystemService(ALARM_SERVICE);
-//                Intent intent = new Intent(AlarmClockActivity.this, AlarmReceiver.class);
-//                alarmIntent = PendingIntent.getBroadcast(AlarmClockActivity.this, 0, intent, 0);
-//                alarmMgr.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5 * 1000, alarmIntent);
-
-
 
             }
         });

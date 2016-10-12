@@ -21,9 +21,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvRouteTime;
     private String fromLocationId = "";
     private String toLocationId = "";
+    String routeTime;
+    int routeTimeInSeconds = 0;
     GetRouteDetailsRequest getRouteDetailsRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, AlarmClockActivity.class);
+                startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
+
             }
         });
     }
@@ -181,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 Log.d("Wykonana metoda","onSuccess");
                 responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
-                String routeTime = Parser.parseWholeRouteTime(response);
+                routeTime= Parser.parseWholeRouteTime(response);
+                routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
                 //map.clear();
                 MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
 

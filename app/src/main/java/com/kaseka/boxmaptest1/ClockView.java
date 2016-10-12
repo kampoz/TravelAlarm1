@@ -4,6 +4,7 @@ package com.kaseka.boxmaptest1;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.StringBuilderPrinter;

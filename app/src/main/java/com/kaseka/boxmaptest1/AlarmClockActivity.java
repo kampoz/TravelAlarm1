@@ -34,12 +34,16 @@ public class AlarmClockActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private EditText etPreparingTimeInMins;
     private Switch switchAmPm;
+    int travelTimeInSeconds = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_alarm_clock);
+
+        Bundle bundle = getIntent().getExtras();
+        travelTimeInSeconds = bundle.getInt("travelTimeInSeconds");
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -68,39 +72,7 @@ public class AlarmClockActivity extends AppCompatActivity {
         bSetAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                float arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
-//                float arriveMinute = clockView.getMinute(clockView.getIvMinuteHand().getRotation());
-//
-//                Integer preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
-//                final int HALF_DAY_MILLIS = 43200000;
-//
-//                long arriveHourInMillis = (long)arriveHour*60*60*1000;
-//                long arriveMinutesInMillis = (long)arriveMinute*60*1000;
-//                long arriveTimeInMillis = arriveHourInMillis + arriveMinutesInMillis;
-//                long preparingTimeInMillis = (long)preparingTimeInMins*60*1000;
-//                long alarmHourLong;
-////
-//                long arriveTimeInMillisLong = (HALF_DAY_MILLIS + arriveTimeInMillis) % HALF_DAY_MILLIS;
-//                long prepareTimeCorrection = HALF_DAY_MILLIS - preparingTimeInMillis;
-//                long alarmTimeInMillis = arriveTimeInMillisLong + prepareTimeCorrection;
-//
-//                if (switchAmPm.isChecked()){
-//                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 24;
-//                }
-//                else{
-//                    alarmHourLong = (alarmTimeInMillis / (1000 * 60 * 60)) % 12;
-//                }
-//
-//
-//
-//                long alarmMinuteLong = (alarmTimeInMillis / (1000 * 60)) % 60;
-//                    Log.d("Long type", "alarmHourLong "+String.valueOf(alarmHourLong));
-//                    Log.d("Long type", "alarmMinuteLong "+String.valueOf(alarmMinuteLong));
-//
-//                int alarmHour = (int)alarmHourLong;
-//                int alarmMinute = (int)alarmMinuteLong;
 
-//////////////////////////////////
                 final int HALF_DAY_MINUTES = 12*60;
                 int arriveHour = clockView.getHour(clockView.getIvHourHand().getRotation());
                 int arriveHourInMinutes = arriveHour*60;
@@ -109,7 +81,8 @@ public class AlarmClockActivity extends AppCompatActivity {
                 int preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
 
                 int prepareTimeCorrection = HALF_DAY_MINUTES - preparingTimeInMins;
-                int alarmTimeInMinutes = arriveTimeInMins + prepareTimeCorrection;
+                int travelTimeInSecondsCorrection = HALF_DAY_MINUTES - travelTimeInSeconds/60;
+                int alarmTimeInMinutes = arriveTimeInMins + prepareTimeCorrection + travelTimeInSecondsCorrection;
                 int alarmHour;
 
                 if (switchAmPm.isChecked()){

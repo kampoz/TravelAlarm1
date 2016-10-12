@@ -52,4 +52,13 @@ public class Parser {
         String wholeRouteTime = duration.optString("text");
         return wholeRouteTime;
     }
+
+    public static int parseRouteTimeInSekonds(JSONObject response){
+        ArrayList<LatLng> points = new ArrayList<>();
+        JSONArray routes = response.optJSONArray("routes");
+        JSONArray legs = routes.optJSONObject(0).optJSONArray("legs");
+        JSONObject duration = legs.optJSONObject(0).optJSONObject("duration");
+        int RouteTimeInSekonds = duration.optInt("value");
+        return RouteTimeInSekonds;
+    }
 }

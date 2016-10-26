@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/hour_hand"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        />
 
     <com.kaseka.boxmaptest1.ClockHandImageView
         android:id="@+id/ivMinuteHand"

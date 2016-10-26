@@ -34,6 +34,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean debug = true;
+
     private static final String LOG_TAG = "Google Places Autocomplete";
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     String routeTime;
     int routeTimeInSeconds = 0;
     GetRouteDetailsRequest getRouteDetailsRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         fromAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
+
                 Log.i("TAG", "miejsce wyjazdu: " + place.getName());
                 Log.i("TAG", "wspolrzedne: " + place.getLatLng());
                 MarkerViewOptions marker = new MarkerViewOptions()
@@ -138,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("punkty", "wspolrzedne do: " + place.getLatLng());
                 toLocationId = place.getId();
                 setCameraPosition(place.getLatLng().latitude, place.getLatLng().longitude);
-
-
             }
 
             @Override
@@ -170,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, AlarmClockActivity.class);
                 startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
-
             }
         });
     }

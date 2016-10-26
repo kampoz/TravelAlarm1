@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.MY_PERMISSIONS_REQUEST_READ_CONTACTS" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".debug.DebugActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,8 +31,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleToken" />
 
-        <activity android:name=".AlarmClockActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AlarmClockActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".TripAlarmService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -2,8 +2,11 @@ package com.kaseka.boxmaptest1;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -44,7 +47,12 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     private void init() {
         inflate(getContext(), R.layout.clock, this);
 
+        Drawable drawable = getContext().getResources().getDrawable(R.drawable.hour_hand);
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+
         this.ivHourHand = (ClockHandImageView)findViewById(R.id.ivHourHand);
+        this.ivHourHand.setImageBitmap(bitmap);
         this.ivMinuteHand = (ClockHandImageView)findViewById(R.id.ivMinuteHand);
         this.vClockCenterCircle = (View)findViewById(R.id.vClockCenterCircle);
 

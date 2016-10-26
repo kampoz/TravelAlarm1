@@ -2,9 +2,7 @@ package com.kaseka.boxmaptest1;
 
 import android.content.Context;
 
-/**
- * Created by wasili on 2016-09-26.
- */
+
 public class GetRouteDetailsRequest extends BaseRequest {
 
     private String fromId;

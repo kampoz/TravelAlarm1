@@ -25,9 +25,7 @@ public class BaseRequest {
 
     public void execute(){
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, getEndpoint() + "&key=" + context.getString(R.string.googleToken),
-        //final StringRequest stringRequest = new StringRequest(Request.Method.GET, getEndpoint()+"&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU",
-
-
+        
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -44,6 +42,7 @@ public class BaseRequest {
                 Toast toast = Toast.makeText(context, "Błąd requesta", Toast.LENGTH_LONG);
                 toast.show();
                 onResponseListener.onFailure();
+                Log.d("error BaseRequest", error.toString());
             }
         });
         VolleySingleton.getInstance(context).getRequestQueue().add(stringRequest);

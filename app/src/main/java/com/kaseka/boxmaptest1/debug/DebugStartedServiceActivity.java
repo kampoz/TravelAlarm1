@@ -1,24 +1,15 @@
 package com.kaseka.boxmaptest1.debug;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.net.Uri;
-import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.TripAlarmService;
+import com.kaseka.boxmaptest1.TripAlarmStartedService;
 
-public class DebugActivity extends AppCompatActivity {
+public class DebugStartedServiceActivity extends AppCompatActivity {
     Intent mServiceIntent;
-    TripAlarmService tripAlarmService;
+    TripAlarmStartedService tripAlarmService;
     boolean bound = false;
 
 
@@ -27,8 +18,8 @@ public class DebugActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
 
-        Intent intent = new Intent(this, TripAlarmService.class);
-        intent.putExtra(TripAlarmService.EXTRA_MESSAGE, "extra message");
+        Intent intent = new Intent(this, TripAlarmStartedService.class);
+        intent.putExtra(TripAlarmStartedService.EXTRA_MESSAGE, "extra message");
         //bindService(mServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         startService(intent);
 

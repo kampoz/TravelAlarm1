@@ -35,13 +35,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private boolean debug = true;
-
     private static final String LOG_TAG = "Google Places Autocomplete";
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
     private static final String API_KEY = "AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU";
-
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
     private ScrollView scrollView;
     private MapView mapView;

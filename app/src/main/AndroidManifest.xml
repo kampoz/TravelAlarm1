@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".debug.DebugActivity"
+            android:name=".debug.DebugBindServiceActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,8 +36,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".TripAlarmService"
-            android:exported="false"/>
+            android:name=".TripAlarmStartedService"
+            android:exported="false" />
+
+        <service
+            android:name=".TripAlarmBoundService"
+            android:exported="false" />
+
 
     </application>
 

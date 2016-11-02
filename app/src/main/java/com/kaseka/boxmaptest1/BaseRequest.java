@@ -25,7 +25,7 @@ public class BaseRequest {
 
     public void execute(){
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, getEndpoint() + "&key=" + context.getString(R.string.googleToken),
-        
+
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

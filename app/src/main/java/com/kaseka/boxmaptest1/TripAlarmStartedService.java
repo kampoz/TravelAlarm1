@@ -1,20 +1,15 @@
 package com.kaseka.boxmaptest1;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Debug;
 import android.os.Handler;
-import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kaseka.boxmaptest1.debug.DebugActivity;
 import com.mapbox.mapboxsdk.annotations.MarkerView;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -24,7 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class TripAlarmService extends IntentService {
+public class TripAlarmStartedService extends IntentService {
 
     public static final String EXTENDED_DATA_STATUS = "com.example.android.threadsample.STATUS";
     public static final String BROADCAST_ACTION = "com.example.android.threadsample.BROADCAST";
@@ -54,8 +49,8 @@ public class TripAlarmService extends IntentService {
 
 
 
-    public TripAlarmService() {
-        super("TripAlarmService");
+    public TripAlarmStartedService() {
+        super("TripAlarmStartedService");
     }
 
     @Override
@@ -67,23 +62,27 @@ public class TripAlarmService extends IntentService {
                 Thread.sleep(5000);
 
                 String text = intent.getStringExtra(EXTRA_MESSAGE);
-                showtext(text);
+                //showtext(text);
+                //setRequest();
                 Log.d("Service1","onHandleIntent()"+i);
-                setRequest();
 
+                getRouteTime();
             }
         } catch (InterruptedException e) {
 
             e.printStackTrace();
         }
-        // Do work here, based on the contents of dataString
+
     }
 
-    private void showtext(final String text) {
+
+
+    private void getRouteTime() {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                setRequest();
+                Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -93,16 +92,16 @@ public class TripAlarmService extends IntentService {
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("TripAlarmService","onSuccess");
+                Log.d("TripAlarmStartedService","onSuccess");
                 responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
                 routeTime= Parser.parseWholeRouteTime(response);
-                Log.d("TripAlarmService","czas przejazdu "+ routeTime);
+                Log.d("TripAlarmStartedService","czas przejazdu "+ routeTime);
                 routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
             }
 
             @Override
             public void onFailure() {
-                Log.d("TripAlarmService","bład requesta w setRequest()");
+                Log.d("TripAlarmStartedService","bład requesta w setRequest()");
             }
         });
         getRouteDetailsRequest.execute();
@@ -124,12 +123,12 @@ public class TripAlarmService extends IntentService {
     @Override
     public void onDestroy() {
         Log.d("onDestroy", "onDestroy");
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Service done", Toast.LENGTH_SHORT).show();
     }
 
     public class LocalBinder extends Binder {
-        public TripAlarmService getService() {
-            return TripAlarmService.this;
+        public TripAlarmStartedService getService() {
+            return TripAlarmStartedService.this;
         }
     }
 }

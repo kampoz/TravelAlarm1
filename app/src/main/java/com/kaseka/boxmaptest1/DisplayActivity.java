@@ -13,7 +13,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         // The filter's action is BROADCAST_ACTION
         IntentFilter mStatusIntentFilter = new IntentFilter(
-                TripAlarmService.BROADCAST_ACTION);
+                TripAlarmStartedService.BROADCAST_ACTION);
 
         // Adds a data filter for the HTTP scheme
         mStatusIntentFilter.addDataScheme("http");

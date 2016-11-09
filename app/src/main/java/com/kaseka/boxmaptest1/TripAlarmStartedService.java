@@ -56,6 +56,11 @@ public class TripAlarmStartedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        //------startowanie activity
+        Intent dialogIntent = new Intent(TripAlarmStartedService.this, MainActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
+
         try {
             for(int i=0; i<10; i++){
 

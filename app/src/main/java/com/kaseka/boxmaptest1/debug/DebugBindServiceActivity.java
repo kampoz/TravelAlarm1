@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kaseka.boxmaptest1.AlarmClockActivity;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.TripAlarmBoundService;
 
@@ -51,6 +52,12 @@ public class DebugBindServiceActivity extends AppCompatActivity {
                 }
                 Log.d("getRouteTime()",routeTime);
                 Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
+
+                //---startowanie activity
+
+
+                //-------------
+
                 handler.postDelayed(this, 3000);
             }
         });

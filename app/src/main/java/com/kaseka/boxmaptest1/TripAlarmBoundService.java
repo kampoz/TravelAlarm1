@@ -38,6 +38,10 @@ public class TripAlarmBoundService extends Service {
     public void onCreate(){
 
         setRequest();
+        //------startowanie activity
+        Intent dialogIntent = new Intent(TripAlarmBoundService.this, MainActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
 
     }
 
@@ -57,6 +61,8 @@ public class TripAlarmBoundService extends Service {
                 routeTime= Parser.parseWholeRouteTime(response);
                 Log.d("TripAlarmBindService","czas przejazdu "+ routeTime);
                 routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
+
+
             }
 
             @Override

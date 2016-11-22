@@ -27,7 +27,5 @@
         android:background="@drawable/little_circle_shape"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
-
-
-
+    
 </RelativeLayout>

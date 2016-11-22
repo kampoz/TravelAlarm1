@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".AlarmActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlarmClockActivity"
+            android:name=".ClockFaceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".AlarmActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
+
         <service
             android:name=".TripAlarmStartedService"
             android:exported="false" />

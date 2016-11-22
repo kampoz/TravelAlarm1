@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.kaseka.boxmaptest1.AlarmClockActivity;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.TripAlarmBoundService;
 

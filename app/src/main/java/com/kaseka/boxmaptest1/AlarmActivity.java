@@ -1,41 +1,29 @@
 package com.kaseka.boxmaptest1;
 
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.ScaleAnimation;
-import android.widget.FrameLayout;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import java.util.zip.Inflater;
 
 public class AlarmActivity extends AppCompatActivity {
 
     ImageButton bCloseAlarm;
     MediaPlayer mMediaPlayer;
     View circleWaveView;
-    Activity_Animation1_Layout animationLayout;
-
+    Animation pulse1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        animationLayout = new Activity_Animation1_Layout(this);
-
-        //setContentView(R.layout.activity_alarm);
         setContentView(R.layout.activity_alarm);
+        getSupportActionBar().hide();
 
         bCloseAlarm = (ImageButton) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
@@ -48,6 +36,15 @@ public class AlarmActivity extends AppCompatActivity {
 
         addListenerOnButton();
 
+        circleWaveView = findViewById(R.id.circle_wave_view1);
+        ViewTreeObserver vto = circleWaveView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                pulse1 = AnimationUtils.loadAnimation(AlarmActivity.this, R.anim.anim1);
+                circleWaveView.startAnimation(pulse1);
+            }
+        });
     }
 
         public void addListenerOnButton(){
@@ -61,23 +58,14 @@ public class AlarmActivity extends AppCompatActivity {
                 //bCloseAlarm.setFocusableInTouchMode(false);
                 //bCloseAlarm.setFocusable(false);
                 mMediaPlayer.stop();
-                animationLayout.animationStop();
+                pulse1.cancel();
+
             }
         });
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //animationLayout.pause();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        animationLayout.resume();
-    }
 
 
 }

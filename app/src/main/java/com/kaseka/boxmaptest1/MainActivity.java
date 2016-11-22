@@ -22,6 +22,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,18 +49,26 @@ public class MainActivity extends AppCompatActivity {
     private MarkerView markerViewTo;
     private Button bStart;
     private Button bDalej;
+    private Button bClean;
     private TextView tvRouteTime;
     private String fromLocationId = "";
     private String toLocationId = "";
     String routeTime;
     int routeTimeInSeconds = 0;
     GetRouteDetailsRequest getRouteDetailsRequest;
+    private ImageButton ibCar;
+    private ImageButton ibPublicTransport;
+    private ImageButton ibBicycle;
+    private ImageButton ibWalk;
+    private GoogleTransportMode transportMode = GoogleTransportMode.driving;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+
 
 //        // "https://maps.googleapis.com/maps/api/" +
 //        "directions/json?origin=place_id:ChIJ8b5DJgJaIkcRqtOAYilxmD4&destination=place_id:" +
@@ -67,27 +76,32 @@ public class MainActivity extends AppCompatActivity {
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         bStart = (Button) findViewById(R.id.bStart);
         bDalej = (Button) findViewById(R.id.bDalej);
+        bClean= (Button) findViewById(R.id.bClean);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
         tvRouteTime = (TextView) findViewById(R.id.tvRouteTime);
+        ibCar = (ImageButton) findViewById(R.id.ibCarTransport);
+        ibPublicTransport = (ImageButton) findViewById(R.id.ibPublicTransport);
+        ibBicycle = (ImageButton) findViewById(R.id.ibBicycleTransport);
+        ibWalk = (ImageButton) findViewById(R.id.ibFootTransport);
+
 
         //tworzenie mapy
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
-
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 // Customize map with markers, polylines, etc.
                 map = mapboxMap;
                 CameraPosition position = new CameraPosition.Builder()
                         .target(new LatLng(51.248975, 22.551762)) // Sets the new camera position
-                        .zoom(12) // Sets the zoom
+                        .zoom(8) // Sets the zoom
                         .bearing(0) // Rotate the camera
                         .tilt(0) // Set the camera tilt
                         .build(); // Creates a CameraPosition from the builder
 
                 mapboxMap.animateCamera(CameraUpdateFactory
-                        .newCameraPosition(position), 7000);
+                        .newCameraPosition(position), 2000);
 
                 map.addPolyline(new PolylineOptions()
                         .add(responsePoints.toArray(new LatLng[responsePoints.size()]))
@@ -147,6 +161,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ibCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonsReaction(ibCar);
+                transportMode = GoogleTransportMode.driving;
+            }
+        });
+
+        ibPublicTransport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonsReaction(ibPublicTransport);
+                transportMode = GoogleTransportMode.transit;
+            }
+        });
+
+        ibBicycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonsReaction(ibBicycle);
+                transportMode = GoogleTransportMode.bicycling;
+            }
+        });
+
+        ibWalk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonsReaction(ibWalk);
+                transportMode = GoogleTransportMode.walking;
+            }
+        });
+
         bStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,16 +212,32 @@ public class MainActivity extends AppCompatActivity {
         bDalej.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, AlarmClockActivity.class);
+                Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
                 startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
             }
         });
+
+        bClean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.clear();
+                fromAutocompleteFragment.setText("");
+                toAutocompleteFragment.setText("");
+            }
+        });
     }
 
+    private void buttonsReaction(ImageButton imageButton){
+        ibCar.setBackgroundColor(Color.BLACK);
+        ibPublicTransport.setBackgroundColor(Color.BLACK);
+        ibBicycle.setBackgroundColor(Color.BLACK);
+        ibWalk.setBackgroundColor(Color.BLACK);
+        imageButton.setBackgroundColor(Color.YELLOW);
+    }
 
     private void setRequest(){
-        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId);
+        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, transportMode);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -183,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
                 routeTime= Parser.parseWholeRouteTime(response);
                 routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
-                //map.clear();
+
                 MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
 
 //                MarkerViewOptions markerFrom = new MarkerViewOptions()
@@ -191,16 +253,18 @@ public class MainActivity extends AppCompatActivity {
 //                MarkerViewOptions markerTo = new MarkerViewOptions()
 //                        .position(responsePoints.get(responsePoints.size()-1));
 
-                markerViewFrom.setPosition(responsePoints.get(0));
+                //4 linijki - ustawienie pinów:
+                markerViewFrom.setPosition(responsePoints.get(0));  //pozycja poczatkowa trasy
                 markerViewFrom.setAnchor(0.5f,1.0f);
-                markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1));
+                markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1)); //pozycja koncowa
                 markerViewTo.setAnchor(0.5f,1.0f);
                 //mapBoxHelper.drawSimplify(responsePoints, map);
                 mapBoxHelper.drawBeforeSimplify(responsePoints);
-                tvRouteTime.setText("Czas przejazdu: "+routeTime);
+                tvRouteTime.setText("Czas: "+routeTime);
 
                 mapBoxHelper.fitZoom(markerViewFrom.getPosition(),markerViewTo.getPosition());
             }
+
 
             @Override
             public void onFailure() {
@@ -250,13 +314,9 @@ public class MainActivity extends AppCompatActivity {
     public void setCameraPosition(double latitude, double longitude){
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)) // Sets the new camera position
-                .zoom(13) // Sets the zoom
-                .bearing(380) // Rotate the camera
-                .tilt(90) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
 
-        map.animateCamera(CameraUpdateFactory
-                .newCameraPosition(position), 7000);
+        map.moveCamera(CameraUpdateFactory
+                .newCameraPosition(position));
     }
-
 }

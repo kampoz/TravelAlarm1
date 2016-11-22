@@ -5,15 +5,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mapbox.mapboxsdk.annotations.MarkerView;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.maps.MapView;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
 
 import org.json.JSONObject;
 
@@ -25,6 +19,7 @@ public class TripAlarmStartedService extends IntentService {
     public static final String BROADCAST_ACTION = "com.example.android.threadsample.BROADCAST";
     public static final String EXTRA_MESSAGE = "extra message";
     private Handler handler;
+    private String transportMode = "driving";
     //private final IBinder mBinder = new LocalBinder();
 
     private static final String LOG_TAG = "Google Places Autocomplete";
@@ -33,14 +28,7 @@ public class TripAlarmStartedService extends IntentService {
     private static final String OUT_JSON = "/json";
     private static final String API_KEY = "AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU";
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
-    private ScrollView scrollView;
-    private MapView mapView;
-    private MapboxMap map;
-    private MarkerView markerViewFrom;
-    private MarkerView markerViewTo;
-    private Button bStart;
-    private Button bDalej;
-    private TextView tvRouteTime;
+
     private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
     private String toLocationId = "ChIJ36UeUliaI0cR9vky0FB9vlI";
     String routeTime;
@@ -57,7 +45,7 @@ public class TripAlarmStartedService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         //------startowanie activity
-        Intent dialogIntent = new Intent(TripAlarmStartedService.this, MainActivity.class);
+        Intent dialogIntent = new Intent(TripAlarmStartedService.this, AlarmActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
 
@@ -93,7 +81,7 @@ public class TripAlarmStartedService extends IntentService {
     }
 
     private void setRequest(){
-        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId);
+        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, GoogleTransportMode.bicycling);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {

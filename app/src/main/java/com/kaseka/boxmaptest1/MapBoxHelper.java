@@ -74,11 +74,48 @@ public class MapBoxHelper {
 
     public void fitZoom(LatLng markerPositionFrom, LatLng markerPositionTo){
 
+//        List<LatLng> latLngList = new ArrayList();
+//        latLngList.add(markerPositionFrom);
+//        latLngList.add(markerPositionTo);
+
+        LatLng northEast = new LatLng();
+        LatLng southWest = new LatLng();
+
+        double north;
+        double east;
+        double south;
+        double west;
+
+        if(markerPositionFrom.getLatitude()>= markerPositionTo.getLatitude()){
+            north = markerPositionFrom.getLatitude();
+            south = markerPositionTo.getLatitude();
+        }
+        else
+        {
+            north = markerPositionTo.getLatitude();
+            south = markerPositionFrom.getLatitude();
+        }
+
+        if(markerPositionFrom.getLongitude() >= markerPositionTo.getLongitude()){
+            east = markerPositionFrom.getLongitude();
+            west = markerPositionTo.getLongitude();
+        } else {
+            east = markerPositionTo.getLongitude();
+            west = markerPositionFrom.getLongitude();
+        }
+
+        northEast.setLatitude(north);
+        northEast.setLongitude(east);
+
+        southWest.setLatitude(south);
+        southWest.setLongitude(west);
+
         LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(markerPositionFrom)
-                .include(markerPositionTo)
+                .include(northEast)
+                .include(southWest)
                 .build();
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10));
+        //map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 125));
+        map.easeCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
     }
 }

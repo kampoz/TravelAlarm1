@@ -4,11 +4,8 @@ package com.kaseka.boxmaptest1;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
@@ -24,6 +21,7 @@ public class TripAlarmBoundService extends Service {
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
     String routeTime;
     private int routeTimeInSeconds = 0;
+    private String transportMode = "driving";
 
 
     private final IBinder binder = new TripAlarmBinder();
@@ -36,7 +34,6 @@ public class TripAlarmBoundService extends Service {
 
     @Override
     public void onCreate(){
-
         setRequest();
         //------startowanie activity
         Intent dialogIntent = new Intent(TripAlarmBoundService.this, MainActivity.class);
@@ -52,7 +49,7 @@ public class TripAlarmBoundService extends Service {
     }
 
     private void setRequest(){
-        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId);
+        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, GoogleTransportMode.bicycling);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {

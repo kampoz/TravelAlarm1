@@ -7,25 +7,24 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
-    private ClockHandImageView ivHourHand;
-    private ClockHandImageView ivMinuteHand;
+    private ClockHandView ivHourHand;
+    private ClockHandView ivMinuteHand;
 
     private View vClockCenterCircle;
-    private ImageView activeHand = null;
-    private ImageView inactiveHand = null;
+    private View activeHand = null;
+    private View inactiveHand = null;
     private Point centerPt, targetPt;
     private OnClockChangeListener onClockChangeListener;
 
@@ -51,10 +50,19 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
         Bitmap bitmap = bitmapDrawable.getBitmap();
 
-        this.ivHourHand = (ClockHandImageView)findViewById(R.id.ivHourHand);
-        this.ivHourHand.setImageBitmap(bitmap);
-        this.ivMinuteHand = (ClockHandImageView)findViewById(R.id.ivMinuteHand);
+        this.ivHourHand = (ClockHandView)findViewById(R.id.ivHourHand);
+        this.ivMinuteHand = (ClockHandView)findViewById(R.id.ivMinuteHand);
         this.vClockCenterCircle = (View)findViewById(R.id.vClockCenterCircle);
+
+//        final ViewTreeObserver vto = this.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//
+//                ivHourHand.getLayoutParams().height = ClockView.this.getMeasuredHeight()/2;
+//            }
+//        });
 
         ivHourHand.setOnClickListener(this);
         ivMinuteHand.setOnClickListener(this);
@@ -93,11 +101,11 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
     }
 
-    public ImageView getIvHourHand() {
+    public View getIvHourHand() {
         return ivHourHand;
     }
 
-    public ImageView getIvMinuteHand() {
+    public View getIvMinuteHand() {
         return ivMinuteHand;
     }
 
@@ -131,15 +139,25 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 Rect myViewRect = new Rect();
                 vClockCenterCircle.getGlobalVisibleRect(myViewRect);
 
-                ivHourHand.setX(vClockCenterCircle.getX()+ (vClockCenterCircle.getWidth() / 2) - ivHourHand.getWidth()/2);
-                ivHourHand.setY(vClockCenterCircle.getY()-ivHourHand.getHeight()+vClockCenterCircle.getHeight()/2);
-                ivHourHand.setPivotX(ivHourHand.getWidth()/2);
-                ivHourHand.setPivotY(ivHourHand.getHeight());
+                int hourHandHeight = (int)((ClockView.this.getWidth()/2 - (20 / getContext().getResources().getDisplayMetrics().density)) * 0.6);
+                ivHourHand.getLayoutParams().height = hourHandHeight;
+                ivHourHand.getLayoutParams().width = 30;
 
-                ivMinuteHand.setX(vClockCenterCircle.getX() + (vClockCenterCircle.getWidth() / 2 - ivMinuteHand.getWidth()/2));
-                ivMinuteHand.setY(vClockCenterCircle.getY()-ivMinuteHand.getHeight()+vClockCenterCircle.getHeight()/2);
-                ivMinuteHand.setPivotX(ivMinuteHand.getWidth()/2);
-                ivMinuteHand.setPivotY(ivMinuteHand.getHeight());
+                ivHourHand.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourHand.getLayoutParams().width/2);
+                ivHourHand.setY(vClockCenterCircle.getY() + vClockCenterCircle.getHeight()/2 - ivHourHand.getLayoutParams().height);
+                ivHourHand.setPivotX(ivHourHand.getLayoutParams().width/2);
+                ivHourHand.setPivotY(ivHourHand.getLayoutParams().height);
+
+
+
+                int minuteHandHeight = (int)((ClockView.this.getWidth()/2 - (20 / getContext().getResources().getDisplayMetrics().density)) * 0.8);
+                ivMinuteHand.getLayoutParams().height = minuteHandHeight;
+                ivMinuteHand.getLayoutParams().width = 20;
+
+                ivMinuteHand.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivMinuteHand.getLayoutParams().width/2);
+                ivMinuteHand.setY(vClockCenterCircle.getY() + vClockCenterCircle.getHeight()/2 - ivMinuteHand.getLayoutParams().height);
+                ivMinuteHand.setPivotX(ivMinuteHand.getLayoutParams().width/2);
+                ivMinuteHand.setPivotY(ivMinuteHand.getLayoutParams().height);
             }
         });
     }
@@ -158,7 +176,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
     @Override
     public void onClick(View v) {
-        activeHand = (ImageView) v;
+        activeHand = (View) v;
         inactiveHand = activeHand == ivMinuteHand ? ivHourHand : ivMinuteHand;
         activeHand.setAlpha(1.0f);
         inactiveHand.setAlpha(0.7f);

@@ -4,21 +4,22 @@ package com.kaseka.boxmaptest1;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
-public class ClockHandImageView extends ImageView{
+public class ClockHandView extends View {
 
 
 
-    public ClockHandImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ClockHandView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public ClockHandImageView(Context context, AttributeSet attrs) {
+    public ClockHandView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ClockHandImageView(Context context) {
+    public ClockHandView(Context context) {
         super(context);
     }
 

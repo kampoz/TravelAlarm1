@@ -5,20 +5,18 @@
     android:layout_margin="20dp"
     android:background="@drawable/clock_circle_shape">
 
-    <com.kaseka.boxmaptest1.ClockHandImageView
-        android:id="@+id/ivHourHand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/hour_hand"
-        android:layout_centerInParent="true"
-        />
-
-    <com.kaseka.boxmaptest1.ClockHandImageView
+    <com.kaseka.boxmaptest1.ClockHandView
         android:id="@+id/ivMinuteHand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/minute_hand"
-        android:layout_centerInParent="true"/>
+        android:layout_width="10dp"
+        android:layout_height="150dp"
+        android:background="@color/colorMyOrange"/>
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourHand"
+        android:layout_width="20dp"
+        android:layout_height="100dp"
+        android:background="@color/colorMyBlue"
+        />
 
     <View
         android:id="@+id/vClockCenterCircle"

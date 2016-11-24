@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,7 +22,18 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
     private ClockHandView ivHourHand;
     private ClockHandView ivMinuteHand;
-
+    private ClockHandView ivHourLine1;
+    private ClockHandView ivHourLine2;
+    private ClockHandView ivHourLine3;
+    private ClockHandView ivHourLine4;
+    private ClockHandView ivHourLine5;
+    private ClockHandView ivHourLine6;
+    private ClockHandView ivHourLine7;
+    private ClockHandView ivHourLine8;
+    private ClockHandView ivHourLine9;
+    private ClockHandView ivHourLine10;
+    private ClockHandView ivHourLine11;
+    private ClockHandView ivHourLine12;
     private View vClockCenterCircle;
     private View activeHand = null;
     private View inactiveHand = null;
@@ -53,6 +65,19 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
         this.ivHourHand = (ClockHandView)findViewById(R.id.ivHourHand);
         this.ivMinuteHand = (ClockHandView)findViewById(R.id.ivMinuteHand);
         this.vClockCenterCircle = (View)findViewById(R.id.vClockCenterCircle);
+
+        this.ivHourLine1 = (ClockHandView)findViewById(R.id.ivHourLine1);
+        this.ivHourLine2 = (ClockHandView)findViewById(R.id.ivHourLine2);
+        this.ivHourLine3 = (ClockHandView)findViewById(R.id.ivHourLine3);
+        this.ivHourLine4 = (ClockHandView)findViewById(R.id.ivHourLine4);
+        this.ivHourLine5 = (ClockHandView)findViewById(R.id.ivHourLine5);
+        this.ivHourLine6 = (ClockHandView)findViewById(R.id.ivHourLine6);
+        this.ivHourLine7 = (ClockHandView)findViewById(R.id.ivHourLine7);
+        this.ivHourLine8 = (ClockHandView)findViewById(R.id.ivHourLine8);
+        this.ivHourLine9 = (ClockHandView)findViewById(R.id.ivHourLine9);
+        this.ivHourLine10 = (ClockHandView)findViewById(R.id.ivHourLine10);
+        this.ivHourLine11 = (ClockHandView)findViewById(R.id.ivHourLine11);
+        this.ivHourLine12 = (ClockHandView)findViewById(R.id.ivHourLine12);
 
 //        final ViewTreeObserver vto = this.getViewTreeObserver();
 //        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -139,7 +164,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 Rect myViewRect = new Rect();
                 vClockCenterCircle.getGlobalVisibleRect(myViewRect);
 
-                int hourHandHeight = (int)((ClockView.this.getWidth()/2 - (20 / getContext().getResources().getDisplayMetrics().density)) * 0.6);
+                int hourHandHeight = (int)((ClockView.this.getWidth()/2 /*- (20 / getContext().getResources().getDisplayMetrics().density)*/) *0.6 );
                 ivHourHand.getLayoutParams().height = hourHandHeight;
                 ivHourHand.getLayoutParams().width = 30;
 
@@ -148,9 +173,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 ivHourHand.setPivotX(ivHourHand.getLayoutParams().width/2);
                 ivHourHand.setPivotY(ivHourHand.getLayoutParams().height);
 
-
-
-                int minuteHandHeight = (int)((ClockView.this.getWidth()/2 - (20 / getContext().getResources().getDisplayMetrics().density)) * 0.8);
+                int minuteHandHeight = (int)((ClockView.this.getWidth()/2 /*- (20 / getContext().getResources().getDisplayMetrics().density)*/) * 0.8);
                 ivMinuteHand.getLayoutParams().height = minuteHandHeight;
                 ivMinuteHand.getLayoutParams().width = 20;
 
@@ -158,9 +181,96 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 ivMinuteHand.setY(vClockCenterCircle.getY() + vClockCenterCircle.getHeight()/2 - ivMinuteHand.getLayoutParams().height);
                 ivMinuteHand.setPivotX(ivMinuteHand.getLayoutParams().width/2);
                 ivMinuteHand.setPivotY(ivMinuteHand.getLayoutParams().height);
+
+                int parentCenterX = (int)(ClockView.this.getX() + ClockView.this.getWidth()/2);
+                int parentCenterY = (int)(ClockView.this.getY() + ClockView.this.getHeight()/2);
+
+
+                Log.d("ClockView getWidth: ",String.valueOf(ClockView.this.getWidth()));
+                Log.d("ClockView getHeight ",String.valueOf(ClockView.this.getHeight()));
+
+                Log.d("ClockViewX: ",String.valueOf(ClockView.this.getX()));
+                Log.d("ClockViewY: ",String.valueOf(ClockView.this.getY()));
+
+                Log.d("parentCenterX: ",String.valueOf(parentCenterX));
+                Log.d("parentCenterY: ",String.valueOf(parentCenterY));
+
+                Log.d("CircleCenterX: ",String.valueOf(vClockCenterCircle.getX()));
+                Log.d("CircleCenterY: ",String.valueOf(vClockCenterCircle.getY()));
+
+                int quaterLine1Height = ClockView.this.getWidth()/8;
+                int ordinaryLineHeight = ClockView.this.getWidth()/12;
+
+//                ivHourLine12.getLayoutParams().height = quaterLine1Height;
+//                ivHourLine12.getLayoutParams().width = 5;
+//                ivHourLine12.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourLine12.getLayoutParams().width/2);
+//                int clockFacemargin = ClockView.this.getHeight()/20;
+//                ivHourLine12.setY(clockFacemargin);
+//                ivHourLine12.setPivotX(ivHourLine3.getLayoutParams().width/2);
+//                ivHourLine12.setPivotY(ivHourLine3.getLayoutParams().height+(ClockView.this.getHeight()/2-ivHourLine3.getLayoutParams().height)-clockFacemargin);
+//                ivHourLine12.setRotation(0);
+//
+//
+//                ivHourLine1.getLayoutParams().height = ordinaryLineHeight;
+//                ivHourLine1.getLayoutParams().width = 2;
+//                ivHourLine1.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourLine12.getLayoutParams().width/2);
+//                ivHourLine1.setY(clockFacemargin);
+//                ivHourLine1.setPivotX(ivHourLine3.getLayoutParams().width/2);
+//                ivHourLine1.setPivotY(ivHourLine3.getLayoutParams().height+(ClockView.this.getHeight()/2-ivHourLine3.getLayoutParams().height)-clockFacemargin);
+//                ivHourLine1.setRotation(30);
+//
+//                ivHourLine2.getLayoutParams().height = ordinaryLineHeight;
+//                ivHourLine2.getLayoutParams().width = 2;
+//                ivHourLine2.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourLine12.getLayoutParams().width/2);
+//                ivHourLine2.setY(clockFacemargin);
+//                ivHourLine2.setPivotX(ivHourLine3.getLayoutParams().width/2);
+//                ivHourLine2.setPivotY(ivHourLine3.getLayoutParams().height+(ClockView.this.getHeight()/2-ivHourLine3.getLayoutParams().height)-clockFacemargin);
+//                ivHourLine2.setRotation(60);
+
+
+                drawQuaterHourLine(ivHourLine3,3);
+                drawQuaterHourLine(ivHourLine6,6);
+                drawQuaterHourLine(ivHourLine9,9);
+                drawQuaterHourLine(ivHourLine12,0);
+
+                drawOrdinaryHourLine(ivHourLine1,1);
+                drawOrdinaryHourLine(ivHourLine2,2);
+                drawOrdinaryHourLine(ivHourLine4,4);
+                drawOrdinaryHourLine(ivHourLine5,5);
+                drawOrdinaryHourLine(ivHourLine7,7);
+                drawOrdinaryHourLine(ivHourLine8,8);
+                drawOrdinaryHourLine(ivHourLine10,10);
+                drawOrdinaryHourLine(ivHourLine11,11);
+
+
             }
         });
     }
+
+    private void drawQuaterHourLine(ClockHandView view, int hour){
+        int angle = hour*30;
+        int clockFacemargin = ClockView.this.getHeight()/20;
+        view.getLayoutParams().height = ClockView.this.getWidth()/12;
+        view.getLayoutParams().width = ClockView.this.getWidth()/50;
+        view.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourLine12.getLayoutParams().width/2);
+        view.setY(clockFacemargin);
+        view.setPivotX(ivHourLine12.getLayoutParams().width/2);
+        view.setPivotY(ClockView.this.getHeight()/2-clockFacemargin);
+        view.setRotation(angle);
+    };
+
+    private void drawOrdinaryHourLine(ClockHandView view, int hour){
+        int angle = hour*30;
+        int clockFacemargin = ClockView.this.getHeight()/20;
+        view.getLayoutParams().height = ClockView.this.getWidth()/12;;
+        view.getLayoutParams().width = 3;
+        view.setX(vClockCenterCircle.getX() + vClockCenterCircle.getWidth()/2 - ivHourLine12.getLayoutParams().width/2);
+        view.setY(clockFacemargin);
+        view.setPivotX(ivHourLine12.getLayoutParams().width/2);
+        view.setPivotY(ClockView.this.getHeight()/2-clockFacemargin);
+        view.setRotation(angle);
+
+    };
 
     public static double calcRotationAngleInDegrees(Point centerPt, Point targetPt)
     {

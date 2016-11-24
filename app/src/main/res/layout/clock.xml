@@ -2,8 +2,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:background="@drawable/clock_circle_shape">
+
+
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine1"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+         />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine2"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine3"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+         />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine4"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+         />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine5"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine6"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine7"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine8"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine9"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine10"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine11"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
+
+    <com.kaseka.boxmaptest1.ClockHandView
+        android:id="@+id/ivHourLine12"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:background="@color/colorMyRed"
+        />
 
     <com.kaseka.boxmaptest1.ClockHandView
         android:id="@+id/ivMinuteHand"

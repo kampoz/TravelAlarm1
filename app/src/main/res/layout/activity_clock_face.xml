@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="center_horizontal"
+
     tools:context="com.kaseka.boxmaptest1.ClockFaceActivity">
 
 
@@ -16,42 +17,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etArriveTime"
-        android:text="Godzina dotarcia"
+        android:text="Podaj godzinę dotarcia"
+        android:paddingBottom="10dp"
         android:textColor="@color/white"
-        android:textSize="30dp"/>
+        android:textSize="20dp"/>
 
     <com.kaseka.boxmaptest1.ClockView
         android:id="@+id/rlClockParent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+    </com.kaseka.boxmaptest1.ClockView>
 
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="2">
 
         <TextView
             android:text="--00:00--"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="113dp"
             android:id="@+id/tvHourDisplay"
             android:textColor="#cccccc"
-            android:textSize="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-    </com.kaseka.boxmaptest1.ClockView>
+            android:textSize="20dp"/>
 
-    <Switch
-        android:text="Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:id="@+id/switchAmPm"
-        />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <Switch
+            android:text="Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/switchAmPm" />
 
         <TextView
             android:id="@+id/tvPreparingTimeLabel"
@@ -60,6 +60,7 @@
             android:text="Preparing time (min)"
             android:textColor="#999"
             android:layout_marginRight="20dp"/>
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,12 +73,13 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/etPreparingTimeInMins" />
 
-    </LinearLayout>
 
     <Button
         android:text="Ustaw budzik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bSetAlarm" />
+    </LinearLayout>
+
 
 </LinearLayout>

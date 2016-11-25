@@ -8,9 +8,12 @@ import android.icu.util.Calendar;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -103,6 +106,19 @@ public class ClockFaceActivity extends AppCompatActivity {
 
             }
         });
+
+//        ViewTreeObserver vto = clockView.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                clockView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                int parentWidth = ((LinearLayout)clockView.getParent()).getWidth();
+//                Log.d("PARENT WIDTH", String.valueOf(((LinearLayout)clockView.getParent()).getWidth()));
+//                clockView.getLayoutParams().width = parentWidth;
+//                clockView.getLayoutParams().height = parentWidth;
+//            }
+//        });
+
     }
 
     private String setDisplayTime(String hour, String minute){

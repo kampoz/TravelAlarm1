@@ -6,7 +6,7 @@
     android:background="@color/black"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context="com.kaseka.boxmaptest1.ClockFaceActivity">
+    tools:context="com.kaseka.boxmaptest1.activity.ClockFaceActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,11 +18,11 @@
         android:textSize="20dp"/>
 
 
-    <com.kaseka.boxmaptest1.ClockView
+    <com.kaseka.boxmaptest1.view.ClockView
         android:id="@+id/rlClockParent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </com.kaseka.boxmaptest1.ClockView>
+    </com.kaseka.boxmaptest1.view.ClockView>
 
 
     <LinearLayout

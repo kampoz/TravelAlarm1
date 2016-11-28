@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.TripAlarmStartedService;
+import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 
 public class DebugStartedServiceActivity extends AppCompatActivity {
     Intent mServiceIntent;

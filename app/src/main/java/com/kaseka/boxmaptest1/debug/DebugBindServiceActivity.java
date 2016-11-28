@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.TripAlarmBoundService;
+import com.kaseka.boxmaptest1.service.TripAlarmBoundService;
 
 public class DebugBindServiceActivity extends AppCompatActivity {
 

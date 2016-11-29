@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_alarms_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMyBlack"
+    tools:context="com.kaseka.boxmaptest1.activity.AlarmsListActivity">
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarmy"
+        android:textColor="@color/colorMyWhite"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/alarmsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/tvLabel"/>
+
+</RelativeLayout>

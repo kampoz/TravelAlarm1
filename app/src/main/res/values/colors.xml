@@ -10,6 +10,8 @@
     <color name="colorMyRed">#db3611</color>
     <color name="colorMyDarkGreen">#2e8c48</color>
     <color name="colorMyLightGreen">#42f474</color>
+    <color name="colorMyBlack">#000000</color>
+    <color name="colorMyWhite">#ffffff</color>
     <color name="colorTimePickerText">#ffffff</color>
 
 

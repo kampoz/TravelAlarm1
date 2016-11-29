@@ -37,14 +37,19 @@ dependencies {
         transitive=true
     }
     compile 'com.google.android.gms:play-services-location:8.4.0'
-
     compile project(":volley")
-
     compile 'net.danlew:android.joda:2.9.4.2'
+   
+
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.uphyca:stetho_realm:2.0.0'
 }
 
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
 }
 

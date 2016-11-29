@@ -100,7 +100,7 @@
         android:id="@+id/ivHourHand"
         android:layout_width="20dp"
         android:layout_height="100dp"
-        android:background="@color/colorMyDarkGreen"
+        android:background="@color/colorMyLightGreen"
         />
 
     <com.kaseka.boxmaptest1.view.ClockHandView

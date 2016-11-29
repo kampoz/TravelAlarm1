@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="20dp"
+
+    android:background="@color/colorMyBlack">
+
+    <TextView
+        android:id="@+id/tvAlarmMhour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorMyWhite"/>
+
+    <TextView
+        android:id="@+id/tvAlarmDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorMyWhite"/>
+
+    <TextView
+        android:id="@+id/tvDestinationPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorMyWhite"/>
+
+</LinearLayout>

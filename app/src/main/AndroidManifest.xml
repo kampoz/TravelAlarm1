@@ -17,23 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.AlarmsListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.ClockFaceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.AlarmActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
-
         <service
             android:name=".service.TripAlarmStartedService"
             android:exported="false" />
@@ -45,7 +44,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleToken" />
 
-
+        <!--<activity android:name=".activity.AlarmsListActivity"></activity>-->
     </application>
 
 </manifest>

@@ -68,10 +68,11 @@ public class MyAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
-        // uzupełniamy layout artykułu
+        // uzupełniamy layout alarmu
         AlarmRealm alarmRealm = alarms.get(i);
-        ((MyViewHolder) viewHolder).tvAlarmHour.setText("12:00");
-        ((MyViewHolder) viewHolder).tvAlarmDay.setText("12-12-2016");
+        ((MyViewHolder) viewHolder).tvAlarmHour.setText(alarmRealm.getAlarmHour());
+        ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDay());
+        ((MyViewHolder) viewHolder).tvDestinaitonPoint.setText(alarmRealm.getDestinationPoint());
     }
 
     @Override

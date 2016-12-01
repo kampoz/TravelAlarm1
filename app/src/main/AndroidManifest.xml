@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.AlarmsListActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleToken" />
 
-        <!--<activity android:name=".activity.AlarmsListActivity"></activity>-->
+        <!-- <activity android:name=".activity.AlarmsListActivity"></activity> -->
+        <activity android:name=".activity.AlarmsListActivity"></activity>
+        <activity android:name=".activity.MainActivity"></activity>
     </application>
 
 </manifest>

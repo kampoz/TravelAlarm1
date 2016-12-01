@@ -29,15 +29,27 @@ public class AlarmsListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // ustawiamy animatora, który odpowiada za animację dodania/usunięcia elementów listy
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // tworzymy źródło danych - tablicę z artykułami
         ArrayList<AlarmRealm> alarms = new ArrayList<>();
 
+        setTestRealmDataBase();
+
+        alarms.addAll(
+                Realm.getDefaultInstance().where(AlarmRealm.class).findAll()
+        );
+        // tworzymy adapter oraz łączymy go z RecyclerView
+        recyclerView.setAdapter(new MyAdapter(alarms, recyclerView));
+    }
+
+    private void setTestRealmDataBase() {
         for (int i = 0; i < 10; ++i) {
             final AlarmRealm alarmRealm = new AlarmRealm();
             alarmRealm.setId(i);
             alarmRealm.setAlarmDay(String.valueOf(i));
+            alarmRealm.setAlarmHour(String.valueOf(i+i));
+            alarmRealm.setDestinationPoint("do Lublina");
 
             Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
                 @Override
@@ -48,8 +60,5 @@ public class AlarmsListActivity extends AppCompatActivity {
             Realm.getDefaultInstance().close();
             //alarms.add(alarmRealm);
         }
-        alarms.addAll(Realm.getDefaultInstance().where(AlarmRealm.class).findAll());
-        // tworzymy adapter oraz łączymy go z RecyclerView
-        recyclerView.setAdapter(new MyAdapter(alarms, recyclerView));
     }
 }

@@ -17,17 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.ClockFaceActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.ClockFaceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".activity.ClockFaceActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
+
         <activity
             android:name=".activity.AlarmActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -44,9 +46,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleToken" />
 
-        <!-- <activity android:name=".activity.AlarmsListActivity"></activity> -->
-        <activity android:name=".activity.AlarmsListActivity"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
+
+        <activity android:name=".activity.AlarmsListActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.AlarmEditActivity"/>
     </application>
 
 </manifest>

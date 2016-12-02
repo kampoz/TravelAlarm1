@@ -170,7 +170,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 ClockView.this.getLayoutParams().width = parentWidth;
                 ClockView.this.getLayoutParams().height = parentWidth;
 
-                int LittleCircleDiameter = ClockView.this.getWidth()/20;
+                int LittleCircleDiameter = ClockView.this.getWidth()/12;
                 vClockCenterCircle.getLayoutParams().height = LittleCircleDiameter;
                 vClockCenterCircle.getLayoutParams().width = LittleCircleDiameter;
                 int centerCircleWidth = vClockCenterCircle.getLayoutParams().width/2;
@@ -184,7 +184,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
                 int hourHandHeight = (int)((ClockView.this.getLayoutParams().width/2 /*- (20 / getContext().getResources().getDisplayMetrics().density)*/) *0.6 );
                 ivHourHand.getLayoutParams().height = hourHandHeight;
-                ivHourHand.getLayoutParams().width = 30;
+                ivHourHand.getLayoutParams().width = LittleCircleDiameter;
 
                 ivHourHand.setX(vClockCenterCircle.getX() + vClockCenterCircle.getLayoutParams().width/2 - ivHourHand.getLayoutParams().width/2);
                 ivHourHand.setY(vClockCenterCircle.getY() + vClockCenterCircle.getLayoutParams().height/2 - ivHourHand.getLayoutParams().height);
@@ -193,7 +193,7 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
                 int minuteHandHeight = (int)((ClockView.this.getLayoutParams().width/2 /*- (20 / getContext().getResources().getDisplayMetrics().density)*/) * 0.8);
                 ivMinuteHand.getLayoutParams().height = minuteHandHeight;
-                ivMinuteHand.getLayoutParams().width = 20;
+                ivMinuteHand.getLayoutParams().width = LittleCircleDiameter/5*4;
 
                 ivMinuteHand.setX(vClockCenterCircle.getX() + vClockCenterCircle.getLayoutParams().width/2 - ivMinuteHand.getLayoutParams().width/2);
                 ivMinuteHand.setY(vClockCenterCircle.getY() + vClockCenterCircle.getLayoutParams().height/2 - ivMinuteHand.getLayoutParams().height);

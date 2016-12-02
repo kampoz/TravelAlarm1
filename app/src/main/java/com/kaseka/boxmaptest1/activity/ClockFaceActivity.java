@@ -33,7 +33,7 @@ public class ClockFaceActivity extends AppCompatActivity {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private EditText etPreparingTimeInMins;
-    private Switch switchAmPm;
+
     int travelTimeInSeconds = 0;
 
     @Override
@@ -44,18 +44,12 @@ public class ClockFaceActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         Bundle bundle = getIntent().getExtras();
-        travelTimeInSeconds = bundle.getInt("travelTimeInSeconds");
+        //travelTimeInSeconds = bundle.getInt("travelTimeInSeconds");
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
         etPreparingTimeInMins = (EditText)findViewById(R.id.etPreparingTimeInMins);
         bSetAlarm = (Button) findViewById(R.id.bSetAlarm);
-        etPreparingTimeInMins.setText("30");
-        switchAmPm = (Switch)findViewById(R.id.switchAmPm);
-        switchAmPm.setTextOff("AM");
-        switchAmPm.setTextOn("PM");
-
-        switchAmPm.setChecked(false);
 
         clockView.setOnClockChangeListener(new OnClockChangeListener() {
             @Override
@@ -86,14 +80,15 @@ public class ClockFaceActivity extends AppCompatActivity {
                 int alarmTimeInMinutes = arriveTimeInMins + prepareTimeCorrection + travelTimeInSecondsCorrection;
                 int alarmHour;
 
-                if (switchAmPm.isChecked()){
-                    alarmHour = (alarmTimeInMinutes / 60) % 12 + 12;
-                }
-                else{
-                    alarmHour = (alarmTimeInMinutes / 60) % 12;
-                }
-
-                int alarmMinute = alarmTimeInMinutes % 60;
+                //OPISAĆ AQM I PM!!
+//                if (switchAmPm.isChecked()){
+//                    alarmHour = (alarmTimeInMinutes / 60) % 12 + 12;
+//                }
+//                else{
+//                    alarmHour = (alarmTimeInMinutes / 60) % 12;
+//                }
+//
+//                int alarmMinute = alarmTimeInMinutes % 60;
 
 //                Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
 //                i.putExtra(AlarmClock.EXTRA_HOUR, alarmHour);

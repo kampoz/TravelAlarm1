@@ -5,6 +5,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.StreamHandler;
 
 
 import io.realm.Realm;
@@ -21,6 +22,7 @@ public class AlarmRealm extends RealmObject{
     private String alarmDay;
     private String startPoint;
     private String destinationPoint;
+    private String dayOfWeek;
     private RealmList<LatLngRealm> LngLatPointsRealmList;
 
 
@@ -79,7 +81,15 @@ public class AlarmRealm extends RealmObject{
        return Realm.getDefaultInstance().where(AlarmRealm.class).findAll();
     }
 
-    //inne metody i kwerendy
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    // inne metody i kwerendy
     // zamknięcie realma
     public void close() {
         Realm.getDefaultInstance().close();
@@ -107,6 +117,7 @@ public class AlarmRealm extends RealmObject{
         alarmRealm.setAlarmHour(alarm.getAlarmHour());
         Realm.getDefaultInstance().commitTransaction();
     }
+
 
     // pobranie wszystkich alarmow
     public List<AlarmRealm> getAllAlarms() {

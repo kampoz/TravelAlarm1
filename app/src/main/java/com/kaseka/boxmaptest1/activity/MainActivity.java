@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
+import com.kaseka.boxmaptest1.data.realm.LatLngRealm;
 import com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment;
 import com.kaseka.boxmaptest1.networking.GetRouteDetailsRequest;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
@@ -76,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Realm realm = Realm.getDefaultInstance();
+        //Realm realm = Realm.getDefaultInstance();
         // ... Do something ...
-        realm.close();
+        //realm.close();
 
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!fromLocationId.isEmpty() && !toLocationId.isEmpty() )
                 {
                     setRequest();
+
                     //Parser parser = new Parser();
                     //ArrayList<LatLng> points = parser.parseRoutePoints();
 
@@ -278,6 +282,18 @@ public class MainActivity extends AppCompatActivity {
                 tvRouteTime.setText("Czas: "+routeTime);
 
                 mapBoxHelper.fitZoom(markerViewFrom.getPosition(),markerViewTo.getPosition());
+
+
+                //Uzupelnianie AlarmPOJO
+
+                setRoutewTimeToAlarmPOJO(routeTime);
+                //tu zrobic przpisanie responsePoints na latLngRealm
+                setPoitnsListInAlarmPOJO(responsePoints);
+                setStartPositionInAlarmPOJO();
+                setdestinationPointInAlarmPOJO();
+
+
+
             }
 
 
@@ -289,6 +305,31 @@ public class MainActivity extends AppCompatActivity {
         getRouteDetailsRequest.execute();
     }
 
+    // AlarmPOJO przypisanie responsePoints na latLngRealm
+    private void setPoitnsListInAlarmPOJO(ArrayList<LatLng> responsePoints){
+        for (int i=0; i<responsePoints.size(); i++){
+            LatLngRealm latLngRealm = new LatLngRealm();
+            double latitude = responsePoints.get(i).getLatitude();
+            double longitude = responsePoints.get(i).getLongitude();
+            latLngRealm.setLatitude(latitude);
+            latLngRealm.setLongitude(longitude);
+            AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
+            Log.d("LngLatPointsRealmList", "setPoitnsListInAlarmPOJO.size():"+AlarmPOJO.LngLatPointsRealmList.size());
+        }
+    }
+
+    //AlarmPOJO przypisanie RoutTime
+    private void setRoutewTimeToAlarmPOJO(String routeTime){
+        AlarmPOJO.routeTime = routeTime;
+    }
+
+    private void setStartPositionInAlarmPOJO(String startPoint){
+        AlarmPOJO.startPoint = startPoint;
+    }
+
+    private void setdestinationPointInAlarmPOJO(String destinationPoint){
+        AlarmPOJO.destinationPoint = destinationPoint;
+    }
 
     @Override
     public void onPause()  {
@@ -296,18 +337,14 @@ public class MainActivity extends AppCompatActivity {
         mapView.onPause();
     }
 
-    /**
-     * Called when the activity will start interacting with the use
-     */
+
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
     }
 
-    /**
-     * The final call you receive before your activity is destroyed.
-     */
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

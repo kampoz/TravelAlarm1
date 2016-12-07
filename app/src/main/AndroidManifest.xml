@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.ClockFaceActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -48,7 +48,7 @@
 
 
         <activity android:name=".activity.AlarmsListActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.ClockFaceActivity" />
         <activity android:name=".activity.AlarmEditActivity"/>
     </application>
 

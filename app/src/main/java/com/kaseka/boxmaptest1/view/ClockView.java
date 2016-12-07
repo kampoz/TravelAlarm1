@@ -40,6 +40,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
     private View inactiveHand = null;
     private Point centerPt, targetPt;
     private OnClockChangeListener onClockChangeListener;
+    private int LittleCircleDiameter;
+    private int parentWidth;
 
     public ClockView(Context context) {
         super(context);
@@ -165,12 +167,12 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
                 Rect myViewRect = new Rect();
                 vClockCenterCircle.getGlobalVisibleRect(myViewRect);
 
-                int parentWidth = ((LinearLayout)ClockView.this.getParent()).getWidth();
+                parentWidth = ((LinearLayout)ClockView.this.getParent()).getWidth();
                 Log.d("PARENT WIDTH", String.valueOf(((LinearLayout)ClockView.this.getParent()).getWidth()));
                 ClockView.this.getLayoutParams().width = parentWidth;
                 ClockView.this.getLayoutParams().height = parentWidth;
 
-                int LittleCircleDiameter = ClockView.this.getWidth()/12;
+                LittleCircleDiameter = parentWidth/18;
                 vClockCenterCircle.getLayoutParams().height = LittleCircleDiameter;
                 vClockCenterCircle.getLayoutParams().width = LittleCircleDiameter;
                 int centerCircleWidth = vClockCenterCircle.getLayoutParams().width/2;
@@ -237,8 +239,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
     private void drawQuaterHourLine(ClockHandView view, int hour){
         int angle = hour*30;
-        view.getLayoutParams().height = ClockView.this.getWidth()/12;
-        view.getLayoutParams().width = (ClockView.this.getWidth()/50);
+        view.getLayoutParams().height = parentWidth/12;
+        view.getLayoutParams().width = parentWidth/30;
         view.setX(vClockCenterCircle.getX() + vClockCenterCircle.getLayoutParams().width/2 -  view.getLayoutParams().width/2);
         view.setY(0);
         view.setPivotX(view.getLayoutParams().width/2);
@@ -248,8 +250,8 @@ public class ClockView extends RelativeLayout implements View.OnClickListener  {
 
     private void drawOrdinaryHourLine(ClockHandView view, int hour){
         int angle = hour*30;
-        view.getLayoutParams().height = ClockView.this.getWidth()/12;;
-        view.getLayoutParams().width = 3;
+        view.getLayoutParams().height = parentWidth/12;;
+        view.getLayoutParams().width = parentWidth/50;
         view.setX(vClockCenterCircle.getX() + vClockCenterCircle.getLayoutParams().width/2 - view.getLayoutParams().width/2);
         view.setY(0);
         view.setPivotX(view.getLayoutParams().width/2);

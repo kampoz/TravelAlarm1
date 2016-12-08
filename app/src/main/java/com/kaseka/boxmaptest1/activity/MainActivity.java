@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
@@ -44,8 +43,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import io.realm.Realm;
-
 public class MainActivity extends AppCompatActivity {
 
     private boolean debug = true;
@@ -74,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ibBicycle;
     private ImageButton ibWalk;
     private GoogleTransportMode transportMode = GoogleTransportMode.driving;
+    private String startPoint;
+    private String destinationPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
 
+                startPoint = place.getName().toString();
                 Log.i("TAG", "miejsce wyjazdu: " + place.getName());
                 Log.i("TAG", "wspolrzedne: " + place.getLatLng());
+
                 MarkerViewOptions marker = new MarkerViewOptions()
                         .position(new LatLng(place.getLatLng().latitude, place.getLatLng().longitude));
                 marker.title(place.getName().toString());
@@ -162,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
         toAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
+
+                destinationPoint = place.getName().toString();
                 Log.i("TAG", "miejsce docelowe: " + place.getName());
                 Log.i("TAG", "wspolrzedne: " + place.getLatLng());
                 MarkerViewOptions marker = new MarkerViewOptions()
@@ -231,6 +234,13 @@ public class MainActivity extends AppCompatActivity {
         bDalej.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Uzupelnianie AlarmPOJO 4 z 8 pol
+                setRoutewTimeToAlarmPOJO(routeTime);
+                setPointsListInAlarmPOJO(responsePoints);
+                setStartPositionInAlarmPOJO(startPoint);
+                setdestinationPointInAlarmPOJO(destinationPoint);
+
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
                 startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
@@ -284,14 +294,7 @@ public class MainActivity extends AppCompatActivity {
                 mapBoxHelper.fitZoom(markerViewFrom.getPosition(),markerViewTo.getPosition());
 
 
-                //Uzupelnianie AlarmPOJO
-
-                setRoutewTimeToAlarmPOJO(routeTime);
-                //tu zrobic przpisanie responsePoints na latLngRealm
-                setPoitnsListInAlarmPOJO(responsePoints);
-                setStartPositionInAlarmPOJO();
-                setdestinationPointInAlarmPOJO();
-
+                //Uzupelnianie AlarmPOJO 4 z 8 pol
 
 
             }
@@ -306,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // AlarmPOJO przypisanie responsePoints na latLngRealm
-    private void setPoitnsListInAlarmPOJO(ArrayList<LatLng> responsePoints){
+    private void setPointsListInAlarmPOJO(ArrayList<LatLng> responsePoints){
         for (int i=0; i<responsePoints.size(); i++){
             LatLngRealm latLngRealm = new LatLngRealm();
             double latitude = responsePoints.get(i).getLatitude();
@@ -314,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
             latLngRealm.setLatitude(latitude);
             latLngRealm.setLongitude(longitude);
             AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
-            Log.d("LngLatPointsRealmList", "setPoitnsListInAlarmPOJO.size():"+AlarmPOJO.LngLatPointsRealmList.size());
+            Log.d("LngLatPointsRealmList", "setPointsListInAlarmPOJO.size():"+AlarmPOJO.LngLatPointsRealmList.size());
         }
     }
 

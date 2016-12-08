@@ -48,7 +48,9 @@
 
 
         <activity android:name=".activity.AlarmsListActivity" />
-        <activity android:name=".activity.ClockFaceActivity" />
+        <activity
+            android:name=".activity.ClockFaceActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.AlarmEditActivity"/>
     </application>
 

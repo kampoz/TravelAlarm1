@@ -5,10 +5,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.util.Calendar;
+//import android.icu.util.Calendar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,10 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
@@ -27,6 +32,7 @@ import com.kaseka.boxmaptest1.view.ClockView;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.security.PrivateKey;
+import java.util.Date;
 
 
 public class ClockFaceActivity extends AppCompatActivity {
@@ -54,6 +60,9 @@ public class ClockFaceActivity extends AppCompatActivity {
 
     int travelTimeInSeconds = 0;
 
+    private int alarmDayWeight = 0;
+    private int todayDayWeight = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +85,36 @@ public class ClockFaceActivity extends AppCompatActivity {
         bFriday = (Button) findViewById(R.id.bFriday);
         bSaturday = (Button) findViewById(R.id.bSaturday);
         bSunday= (Button) findViewById(R.id.bSunday);
+
+//        calendar = Calendar.getInstance();
+//        int currentHouroFDay = calendar.HOUR_OF_DAY;
+//        int currentHour = calendar.HOUR;
+//
+//        Log.d("currentHourofDay", "currentHourofDay: "+currentHouroFDay);
+//        Log.d("currentHour", "currentHour: "+currentHour);
+
+        int hours = new Time(System.currentTimeMillis()).getHours();
+        Log.d("TimeData", "hours: "+hours);
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.d("TimeData", "dayOfWeek: "+day);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+        Log.d("TimeData", "dayOfTheWeek: "+dayOfTheWeek);
+
+        int dayOfWeekNr = (calendar.get(Calendar.DAY_OF_WEEK));
+        Log.d("TimeData", "dayOfTheWeekNr: "+dayOfWeekNr);
+
+//        SimpleDateFormat dow = new SimpleDateFormat("dddd");
+//        Date e = new Date();
+//        String dayOfTheWeekNr = dow.format(e);
+//        Log.d("TimeData", "dayOfTheWeekNr: "+dayOfTheWeekNr);
+
+
+
 
         clockView.setOnClockChangeListener(new OnClockChangeListener() {
             @Override
@@ -157,6 +196,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bMonday);
                 dayOfWeek = DayOfWeek.MONDAY.toString();
+                alarmDayWeight = 1;
             }
         });
 
@@ -165,6 +205,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bTuesday);
                 dayOfWeek = DayOfWeek.TUESDAY.toString();
+                alarmDayWeight = 2;
 
             }
         });
@@ -174,6 +215,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bWensday);
                 dayOfWeek = DayOfWeek.WENSDAY.toString();
+                alarmDayWeight = 3;
             }
         });
 
@@ -182,6 +224,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bThursday);
                 dayOfWeek = DayOfWeek.THURSDAY.toString();
+                alarmDayWeight = 4;
             }
         });
 
@@ -190,6 +233,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bFriday);
                 dayOfWeek = DayOfWeek.FRIDAY.toString();
+                alarmDayWeight = 5;
             }
         });
 
@@ -198,6 +242,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bSaturday);
                 dayOfWeek = DayOfWeek.SATURDAY.toString();
+                alarmDayWeight = 6;
             }
         });
 
@@ -206,6 +251,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonsReaction(bSunday);
                 dayOfWeek = DayOfWeek.SUNDAY.toString();
+                alarmDayWeight = 7;
             }
         });
     }

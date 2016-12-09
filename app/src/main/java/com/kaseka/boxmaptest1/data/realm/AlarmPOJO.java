@@ -103,6 +103,7 @@ public class AlarmPOJO {
     }
 
 
+
     // aktualizacja alarmu w bazie
     public void updateAlarm(final AlarmRealm alarm) {
         AlarmRealm alarmRealm = Realm.getDefaultInstance().where(AlarmRealm.class).equalTo("id", alarm.getId()).findFirst();
@@ -138,4 +139,6 @@ public class AlarmPOJO {
     private int generateId() {
         return Realm.getDefaultInstance().where(AlarmRealm.class).max("id").intValue() + 1;
     }
+
+
 }

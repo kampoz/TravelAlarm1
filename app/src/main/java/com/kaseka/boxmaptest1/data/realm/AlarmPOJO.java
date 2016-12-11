@@ -16,6 +16,8 @@ public class AlarmPOJO {
     public static String dayOfWeek;
     public static String routeTime;
     public static Integer preparingTimeInMins;
+    public static Long wakeUpTimeInMillis;
+    public static int amPm;
     public static RealmList<LatLngRealm> LngLatPointsRealmList = new RealmList<>();
 
     //  KONSTRUKTOR I KLASY sINGLETONA

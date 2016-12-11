@@ -126,6 +126,9 @@
                 android:text="AM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#000000"
+                android:textColor="#ffffff"
+
                 />
 
             <Button
@@ -133,6 +136,8 @@
                 android:text="PM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#000000"
+                android:textColor="#ffffff"
                 />
 
         </LinearLayout>
@@ -155,7 +160,8 @@
         android:text="Ustaw budzik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bSetAlarm" />
+        android:id="@+id/bSetAlarm"
+        android:background="@color/colorMyDarkGreen"/>
     </LinearLayout>
     </ScrollView>
 

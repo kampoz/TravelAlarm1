@@ -259,6 +259,7 @@ public class ClockFaceActivity extends AppCompatActivity {
 
         //roznica miedzy dniem budzenia i dzisiejszym
         int differcenceBetweenDays = (alarmWeekDay-todayWeekDay+7)%7;
+        int dayDifferenceInMins = differcenceBetweenDays *24 *60;
 
         //czas przygotowania
         preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
@@ -271,22 +272,31 @@ public class ClockFaceActivity extends AppCompatActivity {
         if(ampm == 1){
             goalHourInMins = (clockHourInt + 12)*60 ;
         }
-
-        clockMinuteInt = Integer.parseInt(clockMinute);
-        int goalMinute = clockMinuteInt;
+        int goalMinute = Integer.parseInt(clockMinute);
         int goalTimeInMins = goalHourInMins + goalMinute;
+
+        int hoursSubstractionInMins = goalTimeInMins - nowTimeInMins;
+
+        int firstSumInMins = dayDifferenceInMins + hoursSubstractionInMins;
+
+        int secondSumInMins = firstSumInMins - preparingTimeInMins - routeTimeInMinutes;
+        long secondSumInMillis = secondSumInMins * 60 *1000;
+
         long currenttimeLong = System.currentTimeMillis();
+
         int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
         routeTimeInMinutes = routeTimeInSeconds / 60;
 
-        int timeSubtractionResultInMins = goalTimeInMins - nowTimeInMins - preparingTimeInMins - routeTimeInMinutes;
+        //int timeSubtractionResultInMins = goalTimeInMins - nowTimeInMins - preparingTimeInMins - routeTimeInMinutes;
 
-        int dayDifferenceInMins = differcenceBetweenDays *24 *60;
-        long allTimeSubtractionResultInMiliis = (dayDifferenceInMins + timeSubtractionResultInMins) *60 *1000;
 
-        double differenceInDays = (double)allTimeSubtractionResultInMiliis/1000/60/60/24;
+        //long allTimeSubtractionResultInMiliis = (dayDifferenceInMins + timeSubtractionResultInMins) *60 *1000;
 
-        alarmTimeInMillis = currenttimeLong + allTimeSubtractionResultInMiliis;
+        //double differenceInDays = (double)allTimeSubtractionResultInMiliis/1000/60/60/24;
+
+        //alarmTimeInMillis = currenttimeLong + allTimeSubtractionResultInMiliis;
+
+        alarmTimeInMillis = currenttimeLong + secondSumInMillis;
 
 
         String alarmDayOfWeek = dayOfWeek;
@@ -310,7 +320,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         Log.d("timetest", "preparingTimeInMins: " + preparingTimeInMins);
         Log.d("timetest", "routeTimeInMinutes: " + routeTimeInMinutes);
         Log.d("timetest", "routeTimeInSeconds: " + routeTimeInSeconds);
-        Log.d("timetest", "timeSubtractionResultInMins: " + timeSubtractionResultInMins);
+        //Log.d("timetest", "timeSubtractionResultInMins: " + timeSubtractionResultInMins);
         Log.d("timetest", "............................................................");
 
         Log.d("timetest", "ampm: " + ampm);
@@ -318,10 +328,14 @@ public class ClockFaceActivity extends AppCompatActivity {
         Log.d("timetest", "goalMinute: " + goalMinute);
         Log.d("timetest", "goalHourInMins: " + goalHourInMins);
         Log.d("timetest", "currenttimeLong: " + currenttimeLong);
-        Log.d("timetest", "timeSubtractionResultInMins: " + timeSubtractionResultInMins);
-        Log.d("timetest", "allTimeSubtractionResultInMiliis: " + allTimeSubtractionResultInMiliis);
+        //Log.d("timetest", "timeSubtractionResultInMins: " + timeSubtractionResultInMins);
+        //Log.d("timetest", "allTimeSubtractionResultInMiliis: " + allTimeSubtractionResultInMiliis);
         Log.d("timetest", "AlarmTimeInMillis: " + alarmTimeInMillis);
-        Log.d("timetest", "differenceInDays: " + differenceInDays);
+        //Log.d("timetest", "differenceInDays: " + differenceInDays);
+        Log.d("timetest", "hoursSubstractionInMins: " + hoursSubstractionInMins);
+        Log.d("timetest", "firstSumInMins: " + firstSumInMins);
+        Log.d("timetest", "secondSumInMins: " + secondSumInMins);
+
         Log.d("timetest", "alarmHour: " + alarmHour);
         Log.d("timetest", "alarmMinutes: " + alarmMinutes);
         Log.d("timetest", "alarmDayOfWeek: " + alarmDayOfWeek);

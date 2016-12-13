@@ -26,6 +26,8 @@ import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 import com.kaseka.boxmaptest1.view.ClockView;
 
+import org.joda.time.DateTime;
+
 //import net.danlew.android.joda.JodaTimeAndroid;
 
 
@@ -260,6 +262,7 @@ public class ClockFaceActivity extends AppCompatActivity {
 
         //roznica miedzy dniem budzenia i dzisiejszym
         int differcenceBetweenDays = (alarmWeekDay-todayWeekDay+7)%7;
+
         int dayDifferenceInMins = differcenceBetweenDays *24 *60;
 
         //czas przygotowania
@@ -310,8 +313,13 @@ public class ClockFaceActivity extends AppCompatActivity {
         //zwikszenie godziny alarmu o jedna godzine, bo taki jest bład
         int alarmHourCorrection =(int) (((alarmTimeInMillis + 1000*60*60) / (1000*60*60)) % 24);
 
-        
+        ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
 
+        DateTime currentDaleTime = new DateTime();
+        int minutesToAdd = 1440*((alarmWeekDay-todayWeekDay+7)%7)-nowTimeInMins + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
+
+        DateTime alarmDateTime = new DateTime();
+        alarmDateTime.plusMinutes(minutesToAdd);
 
         Log.d("timetest", "*****************************************************************");
         Log.d("timetest", "currentDayOfTheWeek: " + currentDayOfTheWeek);
@@ -355,6 +363,9 @@ public class ClockFaceActivity extends AppCompatActivity {
         Log.d("timetest", "alarmHourCorrection: " + alarmHourCorrection);
         Log.d("timetest", "alarmMinutes: " + alarmMinutes);
         Log.d("timetest", "alarmDayOfWeek: " + alarmDayOfWeek);
+        Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
+        Log.d("timetest", "minutesToAdd: " + minutesToAdd);
+        Log.d("timetest", "alarmDateTime: " + alarmDateTime.plusMinutes(minutesToAdd).toString());
         Log.d("timetest", "*********************************************************************");
     }
 

@@ -236,10 +236,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Uzupelnianie AlarmPOJO 4 z 8 pol
-                setRoutewTimeToAlarmPOJO(routeTime);
+                setAlarmPOJOData();
+
                 setPointsListInAlarmPOJO(responsePoints);
-                setStartPositionInAlarmPOJO(startPoint);
-                setdestinationPointInAlarmPOJO(destinationPoint);
+
 
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
                 startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
@@ -310,29 +310,29 @@ public class MainActivity extends AppCompatActivity {
 
     // AlarmPOJO przypisanie responsePoints na latLngRealm
     private void setPointsListInAlarmPOJO(ArrayList<LatLng> responsePoints){
-        for (int i=0; i<responsePoints.size(); i++){
+        for (int i=0; i<AlarmPOJO.getLngLatPointsRealmList().size(); i++){
             LatLngRealm latLngRealm = new LatLngRealm();
             double latitude = responsePoints.get(i).getLatitude();
             double longitude = responsePoints.get(i).getLongitude();
             latLngRealm.setLatitude(latitude);
             latLngRealm.setLongitude(longitude);
-            AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
-            Log.d("LngLatPointsRealmList", "setPointsListInAlarmPOJO.size():"+AlarmPOJO.LngLatPointsRealmList.size());
+
+            AlarmPOJO.getLngLatPointsRealmList().add(i, latLngRealm);
+
+            //AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
+            Log.d("AlarmPOJOListSize", "setPointsListInAlarmPOJO.size():"+AlarmPOJO.getLngLatPointsRealmList().size());
         }
     }
 
-    //AlarmPOJO przypisanie RoutTime
-    private void setRoutewTimeToAlarmPOJO(String routeTime){
-        AlarmPOJO.routeTime = routeTime;
+
+    private void setAlarmPOJOData(){
+        AlarmPOJO.setRouteTimeLabel(routeTime);
+        AlarmPOJO.setRouteTimeInSeconds(routeTimeInSeconds);
+        AlarmPOJO.setStartPoint(startPoint);
+        AlarmPOJO.setDestinationPoint(destinationPoint);
     }
 
-    private void setStartPositionInAlarmPOJO(String startPoint){
-        AlarmPOJO.startPoint = startPoint;
-    }
 
-    private void setdestinationPointInAlarmPOJO(String destinationPoint){
-        AlarmPOJO.destinationPoint = destinationPoint;
-    }
 
     @Override
     public void onPause()  {

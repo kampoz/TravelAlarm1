@@ -71,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter {
         // uzupełniamy layout alarmu
         AlarmRealm alarmRealm = alarms.get(i);
         ((MyViewHolder) viewHolder).tvAlarmHour.setText(alarmRealm.getAlarmHour());
-        ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDay());
+        ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());
         ((MyViewHolder) viewHolder).tvDestinaitonPoint.setText(alarmRealm.getDestinationPoint());
     }
 

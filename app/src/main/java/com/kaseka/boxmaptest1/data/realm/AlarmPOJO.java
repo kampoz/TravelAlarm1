@@ -7,100 +7,158 @@ import io.realm.RealmList;
 public class AlarmPOJO {
 
     private static int id;
-    public static boolean isOn = false;
-    public static String alarmHour;
-    public static String alarmMinute;
-    public static String alarmDay;
-    public static String startPoint;
-    public static String destinationPoint;
-    public static String dayOfWeek;
-    public static String routeTime;
-    public static Integer preparingTimeInMins;
-    public static Long wakeUpTimeInMillis;
-    public static int amPm;
-    public static RealmList<LatLngRealm> LngLatPointsRealmList = new RealmList<>();
+    private static boolean isOn = false;
+    private static int alarmHour;
+    private static int alarmMinute;
+    private static int amPm;
 
-    //  KONSTRUKTOR I KLASY sINGLETONA
-//    private AlarmPOJO(){}
-//
-//    private final static class SingletonHolder {
-//        private final static AlarmPOJO instance = new AlarmPOJO();
-//    }
-//
-//    public final static AlarmPOJO getInstance() {
-//        return SingletonHolder.instance;
-//    }
+    private static String alarmDayOfWeek;
+    private static int alarmDayOfWeekAsInt;
+    private static String startPoint;
+    private static String destinationPoint;
+    private static String routeTimeLabel;
+    private static int routeTimeInSeconds;
+    private static Integer preparingTimeInMins;
+    private static Long alarmTimeInMillis;
 
-    public String getAlarmDay() {
-        return alarmDay;
+    private static RealmList<LatLngRealm> LngLatPointsRealmList = new RealmList<>();
+
+
+    public static String getAlarmDayOfWeek() {
+        return alarmDayOfWeek;
     }
 
-    public void setAlarmDay(String alarmDay) {
-        this.alarmDay = alarmDay;
+    public static void setAlarmDayOfWeek(String alarmDayOfWeek) {
+        AlarmPOJO.alarmDayOfWeek = alarmDayOfWeek;
     }
 
-    public String getAlarmHour() {
+    public static int getAlarmHour() {
         return alarmHour;
     }
 
-    public void setAlarmHour(String alarmHour) {
-        this.alarmHour = alarmHour;
+    public static void setAlarmHour(int alarmHour) {
+        AlarmPOJO.alarmHour = alarmHour;
     }
 
-    public String getDayOfWeek() {
-        return dayOfWeek;
+    public static int getAlarmMinute() {
+        return alarmMinute;
     }
 
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public static void setAlarmMinute(int alarmMinute) {
+        AlarmPOJO.alarmMinute = alarmMinute;
     }
 
-    public String getDestinationPoint() {
+    public static Long getAlarmTimeInMillis() {
+        return alarmTimeInMillis;
+    }
+
+    public static void setAlarmTimeInMillis(Long alarmTimeInMillis) {
+        AlarmPOJO.alarmTimeInMillis = alarmTimeInMillis;
+    }
+
+    public static int getAmPm() {
+        return amPm;
+    }
+
+    public static void setAmPm(int amPm) {
+        AlarmPOJO.amPm = amPm;
+    }
+
+    public static String getDestinationPoint() {
         return destinationPoint;
     }
 
-    public void setDestinationPoint(String destinationPoint) {
-        this.destinationPoint = destinationPoint;
+    public static void setDestinationPoint(String destinationPoint) {
+        AlarmPOJO.destinationPoint = destinationPoint;
     }
 
-    public int getAlarmId() {
+    public static int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public static void setId(int id) {
+        AlarmPOJO.id = id;
     }
 
-    public RealmList<LatLngRealm> getLngLatPointsRealmList() {
+    public static boolean getIsOn() {
+        return isOn;
+    }
+
+    public static void setIsOn(boolean isOn) {
+        AlarmPOJO.isOn = isOn;
+    }
+
+    public static RealmList<LatLngRealm> getLngLatPointsRealmList() {
         return LngLatPointsRealmList;
     }
 
-    public void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
+    public static void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
         LngLatPointsRealmList = lngLatPointsRealmList;
     }
 
-    public String getStartPoint() {
+    public static Integer getPreparingTimeInMins() {
+        return preparingTimeInMins;
+    }
+
+    public static void setPreparingTimeInMins(Integer preparingTimeInMins) {
+        AlarmPOJO.preparingTimeInMins = preparingTimeInMins;
+    }
+
+    public static String getRouteTimeLabel() {
+        return routeTimeLabel;
+    }
+
+    public static void setRouteTimeLabel(String routeTimeLabel) {
+        AlarmPOJO.routeTimeLabel = routeTimeLabel;
+    }
+
+    public static String getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint;
+    public static void setStartPoint(String startPoint) {
+        AlarmPOJO.startPoint = startPoint;
     }
 
 
+
+
+    public static int getRouteTimeInSeconds() {
+        return routeTimeInSeconds;
+    }
+
+    public static void setRouteTimeInSeconds(int routeTimeInSeconds) {
+        AlarmPOJO.routeTimeInSeconds = routeTimeInSeconds;
+    }
+
+
+    public static int getAlarmDayOfWeekAsInt() {
+        return alarmDayOfWeekAsInt;
+    }
+
+    public static void setAlarmDayOfWeekAsInt(int alarmDayOfWeekAsInt) {
+        AlarmPOJO.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
+    }
 
     //wstawianie nowego alarmu
     public void insertAlarm(final AlarmRealm alarm){
         Realm.getDefaultInstance().beginTransaction();
         AlarmRealm alarmRealm = Realm.getDefaultInstance().createObject(AlarmRealm.class);
 
-        alarmRealm.setId(generateId());
+
         alarmRealm.setAlarmHour(getAlarmHour());
-        alarmRealm.setAlarmDay(getAlarmDay());
+        alarmRealm.setAlarmMinute(getAlarmMinute());
+        alarmRealm.setAmPm(getAmPm());
+        alarmRealm.setAlarmDayOfWeek(getAlarmDayOfWeek());
+        alarmRealm.setAlarmDayOfWeekAsInt(getAlarmDayOfWeekAsInt());
         alarmRealm.setStartPoint(getStartPoint());
         alarmRealm.setDestinationPoint(getDestinationPoint());
-        alarmRealm.setDayOfWeek(getDayOfWeek());
+        alarmRealm.setRouteTimeInSeconds(getRouteTimeInSeconds());
+        alarmRealm.setRouteTimeLabel(getRouteTimeLabel());
+        alarmRealm.setPreparingTimeInMins(getPreparingTimeInMins());
+        alarmRealm.setAlarmTimeInMillis(getAlarmTimeInMillis());
         alarmRealm.setLngLatPointsRealmList(getLngLatPointsRealmList());
+
         Realm.getDefaultInstance().commitTransaction();
     }
 
@@ -112,27 +170,40 @@ public class AlarmPOJO {
         Realm.getDefaultInstance().beginTransaction();
 
         //wprowadzenie zmian w alarmie: tu zmiana godziny
+        alarmRealm.setIsOn(getIsOn());
         alarmRealm.setAlarmHour(getAlarmHour());
-        alarmRealm.setAlarmDay(getAlarmDay());
+        alarmRealm.setAlarmMinute(getAlarmMinute());
+        alarmRealm.setAmPm(getAmPm());
+        alarmRealm.setAlarmDayOfWeek(getAlarmDayOfWeek());
+        alarmRealm.setAlarmDayOfWeekAsInt(getAlarmDayOfWeekAsInt());
         alarmRealm.setStartPoint(getStartPoint());
         alarmRealm.setDestinationPoint(getDestinationPoint());
-        alarmRealm.setDayOfWeek(getDayOfWeek());
+        alarmRealm.setRouteTimeInSeconds(getRouteTimeInSeconds());
+        alarmRealm.setRouteTimeLabel(getRouteTimeLabel());
+        alarmRealm.setPreparingTimeInMins(getPreparingTimeInMins());
+        alarmRealm.setAlarmTimeInMillis(getAlarmTimeInMillis());
         alarmRealm.setLngLatPointsRealmList(getLngLatPointsRealmList());
-        Realm.getDefaultInstance().commitTransaction();
-
 
         Realm.getDefaultInstance().commitTransaction();
+
     }
 
 
     public void setToNull(){
 
         setId(0);
-        setAlarmHour(null);
-        setAlarmDay(null);
-        setDayOfWeek(null);
+        setIsOn(false);
+        setAlarmHour(0);
+        setAlarmMinute(0);
+        setAmPm(0);
+        setAlarmDayOfWeek(null);
+        setAlarmDayOfWeekAsInt(getAlarmDayOfWeekAsInt());
         setStartPoint(null);
         setDestinationPoint(null);
+        setRouteTimeInSeconds(0);
+        setRouteTimeLabel(null);
+        setPreparingTimeInMins(null);
+        setAlarmTimeInMillis(null);
         setLngLatPointsRealmList(null);
 
     };

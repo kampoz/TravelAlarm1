@@ -1,11 +1,8 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.StreamHandler;
 
 
 import io.realm.Realm;
@@ -18,11 +15,20 @@ public class AlarmRealm extends RealmObject{
 
     @PrimaryKey
     private int id;
-    private String alarmHour;
-    private String alarmDay;
+    private boolean isOn = false;
+    private int alarmHour;
+    private int alarmMinute;
+    private int amPm;
+    private String alarmDayOfWeek;
+    private int alarmDayOfWeekAsInt;
     private String startPoint;
     private String destinationPoint;
-    private String dayOfWeek;
+    private int routeTimeInSeconds;
+    private String routeTimeLabel;
+    private Integer preparingTimeInMins;
+    private Long alarmTimeInMillis;
+
+
     private RealmList<LatLngRealm> LngLatPointsRealmList;
 
 
@@ -37,19 +43,30 @@ public class AlarmRealm extends RealmObject{
         this.id = id;
     }
 
-    public String getAlarmDay() {
-        return alarmDay;
+
+
+
+    public int getAlarmDayOfWeekAsInt() {
+        return alarmDayOfWeekAsInt;
     }
 
-    public void setAlarmDay(String alarmDay) {
-        this.alarmDay = alarmDay;
+    public void setAlarmDayOfWeekAsInt(int alarmDayOfWeekAsInt) {
+        this.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
     }
 
-    public String getAlarmHour() {
+    public String getAlarmDayOfWeek() {
+        return alarmDayOfWeek;
+    }
+
+    public void setAlarmDayOfWeek(String alarmDayOfWeek) {
+        this.alarmDayOfWeek = alarmDayOfWeek;
+    }
+
+    public int getAlarmHour() {
         return alarmHour;
     }
 
-    public void setAlarmHour(String alarmHour) {
+    public void setAlarmHour(int alarmHour) {
         this.alarmHour = alarmHour;
     }
 
@@ -81,12 +98,67 @@ public class AlarmRealm extends RealmObject{
        return Realm.getDefaultInstance().where(AlarmRealm.class).findAll();
     }
 
-    public String getDayOfWeek() {
-        return dayOfWeek;
+
+
+    public int getAlarmMinute() {
+        return alarmMinute;
     }
 
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setAlarmMinute(int alarmMinute) {
+        this.alarmMinute = alarmMinute;
+    }
+
+    public Long getAlarmTimeInMillis() {
+        return alarmTimeInMillis;
+    }
+
+    public void setAlarmTimeInMillis(Long alarmTimeInMillis) {
+        this.alarmTimeInMillis = alarmTimeInMillis;
+    }
+
+    public int getAmPm() {
+        return amPm;
+    }
+
+    public void setAmPm(int amPm) {
+        this.amPm = amPm;
+    }
+
+    public boolean getIsOn() {
+        return isOn;
+    }
+
+    public void setIsOn(boolean on) {
+        isOn = on;
+    }
+
+
+
+    public Integer getPreparingTimeInMins() {
+        return preparingTimeInMins;
+    }
+
+    public void setPreparingTimeInMins(Integer preparingTimeInMins) {
+        this.preparingTimeInMins = preparingTimeInMins;
+    }
+
+    public String getRouteTimeLabel() {
+        return routeTimeLabel;
+    }
+
+    public void setRouteTimeLabel(String routeTimeLabel) {
+        this.routeTimeLabel = routeTimeLabel;
+    }
+
+
+
+
+    public int getRouteTimeInSeconds() {
+        return routeTimeInSeconds;
+    }
+
+    public void setRouteTimeInSeconds(int routeTimeInSeconds) {
+        this.routeTimeInSeconds = routeTimeInSeconds;
     }
 
     // inne metody i kwerendy

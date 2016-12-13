@@ -49,7 +49,7 @@ public class DebugBindServiceActivity extends AppCompatActivity {
                 if (tripAlarmBoundService != null) {
                     routeTime = String.valueOf(tripAlarmBoundService.getRouteTimeInSeconds());
                 }
-                Log.d("getRouteTime()",routeTime);
+                Log.d("getRouteTimeLabel()",routeTime);
                 Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
 
                 //---startowanie activity

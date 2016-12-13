@@ -47,8 +47,8 @@ public class AlarmsListActivity extends AppCompatActivity {
         for (int i = 0; i < 10; ++i) {
             final AlarmRealm alarmRealm = new AlarmRealm();
             alarmRealm.setId(i);
-            alarmRealm.setAlarmDay(String.valueOf(i));
-            alarmRealm.setAlarmHour(String.valueOf(i+i));
+            alarmRealm.setAlarmDayOfWeek(String.valueOf(i));
+            alarmRealm.setAlarmHour(15);
             alarmRealm.setDestinationPoint("do Lublina");
 
             Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {

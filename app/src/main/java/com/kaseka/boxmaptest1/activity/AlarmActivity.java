@@ -38,6 +38,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         addListenerOnButton();
 
+
         circleWaveView = findViewById(R.id.circle_wave_view1);
         ViewTreeObserver vto = circleWaveView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

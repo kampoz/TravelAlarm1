@@ -40,10 +40,10 @@ public class ClockFaceActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private EditText etPreparingTimeInMins;
 
-    private Integer clockHourInt;
-    private Integer clockMinuteInt;
-    private String clockHour;
-    private String clockMinute;
+    private Integer clockHourInt = 0;
+    private Integer clockMinuteInt = 0;
+    private String clockHour = "0";
+    private String clockMinute = "0";
 
     private Button bMonday;
     private Button bTuesday;
@@ -77,8 +77,6 @@ public class ClockFaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clock_face);
         getSupportActionBar().hide();
 
-        Bundle bundle = getIntent().getExtras();
-        //travelTimeInSeconds = bundle.getInt("travelTimeInSeconds");
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -320,6 +318,7 @@ public class ClockFaceActivity extends AppCompatActivity {
 
         DateTime alarmDateTime = new DateTime();
         alarmDateTime.plusMinutes(minutesToAdd);
+        alarmDateTime.plusMinutes(minutesToAdd).getDayOfWeek();
 
         Log.d("timetest", "*****************************************************************");
         Log.d("timetest", "currentDayOfTheWeek: " + currentDayOfTheWeek);
@@ -365,7 +364,8 @@ public class ClockFaceActivity extends AppCompatActivity {
         Log.d("timetest", "alarmDayOfWeek: " + alarmDayOfWeek);
         Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
         Log.d("timetest", "minutesToAdd: " + minutesToAdd);
-        Log.d("timetest", "alarmDateTime: " + alarmDateTime.plusMinutes(minutesToAdd).toString());
+        Log.d("timetest", "Day of week DateTime: " + alarmDateTime.plusMinutes(minutesToAdd));
+        Log.d("timetest", "alarmDateTime: " + alarmDateTime.plusMinutes(minutesToAdd).getDayOfWeek());
         Log.d("timetest", "*********************************************************************");
     }
 

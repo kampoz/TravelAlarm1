@@ -51,6 +51,14 @@ public class TripAlarmStartedService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         //------startowanie activity
+        //próne uśnpienie startu na 5s.
+//        try {
+//            Thread.sleep(8000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
         Intent dialogIntent = new Intent(TripAlarmStartedService.this, AlarmActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);

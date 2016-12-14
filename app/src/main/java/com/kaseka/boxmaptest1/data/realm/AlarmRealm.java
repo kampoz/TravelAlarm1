@@ -16,6 +16,7 @@ public class AlarmRealm extends RealmObject{
     @PrimaryKey
     private int id;
     private boolean isOn = false;
+    private boolean isAlarmPeriodic = false;
     private int alarmHour;
     private int alarmMinute;
     private int amPm;
@@ -27,11 +28,7 @@ public class AlarmRealm extends RealmObject{
     private String routeTimeLabel;
     private Integer preparingTimeInMins;
     private Long alarmTimeInMillis;
-
-
     private RealmList<LatLngRealm> LngLatPointsRealmList;
-
-
 
 
     //gettery, settery
@@ -43,8 +40,21 @@ public class AlarmRealm extends RealmObject{
         this.id = id;
     }
 
+    public boolean isOn() {
+        return isOn;
+    }
 
+    public void setOn(boolean on) {
+        isOn = on;
+    }
 
+    public boolean isAlarmPeriodic() {
+        return isAlarmPeriodic;
+    }
+
+    public void setAlarmPeriodic(boolean alarmPeriodic) {
+        isAlarmPeriodic = alarmPeriodic;
+    }
 
     public int getAlarmDayOfWeekAsInt() {
         return alarmDayOfWeekAsInt;

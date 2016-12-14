@@ -8,10 +8,10 @@ public class AlarmPOJO {
 
     private static int id;
     private static boolean isOn = false;
+    private static boolean isAlarmPeriodic = false;
     private static int alarmHour;
     private static int alarmMinute;
     private static int amPm;
-
     private static String alarmDayOfWeek;
     private static int alarmDayOfWeekAsInt;
     private static String startPoint;
@@ -20,7 +20,6 @@ public class AlarmPOJO {
     private static int routeTimeInSeconds;
     private static Integer preparingTimeInMins;
     private static Long alarmTimeInMillis;
-
     private static RealmList<LatLngRealm> LngLatPointsRealmList = new RealmList<>();
 
 
@@ -30,6 +29,18 @@ public class AlarmPOJO {
 
     public static void setAlarmDayOfWeek(String alarmDayOfWeek) {
         AlarmPOJO.alarmDayOfWeek = alarmDayOfWeek;
+    }
+
+    public static boolean isOn() {
+        return isOn;
+    }
+
+    public static boolean isAlarmPeriodic() {
+        return isAlarmPeriodic;
+    }
+
+    public static void setIsAlarmPeriodic(boolean isAlarmPeriodic) {
+        AlarmPOJO.isAlarmPeriodic = isAlarmPeriodic;
     }
 
     public static int getAlarmHour() {
@@ -140,7 +151,7 @@ public class AlarmPOJO {
         AlarmPOJO.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
     }
 
-    //wstawianie nowego alarmu
+    //dodanie nowego alarmu
     public void insertAlarm(final AlarmRealm alarm){
         Realm.getDefaultInstance().beginTransaction();
         AlarmRealm alarmRealm = Realm.getDefaultInstance().createObject(AlarmRealm.class);

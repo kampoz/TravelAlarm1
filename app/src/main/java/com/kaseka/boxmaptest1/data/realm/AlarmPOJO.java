@@ -1,6 +1,8 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
+import org.joda.time.DateTime;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -20,7 +22,12 @@ public class AlarmPOJO {
     private static int routeTimeInSeconds;
     private static Integer preparingTimeInMins;
     private static Long alarmTimeInMillis;
-    private static RealmList<LatLngRealm> LngLatPointsRealmList = new RealmList<>();
+    private static RealmList<LatLngRealm> lngLatPointsRealmList = new RealmList<>();
+    private static String alarmDateTimeData;
+    private static String transportMode;
+    private static String goalHourOfDay;
+    private static String goalMinute;
+
 
 
     public static String getAlarmDayOfWeek() {
@@ -100,11 +107,11 @@ public class AlarmPOJO {
     }
 
     public static RealmList<LatLngRealm> getLngLatPointsRealmList() {
-        return LngLatPointsRealmList;
+        return lngLatPointsRealmList;
     }
 
     public static void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
-        LngLatPointsRealmList = lngLatPointsRealmList;
+        AlarmPOJO.lngLatPointsRealmList = lngLatPointsRealmList;
     }
 
     public static Integer getPreparingTimeInMins() {
@@ -151,8 +158,42 @@ public class AlarmPOJO {
         AlarmPOJO.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
     }
 
+
+    public static String getAlarmDateTimeData() {
+        return alarmDateTimeData;
+    }
+
+    public static void setAlarmDateTimeData(String alarmDateTimeData) {
+        AlarmPOJO.alarmDateTimeData = alarmDateTimeData;
+    }
+
+    public static String getTransportMode() {
+        return transportMode;
+    }
+
+    public static void setTransportMode(String transportMode) {
+        AlarmPOJO.transportMode = transportMode;
+    }
+
+    public static String getGoalHourOfDay() {
+        return goalHourOfDay;
+    }
+
+    public static void setGoalHourOfDay(String goalHourOfDay) {
+        AlarmPOJO.goalHourOfDay = goalHourOfDay;
+    }
+
+    public static String getGoalMinute() {
+        return goalMinute;
+    }
+
+    public static void setGoalMinute(String goalMinute) {
+        AlarmPOJO.goalMinute = goalMinute;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //dodanie nowego alarmu
-    public void insertAlarm(final AlarmRealm alarm){
+    public static void insertAlarm(){
         Realm.getDefaultInstance().beginTransaction();
         AlarmRealm alarmRealm = Realm.getDefaultInstance().createObject(AlarmRealm.class);
 
@@ -169,6 +210,10 @@ public class AlarmPOJO {
         alarmRealm.setPreparingTimeInMins(getPreparingTimeInMins());
         alarmRealm.setAlarmTimeInMillis(getAlarmTimeInMillis());
         alarmRealm.setLngLatPointsRealmList(getLngLatPointsRealmList());
+        alarmRealm.setAlarmDateTimeData(getAlarmDateTimeData());
+        alarmRealm.setTransportMode(getTransportMode());
+        alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
+        alarmRealm.setGoalMinute(getGoalMinute());
 
         Realm.getDefaultInstance().commitTransaction();
     }
@@ -194,13 +239,17 @@ public class AlarmPOJO {
         alarmRealm.setPreparingTimeInMins(getPreparingTimeInMins());
         alarmRealm.setAlarmTimeInMillis(getAlarmTimeInMillis());
         alarmRealm.setLngLatPointsRealmList(getLngLatPointsRealmList());
+        alarmRealm.setAlarmDateTimeData(getAlarmDateTimeData());
+        alarmRealm.setTransportMode(getTransportMode());
+        alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
+        alarmRealm.setGoalMinute(getGoalMinute());
 
         Realm.getDefaultInstance().commitTransaction();
 
     }
 
 
-    public void setToNull(){
+    public static void setToNull(){
 
         setId(0);
         setIsOn(false);
@@ -216,6 +265,8 @@ public class AlarmPOJO {
         setPreparingTimeInMins(null);
         setAlarmTimeInMillis(null);
         setLngLatPointsRealmList(null);
+        setAlarmDateTimeData(null);
+        setTransportMode(null);
 
     };
 

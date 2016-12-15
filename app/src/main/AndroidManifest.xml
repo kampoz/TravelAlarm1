@@ -19,7 +19,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +33,9 @@
 
         <activity
             android:name=".activity.AlarmActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
         <service
@@ -50,8 +53,11 @@
         <activity android:name=".activity.AlarmsListActivity" />
         <activity
             android:name=".activity.ClockFaceActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".activity.AlarmEditActivity"/>
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AlarmEditActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ public class CustomAutocompleteFragment extends PlaceAutocompleteFragment {
         var4.setBackground(getResources().getDrawable(R.drawable.search_box_shape));
 
         etInput = (EditText)var4.findViewById(com.google.android.gms.R.id.place_autocomplete_search_input);
-        etInput.setHintTextColor(getResources().getColor(R.color.colorMyGrey));
+        etInput.setHintTextColor(getResources().getColor(R.color.colorMyLightGrey));
         etInput.setTextColor(getResources().getColor(R.color.colorMyYellow));
 
         return var4;

@@ -2,10 +2,13 @@ package com.kaseka.boxmaptest1.activity;
 
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 //import android.icu.util.Calendar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,25 +17,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
-import com.kaseka.boxmaptest1.global.DayOfWeek;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 import com.kaseka.boxmaptest1.view.ClockView;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 
 //import net.danlew.android.joda.JodaTimeAndroid;
 
 
 public class ClockFaceActivity extends AppCompatActivity {
 
+    private Context context = this;
     private TextView ivHourDisplay;
     private Button bSetAlarm;
     ClockView clockView;
@@ -56,7 +55,7 @@ public class ClockFaceActivity extends AppCompatActivity {
 
     private Button bAm;
     private Button bPm;
-    private int amPm;
+    private int amPm = 0;
 
     private int alarmHour;
     private int alarmMinutes;
@@ -69,6 +68,11 @@ public class ClockFaceActivity extends AppCompatActivity {
 
     private int alarmDayWeight = 0;
     private int todayDayWeight = 0;
+
+    DateTime alarmDateTime;
+    int goalHourInMins = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,23 +100,6 @@ public class ClockFaceActivity extends AppCompatActivity {
         bPm = (Button) findViewById(R.id.bPM);
 
 
-        int hours = new Time(System.currentTimeMillis()).getHours();
-        Log.d("TimeData", "hours: "+hours);
-
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        Log.d("TimeData", "wakeUpDayOfWeek: "+day);
-
-
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        Log.d("TimeData", "hour: "+hour);
-
-        int minute = calendar.get(Calendar.MINUTE);
-        Log.d("TimeData", "minute: "+minute);
-
-        //funkcja zwraca 0 dla AM i 1 dla PM
-        day = calendar.get(Calendar.AM_PM);
-        Log.d("TimeData", "AM/PM: "+day);
 
 
         clockView.setOnClockChangeListener(new OnClockChangeListener() {
@@ -132,18 +119,74 @@ public class ClockFaceActivity extends AppCompatActivity {
 
 
         bSetAlarm.setOnClickListener(new View.OnClickListener() {
+
+            public TextView tvDialogAlarmHour;
+            public TextView tvDialogWeekDay;
+            public TextView tvDialogStartPoint;
+            public TextView tvDialogDestinationPoint;
+            public TextView tvDialogTransportMode;
+            public TextView tvDialogGoalTime;
+            public TextView tvDialogPreparingTime;
+            public Button bDialogAlarmModification;
+            public Button bDialogOK;
+
             @Override
             public void onClick(View v) {
 
-
                 //Uzupełenianie dalej AlarmPOJO, poprzednio w MainActivity
-
                 calculatingAlarmTimeInMillis();
-                setAlarmPojoObjcest();
+                setAlarmPojoObject();
 
-                Intent intent = new Intent(ClockFaceActivity.this, TripAlarmStartedService.class);
-                intent.putExtra(TripAlarmStartedService.EXTRA_MESSAGE, "extra message");
-                startService(intent);
+
+
+                Dialog dialog = new Dialog(ClockFaceActivity.this);
+                dialog.setContentView(R.layout.alarm_dialog);
+                dialog.setTitle("Alarm - ustawienia");
+                dialog.show();
+
+//                tvDialogAlarmHour = (TextView)findViewById(R.id.tvDialogAlarmHour);
+//                tvDialogWeekDay = (TextView)findViewById(R.id.tvDialogWeekDay);
+//                tvDialogStartPoint = (TextView)findViewById(R.id.tvDialogStartPoint);
+//                tvDialogDestinationPoint = (TextView)findViewById(R.id.tvDialogDestinationPoint);
+//                tvDialogTransportMode = (TextView)findViewById(R.id.tvDialogTransportMode);
+//                tvDialogGoalTime = (TextView)findViewById(R.id.tvDialogGoalTime);
+//                tvDialogPreparingTime = (TextView)findViewById(R.id.tvDialogPreparingTime);
+//                bDialogAlarmModification = (Button)findViewById(R.id.bDialogAlarmModification);
+//                bDialogOK  = (Button)findViewById(R.id.bDialogOK);
+//
+//
+//                tvDialogAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
+//                tvDialogWeekDay.setText(AlarmPOJO.getAlarmDayOfWeek());
+//                tvDialogStartPoint.setText("z: "+AlarmPOJO.getStartPoint());
+//                tvDialogDestinationPoint.setText("do: "+AlarmPOJO.getDestinationPoint());
+//                tvDialogTransportMode.setText("transport: "+AlarmPOJO.getTransportMode());
+//                tvDialogGoalTime.setText("na: "+AlarmPOJO.getGoalHourOfDay()+" : "+AlarmPOJO.getGoalMinute());
+//                tvDialogPreparingTime.setText("przygotowanie: "+AlarmPOJO.getPreparingTimeInMins()+" min.");
+
+
+
+
+//                bDialogAlarmModification.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        AlarmPOJO.setToNull();
+//
+//                        Intent startMainActivityIntent = new Intent(ClockFaceActivity.this, MainActivity.class);
+//                        ClockFaceActivity.this.startActivity(startMainActivityIntent);
+//                    }
+//                });
+//
+//                bDialogOK.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        AlarmPOJO.insertAlarm();
+//
+//                        Intent intent = new Intent(ClockFaceActivity.this, TripAlarmStartedService.class);
+//                        startService(intent);
+//                    }
+//                });
+
+
 
             }
         });
@@ -153,8 +196,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bMonday);
-                dayOfWeek = DayOfWeek.MONDAY.toString();
-                alarmDayWeight = 2;
+//                dayOfWeek = DayOfWeek.MONDAY.toString();
+//                alarmDayWeight = 2;
+                alarmDayWeight = DateTimeConstants.MONDAY;
             }
         });
 
@@ -162,8 +206,10 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bTuesday);
-                dayOfWeek = DayOfWeek.TUESDAY.toString();
-                alarmDayWeight = 3;
+//                dayOfWeek = DayOfWeek.TUESDAY.toString();
+//                alarmDayWeight = 3;
+                alarmDayWeight = DateTimeConstants.TUESDAY;
+
 
             }
         });
@@ -172,8 +218,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bWensday);
-                dayOfWeek = DayOfWeek.WENSDAY.toString();
-                alarmDayWeight = 4;
+//                dayOfWeek = DayOfWeek.WENSDAY.toString();
+//                alarmDayWeight = 4;
+                alarmDayWeight = DateTimeConstants.WEDNESDAY;
             }
         });
 
@@ -181,8 +228,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bThursday);
-                dayOfWeek = DayOfWeek.THURSDAY.toString();
-                alarmDayWeight = 5;
+//                dayOfWeek = DayOfWeek.THURSDAY.toString();
+//                alarmDayWeight = 5;
+                alarmDayWeight = DateTimeConstants.THURSDAY;
             }
         });
 
@@ -190,8 +238,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bFriday);
-                dayOfWeek = DayOfWeek.FRIDAY.toString();
-                alarmDayWeight = 6;
+//                dayOfWeek = DayOfWeek.FRIDAY.toString();
+//                alarmDayWeight = 6;
+                alarmDayWeight = DateTimeConstants.FRIDAY;
             }
         });
 
@@ -199,8 +248,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bSaturday);
-                dayOfWeek = DayOfWeek.SATURDAY.toString();
-                alarmDayWeight = 7;
+//                dayOfWeek = DayOfWeek.SATURDAY.toString();
+//                alarmDayWeight = 7;
+                alarmDayWeight = DateTimeConstants.SATURDAY;
             }
         });
 
@@ -208,8 +258,9 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsDaysReaction(bSunday);
-                dayOfWeek = DayOfWeek.SUNDAY.toString();
-                alarmDayWeight = 1;
+//                dayOfWeek = DayOfWeek.SUNDAY.toString();
+//                alarmDayWeight = 1;
+                alarmDayWeight = DateTimeConstants.SUNDAY;
             }
         });
 
@@ -230,48 +281,34 @@ public class ClockFaceActivity extends AppCompatActivity {
         });
     }
 
-    private void setAlarmPojoObjcest(){
+    private void setAlarmPojoObject(){
         AlarmPOJO.setAlarmHour(alarmHour);
         AlarmPOJO.setAlarmMinute(alarmMinutes);
         AlarmPOJO.setAlarmDayOfWeek(dayOfWeek);
         AlarmPOJO.setPreparingTimeInMins(preparingTimeInMins);
         AlarmPOJO.setAmPm(amPm);
         AlarmPOJO.setAlarmTimeInMillis(alarmTimeInMillis);
+        AlarmPOJO.setAlarmDateTimeData(alarmDateTime.toString());
+        AlarmPOJO.setGoalHourOfDay(String.valueOf(goalHourInMins/60));
+        AlarmPOJO.setGoalMinute(clockMinute);
 
+        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
 
+        //sprawdzenie parsowania ze Stringa na DateTime
+        DateTime dateTimeParseFromString = DateTime.parse(AlarmPOJO.getAlarmDateTimeData());
+        Log.d("timetest", "dateTimeParseFromString: " + dateTimeParseFromString);
     }
 
     private void calculatingAlarmTimeInMillis(){
 
-        Calendar calendar = Calendar.getInstance();
-        long currenttimeLong = System.currentTimeMillis();
-
-        //Obecny czas: dzien tyg jako liczba 1-7; godzina, minuta, czas obecny w min.
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        Date d = new Date();
-        String currentDayOfTheWeek = sdf.format(d);
-        int todayWeekDay = calendar.get(Calendar.DAY_OF_WEEK);
-        int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int nowMinute = calendar.get(Calendar.MINUTE);
-        int nowTimeInMins = nowHour*60 + nowMinute;
-
         //dzien budzenia jako liczba 1-7
         int alarmWeekDay = alarmDayWeight;
-
-        //roznica miedzy dniem budzenia i dzisiejszym
-        int differcenceBetweenDays = (alarmWeekDay-todayWeekDay+7)%7;
-
-        int dayDifferenceInMins = differcenceBetweenDays *24 *60;
-
-        //czas przygotowania
-        //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
-        preparingTimeInMins = 15;
 
         //Zamiana czasu zegarka na minuty, dla latwiejszych obliczeń
         int ampm = amPm;
         clockHourInt = Integer.parseInt(clockHour);
 
-        int goalHourInMins = clockHourInt*60;
+        goalHourInMins = clockHourInt*60;
         if(ampm ==1){
             goalHourInMins = (clockHourInt + 12)*60 ;
         }
@@ -279,94 +316,57 @@ public class ClockFaceActivity extends AppCompatActivity {
         int goalMinute = Integer.parseInt(clockMinute);
         int goalTimeInMins = goalHourInMins + goalMinute;
 
-        int hoursSubstractionInMins = goalTimeInMins - nowTimeInMins;
 
-        long currenttimeLongPlushoursSubstraction =  hoursSubstractionInMins*60*1000 + currenttimeLong;
-        long currenttimeLongPlushoursSubstractionH =  (currenttimeLongPlushoursSubstraction / (1000*60)) % 60;
-        long currenttimeLongPlushoursSubstractionMin =  (currenttimeLongPlushoursSubstraction / (1000*60*60)) % 24;
-
-        int firstSumInMins = dayDifferenceInMins + hoursSubstractionInMins;
-
+        int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
         //routeTimeInMinutes = routeTimeInSeconds / 60;
         routeTimeInMinutes = 15;
 
-        int secondSumInMins = firstSumInMins - preparingTimeInMins - routeTimeInMinutes;
-        long secondSumInMillis = secondSumInMins * 60 *1000;
+        //czas przygotowania
+        //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
+        preparingTimeInMins = 15;
 
-
-
-        int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
-
-
-
-        alarmTimeInMillis = currenttimeLong + secondSumInMillis;
-
-
-        String alarmDayOfWeek = dayOfWeek;
-
-        alarmMinutes = (int) ((alarmTimeInMillis / (1000*60)) % 60);
-
-        alarmHour   = (int) ((alarmTimeInMillis / (1000*60*60)) % 24);
-
-        //zwikszenie godziny alarmu o jedna godzine, bo taki jest bład
-        int alarmHourCorrection =(int) (((alarmTimeInMillis + 1000*60*60) / (1000*60*60)) % 24);
 
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
 
         DateTime currentDaleTime = new DateTime();
-        int minutesToAdd = 1440*((alarmWeekDay-todayWeekDay+7)%7)-nowTimeInMins + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
+        int minuteOfHour = currentDaleTime.getMinuteOfHour();
+        int hourOfDay = currentDaleTime.getHourOfDay();
+        int dayOfWeek = currentDaleTime.getDayOfWeek();
+        int currentDayTimeInMinutes = hourOfDay*60 + minuteOfHour;
 
-        DateTime alarmDateTime = new DateTime();
-        alarmDateTime.plusMinutes(minutesToAdd);
-        alarmDateTime.plusMinutes(minutesToAdd).getDayOfWeek();
+        int minutesToAdd = 1440*((alarmWeekDay -dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
 
-        Log.d("timetest", "*****************************************************************");
-        Log.d("timetest", "currentDayOfTheWeek: " + currentDayOfTheWeek);
-        Log.d("timetest", "todayWeekDay: " + todayWeekDay);
-        Log.d("timetest", "nowHour: " + nowHour);
-        Log.d("timetest", "nowMinute: " + nowMinute);
-        Log.d("timetest", "nowTimeInMins: " + nowTimeInMins);
-        Log.d("timetest", "differcenceBetweenDays: " + differcenceBetweenDays);
+        alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
+        alarmHour = alarmDateTime.getHourOfDay();
+        alarmMinutes = alarmDateTime.getMinuteOfHour();
+        currentDaleTime.getMinuteOfHour();
+
+
+
+        Log.d("timetest", "######################################################################");
         Log.d("timetest", "AlarmPOJO.getRouteTimeLabel(): " + AlarmPOJO.getRouteTimeLabel());
 
         Log.d("timetest", "............................................................");
         Log.d("timetest", "goalTimeInMins: " + goalTimeInMins);
-        Log.d("timetest", "goalTimeInMins/h: " + ((goalTimeInMins /60)%24));
-        Log.d("timetest", "goalTimeInMins/min: " + (goalTimeInMins%60));
-        Log.d("timetest", "nowTimeInMins: " + nowTimeInMins);
         Log.d("timetest", "preparingTimeInMins: " + preparingTimeInMins);
         Log.d("timetest", "routeTimeInMinutes: " + routeTimeInMinutes);
-
         Log.d("timetest", "............................................................");
-
         Log.d("timetest", "ampm: " + ampm);
         Log.d("timetest", "clockHourInt: " + clockHourInt);
         Log.d("timetest", "goalHourInMins: " + goalHourInMins/60);
         Log.d("timetest", "goalMinute: " + goalMinute);
         Log.d("timetest", "goalHourInMins: " + goalHourInMins);
-        Log.d("timetest", "currenttimeLong: " + currenttimeLong);
-
-        Log.d("timetest", "currenttimeLongPlushoursSubstraction: " + currenttimeLongPlushoursSubstraction);
-        Log.d("timetest", "currenttimeLongPlushoursSubstractionH: " + currenttimeLongPlushoursSubstractionH);
-        Log.d("timetest", "currenttimeLongPlushoursSubstractionMin: " + currenttimeLongPlushoursSubstractionMin);
-
-        Log.d("timetest", "AlarmTimeInMillis: " + alarmTimeInMillis);
-        //Log.d("timetest", "differenceInDays: " + differenceInDays);
-        Log.d("timetest", "hoursSubstractionInMins: " + hoursSubstractionInMins);
-        Log.d("timetest", "hoursSubstractionInMins/h: " + ((hoursSubstractionInMins/60)%24));
-        Log.d("timetest", "hoursSubstractionInMins/min: " + (hoursSubstractionInMins%60));
-        Log.d("timetest", "firstSumInMins: " + firstSumInMins);
-        Log.d("timetest", "secondSumInMins: " + secondSumInMins);
-
+        Log.d("timetest", "............................................................");
         Log.d("timetest", "alarmHour: " + alarmHour);
-        Log.d("timetest", "alarmHourCorrection: " + alarmHourCorrection);
         Log.d("timetest", "alarmMinutes: " + alarmMinutes);
-        Log.d("timetest", "alarmDayOfWeek: " + alarmDayOfWeek);
+        Log.d("timetest", "alarmDayWeight: " + alarmDayWeight);
         Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
         Log.d("timetest", "minutesToAdd: " + minutesToAdd);
-        Log.d("timetest", "Day of week DateTime: " + alarmDateTime.plusMinutes(minutesToAdd));
-        Log.d("timetest", "alarmDateTime: " + alarmDateTime.plusMinutes(minutesToAdd).getDayOfWeek());
-        Log.d("timetest", "*********************************************************************");
+        Log.d("timetest", "alarmDateTime: " + alarmDateTime);
+        Log.d("timetest", "alarmDateTime: " + alarmDateTime.getDayOfWeek());
+        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
+
+        Log.d("timetest", "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     }
 
     private String setDisplayTime(String hour, String minute){

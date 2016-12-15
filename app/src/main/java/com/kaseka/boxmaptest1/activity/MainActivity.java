@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
-                startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
+                //startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
             }
         });
@@ -330,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
         AlarmPOJO.setRouteTimeInSeconds(routeTimeInSeconds);
         AlarmPOJO.setStartPoint(startPoint);
         AlarmPOJO.setDestinationPoint(destinationPoint);
+        AlarmPOJO.setTransportMode(transportMode.toString());
     }
 
 

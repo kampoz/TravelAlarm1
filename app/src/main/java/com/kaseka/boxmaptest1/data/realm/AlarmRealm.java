@@ -1,6 +1,8 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,11 @@ public class AlarmRealm extends RealmObject{
     private String routeTimeLabel;
     private Integer preparingTimeInMins;
     private Long alarmTimeInMillis;
-    private RealmList<LatLngRealm> LngLatPointsRealmList;
+    private RealmList<LatLngRealm> lngLatPointsRealmList;
+    private String alarmDateTimeData;
+    private String transportMode;
+    private String goalHourOfDay;
+    private String goalMinute;
 
 
     //gettery, settery
@@ -88,12 +94,12 @@ public class AlarmRealm extends RealmObject{
         this.destinationPoint = destinationPoint;
     }
 
-    public RealmList getLngLatPointsRealmList() {
-        return LngLatPointsRealmList;
+    public RealmList<LatLngRealm> getLngLatPointsRealmList() {
+        return lngLatPointsRealmList;
     }
 
-    public void setLngLatPointsRealmList(RealmList lngLatPointsRealmList) {
-        LngLatPointsRealmList = lngLatPointsRealmList;
+    public void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
+        this.lngLatPointsRealmList = lngLatPointsRealmList;
     }
 
     public String getStartPoint() {
@@ -171,6 +177,42 @@ public class AlarmRealm extends RealmObject{
         this.routeTimeInSeconds = routeTimeInSeconds;
     }
 
+
+    public String getAlarmDateTimeData() {
+        return alarmDateTimeData;
+    }
+
+    public void setAlarmDateTimeData(String alarmDateTimeData) {
+        this.alarmDateTimeData = alarmDateTimeData;
+    }
+
+
+    public String getTransportMode() {
+        return transportMode;
+    }
+
+    public void setTransportMode(String transportMode) {
+        this.transportMode = transportMode;
+    }
+
+
+    public String getGoalHourOfDay() {
+        return goalHourOfDay;
+    }
+
+    public void setGoalHourOfDay(String goalHourOfDay) {
+        this.goalHourOfDay = goalHourOfDay;
+    }
+
+    public String getGoalMinute() {
+        return goalMinute;
+    }
+
+    public void setGoalMinute(String goalMinute) {
+        this.goalMinute = goalMinute;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
     // inne metody i kwerendy
     // zamknięcie realma
     public void close() {

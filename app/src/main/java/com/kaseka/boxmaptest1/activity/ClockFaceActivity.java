@@ -3,10 +3,12 @@ package com.kaseka.boxmaptest1.activity;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 //import android.icu.util.Calendar;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
+import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
@@ -118,80 +121,6 @@ public class ClockFaceActivity extends AppCompatActivity {
         });
 
 
-        bSetAlarm.setOnClickListener(new View.OnClickListener() {
-
-            public TextView tvDialogAlarmHour;
-            public TextView tvDialogWeekDay;
-            public TextView tvDialogStartPoint;
-            public TextView tvDialogDestinationPoint;
-            public TextView tvDialogTransportMode;
-            public TextView tvDialogGoalTime;
-            public TextView tvDialogPreparingTime;
-            public Button bDialogAlarmModification;
-            public Button bDialogOK;
-
-            @Override
-            public void onClick(View v) {
-
-                //Uzupełenianie dalej AlarmPOJO, poprzednio w MainActivity
-                calculatingAlarmTimeInMillis();
-                setAlarmPojoObject();
-
-
-
-                Dialog dialog = new Dialog(ClockFaceActivity.this);
-                dialog.setContentView(R.layout.alarm_dialog);
-                dialog.setTitle("Alarm - ustawienia");
-                dialog.show();
-
-//                tvDialogAlarmHour = (TextView)findViewById(R.id.tvDialogAlarmHour);
-//                tvDialogWeekDay = (TextView)findViewById(R.id.tvDialogWeekDay);
-//                tvDialogStartPoint = (TextView)findViewById(R.id.tvDialogStartPoint);
-//                tvDialogDestinationPoint = (TextView)findViewById(R.id.tvDialogDestinationPoint);
-//                tvDialogTransportMode = (TextView)findViewById(R.id.tvDialogTransportMode);
-//                tvDialogGoalTime = (TextView)findViewById(R.id.tvDialogGoalTime);
-//                tvDialogPreparingTime = (TextView)findViewById(R.id.tvDialogPreparingTime);
-//                bDialogAlarmModification = (Button)findViewById(R.id.bDialogAlarmModification);
-//                bDialogOK  = (Button)findViewById(R.id.bDialogOK);
-//
-//
-//                tvDialogAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
-//                tvDialogWeekDay.setText(AlarmPOJO.getAlarmDayOfWeek());
-//                tvDialogStartPoint.setText("z: "+AlarmPOJO.getStartPoint());
-//                tvDialogDestinationPoint.setText("do: "+AlarmPOJO.getDestinationPoint());
-//                tvDialogTransportMode.setText("transport: "+AlarmPOJO.getTransportMode());
-//                tvDialogGoalTime.setText("na: "+AlarmPOJO.getGoalHourOfDay()+" : "+AlarmPOJO.getGoalMinute());
-//                tvDialogPreparingTime.setText("przygotowanie: "+AlarmPOJO.getPreparingTimeInMins()+" min.");
-
-
-
-
-//                bDialogAlarmModification.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        AlarmPOJO.setToNull();
-//
-//                        Intent startMainActivityIntent = new Intent(ClockFaceActivity.this, MainActivity.class);
-//                        ClockFaceActivity.this.startActivity(startMainActivityIntent);
-//                    }
-//                });
-//
-//                bDialogOK.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        AlarmPOJO.insertAlarm();
-//
-//                        Intent intent = new Intent(ClockFaceActivity.this, TripAlarmStartedService.class);
-//                        startService(intent);
-//                    }
-//                });
-
-
-
-            }
-        });
-
-
         bMonday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,6 +210,16 @@ public class ClockFaceActivity extends AppCompatActivity {
         });
     }
 
+    public void showDialog(View v){
+        calculatingAlarmTimeInMillis();
+        setAlarmPojoObject();
+
+        FragmentManager manager = getFragmentManager();
+        AlarmDialogFragment myDialog = new AlarmDialogFragment();
+        myDialog.show(manager, "myDialog");
+
+    }
+
     private void setAlarmPojoObject(){
         AlarmPOJO.setAlarmHour(alarmHour);
         AlarmPOJO.setAlarmMinute(alarmMinutes);
@@ -332,14 +271,16 @@ public class ClockFaceActivity extends AppCompatActivity {
         int minuteOfHour = currentDaleTime.getMinuteOfHour();
         int hourOfDay = currentDaleTime.getHourOfDay();
         int dayOfWeek = currentDaleTime.getDayOfWeek();
+
         int currentDayTimeInMinutes = hourOfDay*60 + minuteOfHour;
 
-        int minutesToAdd = 1440*((alarmWeekDay -dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
+        int minutesToAdd = 1440*((alarmWeekDay - dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
 
         alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
         alarmHour = alarmDateTime.getHourOfDay();
         alarmMinutes = alarmDateTime.getMinuteOfHour();
-        currentDaleTime.getMinuteOfHour();
+        this.dayOfWeek = String.valueOf(alarmDateTime.getDayOfWeek());
+        //currentDaleTime.getMinuteOfHour();
 
 
 

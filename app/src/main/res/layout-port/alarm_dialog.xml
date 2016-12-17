@@ -18,6 +18,7 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -26,6 +27,7 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -34,6 +36,7 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -42,6 +45,7 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -50,6 +54,7 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -58,36 +63,20 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
         android:id="@+id/tvDialogPreparingTime"
         android:layout_margin="10dp"/>
 
-
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+    <TextView
+        android:text="TextView"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorMyLightGrey"
-        android:weightSum="2">
-
-
-        <Button
-            android:text="Modyfikuj"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/bDialogAlarmModification"
-            android:layout_weight="1" />
-
-        <Button
-            android:text="OK"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/bDialogOK"
-            android:layout_weight="1" />
-    </LinearLayout>
-
+        android:textColor="@color/colorMyLightGrey"
+        android:id="@+id/tvDialogTravelTime"
+        android:layout_margin="10dp"/>
 
 </LinearLayout>

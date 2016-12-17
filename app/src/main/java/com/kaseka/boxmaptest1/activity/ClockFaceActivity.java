@@ -16,11 +16,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
+import com.kaseka.boxmaptest1.global.DayOfWeek;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
@@ -28,6 +30,8 @@ import com.kaseka.boxmaptest1.view.ClockView;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
+
+import java.util.Calendar;
 
 //import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -279,7 +283,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
         alarmHour = alarmDateTime.getHourOfDay();
         alarmMinutes = alarmDateTime.getMinuteOfHour();
-        this.dayOfWeek = String.valueOf(alarmDateTime.getDayOfWeek());
+        this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
         //currentDaleTime.getMinuteOfHour();
 
 
@@ -343,6 +347,20 @@ public class ClockFaceActivity extends AppCompatActivity {
         bAm.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
         bPm.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyYellow));
+    }
+
+    private String getDayName(int dayOfWeekNumber){
+        String dayOfWeekName = "";
+        switch(dayOfWeekNumber){
+            case 1: dayOfWeekName = DayOfWeek.MONDAY.toString();
+            case 2: dayOfWeekName = DayOfWeek.TUESDAY.toString();
+            case 3: dayOfWeekName = DayOfWeek.WENSDAY.toString();
+            case 4: dayOfWeekName = DayOfWeek.THURSDAY.toString();
+            case 5: dayOfWeekName = DayOfWeek.FRIDAY.toString();
+            case 6: dayOfWeekName = DayOfWeek.SATURDAY.toString();
+            case 7: dayOfWeekName = DayOfWeek.SUNDAY.toString();
+        }
+        return dayOfWeekName;
     }
 }
 

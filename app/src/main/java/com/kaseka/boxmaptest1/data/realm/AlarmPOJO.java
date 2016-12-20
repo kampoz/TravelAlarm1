@@ -265,6 +265,7 @@ public class AlarmPOJO {
         setPreparingTimeInMins(null);
         setAlarmTimeInMillis(null);
         setLngLatPointsRealmList(null);
+        lngLatPointsRealmList = new RealmList<>();
         setAlarmDateTimeData(null);
         setTransportMode(null);
 

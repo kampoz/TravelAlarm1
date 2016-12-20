@@ -201,7 +201,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsAmPmReaction(bAm);
-                amPm = 0;
+                amPm = DateTimeConstants.AM;
             }
         });
 
@@ -209,7 +209,7 @@ public class ClockFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonsAmPmReaction(bPm);
-                amPm = 1;
+                amPm = DateTimeConstants.PM;
             }
         });
     }
@@ -308,13 +308,13 @@ public class ClockFaceActivity extends AppCompatActivity {
         Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
         Log.d("timetest", "minutesToAdd: " + minutesToAdd);
         Log.d("timetest", "alarmDateTime: " + alarmDateTime);
-        Log.d("timetest", "alarmDateTime: " + alarmDateTime.getDayOfWeek());
+        Log.d("timetest", "alarmDateTime.getDayOfWeek(): " + alarmDateTime.getDayOfWeek());
         Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
 
         Log.d("timetest", "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     }
 
-    private String setDisplayTime(String hour, String minute){
+    public static String setDisplayTime(String hour, String minute){
         int intHour = Integer.parseInt(hour);
         int intMinute = Integer.parseInt(minute);
 
@@ -353,12 +353,19 @@ public class ClockFaceActivity extends AppCompatActivity {
         String dayOfWeekName = "";
         switch(dayOfWeekNumber){
             case 1: dayOfWeekName = DayOfWeek.MONDAY.toString();
+                break;
             case 2: dayOfWeekName = DayOfWeek.TUESDAY.toString();
+                break;
             case 3: dayOfWeekName = DayOfWeek.WENSDAY.toString();
+                break;
             case 4: dayOfWeekName = DayOfWeek.THURSDAY.toString();
+                break;
             case 5: dayOfWeekName = DayOfWeek.FRIDAY.toString();
+                break;
             case 6: dayOfWeekName = DayOfWeek.SATURDAY.toString();
+                break;
             case 7: dayOfWeekName = DayOfWeek.SUNDAY.toString();
+                break;
         }
         return dayOfWeekName;
     }

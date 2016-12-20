@@ -40,7 +40,8 @@ public class AlarmDialogFragment extends DialogFragment{
         final TextView tvDialogPreparingTime = (TextView) view.findViewById(R.id.tvDialogPreparingTime);
         final TextView tvDialogTravelTime = (TextView) view.findViewById(R.id.tvDialogTravelTime);
 
-        tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
+        //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
+        tvAlarmHour.setText(ClockFaceActivity.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
         tvDialogWeekDay.setText("Alarm day: "+AlarmPOJO.getAlarmDayOfWeek());
         tvDialogStartPoint.setText("z: "+AlarmPOJO.getStartPoint());
         tvDialogDestinationPoint.setText("do: "+AlarmPOJO.getDestinationPoint());
@@ -55,6 +56,7 @@ public class AlarmDialogFragment extends DialogFragment{
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                AlarmPOJO.setToNull();
                 Intent startMainActivityIntent = new Intent(getActivity(), MainActivity.class);
                 getActivity().startActivity(startMainActivityIntent);
                 //         AlarmDialogFragment.this.startActivity(startMainActivityIntent);

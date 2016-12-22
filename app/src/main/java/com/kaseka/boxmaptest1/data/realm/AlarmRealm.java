@@ -16,7 +16,7 @@ import io.realm.annotations.PrimaryKey;
 public class AlarmRealm extends RealmObject{
 
     @PrimaryKey
-    private int id;
+    private long id;
     private boolean isOn = false;
     private boolean isAlarmPeriodic = false;
     private int alarmHour;
@@ -38,11 +38,11 @@ public class AlarmRealm extends RealmObject{
 
 
     //gettery, settery
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

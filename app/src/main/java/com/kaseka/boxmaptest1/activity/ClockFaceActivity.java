@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
+import com.kaseka.boxmaptest1.helper.DateTimeAsync;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
@@ -32,6 +33,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
 import java.util.Calendar;
+import java.util.Date;
 
 //import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -88,6 +90,9 @@ public class ClockFaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clock_face);
         getSupportActionBar().hide();
 
+//        DateTime dateTime1;
+//        DateTimeAsync async = new DateTimeAsync();
+//        dateTime1 = async.execute();
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -215,12 +220,19 @@ public class ClockFaceActivity extends AppCompatActivity {
     }
 
     public void showDialog(View v){
+            Log.d("showDialog", "1");
         calculatingAlarmTimeInMillis();
+            Log.d("showDialog", "2");
+
         setAlarmPojoObject();
+            Log.d("showDialog", "3");
 
         FragmentManager manager = getFragmentManager();
+            Log.d("showDialog", "4");
         AlarmDialogFragment myDialog = new AlarmDialogFragment();
+            Log.d("showDialog", "5");
         myDialog.show(manager, "myDialog");
+            Log.d("showDialog", "6");
 
     }
 
@@ -245,73 +257,108 @@ public class ClockFaceActivity extends AppCompatActivity {
     private void calculatingAlarmTimeInMillis(){
 
         //dzien budzenia jako liczba 1-7
+        Log.d("dupa", "1");
+
+
         int alarmWeekDay = alarmDayWeight;
 
+        Log.d("dupa", "2");
         //Zamiana czasu zegarka na minuty, dla latwiejszych obliczeń
         int ampm = amPm;
+
+        Log.d("dupa", "3");
         clockHourInt = Integer.parseInt(clockHour);
 
+        Log.d("dupa", "4");
         goalHourInMins = clockHourInt*60;
+        Log.d("dupa", "5");
         if(ampm ==1){
+            Log.d("dupa", "6");
             goalHourInMins = (clockHourInt + 12)*60 ;
+            Log.d("dupa", "7");
         }
 
+        Log.d("dupa", "8");
         int goalMinute = Integer.parseInt(clockMinute);
+        Log.d("dupa", "9");
         int goalTimeInMins = goalHourInMins + goalMinute;
+        Log.d("dupa", "10");
 
-
-        int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
+        //int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
         //routeTimeInMinutes = routeTimeInSeconds / 60;
         routeTimeInMinutes = 15;
+        Log.d("dupa", "11");
 
         //czas przygotowania
         //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
         preparingTimeInMins = 15;
 
+        Log.d("dupa", "12");
+
 
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
 
-        DateTime currentDaleTime = new DateTime();
+        Date date = new Date();
+        Log.d("dupa", "date: "+date.toString());
+
+        DateTime currentDaleTime = new DateTime(date);
+        Log.d("dupa", "DateTime().toString: "+currentDaleTime.toString());
+        Calendar calendarTime = Calendar.getInstance();
+        String c = calendarTime.toString();
+        Log.d("dupa", "Calendar String: "+c);
+
+
+        Log.d("dupa", "13");
         int minuteOfHour = currentDaleTime.getMinuteOfHour();
+        Log.d("dupa", "14");
         int hourOfDay = currentDaleTime.getHourOfDay();
+        Log.d("dupa", "15");
         int dayOfWeek = currentDaleTime.getDayOfWeek();
 
+        Log.d("dupa", "16");
         int currentDayTimeInMinutes = hourOfDay*60 + minuteOfHour;
 
+        Log.d("dupa", "17");
         int minutesToAdd = 1440*((alarmWeekDay - dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
 
+        Log.d("dupa", "18");
         alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
+        Log.d("dupa", "19");
         alarmHour = alarmDateTime.getHourOfDay();
+        Log.d("dupa", "20");
         alarmMinutes = alarmDateTime.getMinuteOfHour();
+        Log.d("dupa", "21");
         this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
+
+        Log.d("dupa", "22");
         //currentDaleTime.getMinuteOfHour();
 
 
 
-        Log.d("timetest", "######################################################################");
-        Log.d("timetest", "AlarmPOJO.getRouteTimeLabel(): " + AlarmPOJO.getRouteTimeLabel());
-
-        Log.d("timetest", "............................................................");
-        Log.d("timetest", "goalTimeInMins: " + goalTimeInMins);
-        Log.d("timetest", "preparingTimeInMins: " + preparingTimeInMins);
-        Log.d("timetest", "routeTimeInMinutes: " + routeTimeInMinutes);
-        Log.d("timetest", "............................................................");
-        Log.d("timetest", "ampm: " + ampm);
-        Log.d("timetest", "clockHourInt: " + clockHourInt);
-        Log.d("timetest", "goalHourInMins: " + goalHourInMins/60);
-        Log.d("timetest", "goalMinute: " + goalMinute);
-        Log.d("timetest", "goalHourInMins: " + goalHourInMins);
-        Log.d("timetest", "............................................................");
-        Log.d("timetest", "alarmHour: " + alarmHour);
-        Log.d("timetest", "alarmMinutes: " + alarmMinutes);
-        Log.d("timetest", "alarmDayWeight: " + alarmDayWeight);
-        Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
-        Log.d("timetest", "minutesToAdd: " + minutesToAdd);
-        Log.d("timetest", "alarmDateTime: " + alarmDateTime);
-        Log.d("timetest", "alarmDateTime.getDayOfWeek(): " + alarmDateTime.getDayOfWeek());
-        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
-
-        Log.d("timetest", "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+//        Log.d("timetest", "######################################################################");
+//        Log.d("timetest", "AlarmPOJO.getRouteTimeLabel(): " + AlarmPOJO.getRouteTimeLabel());
+//
+//        Log.d("timetest", "............................................................");
+//        Log.d("timetest", "goalTimeInMins: " + goalTimeInMins);
+//        Log.d("timetest", "preparingTimeInMins: " + preparingTimeInMins);
+//        Log.d("timetest", "routeTimeInMinutes: " + routeTimeInMinutes);
+//        Log.d("timetest", "............................................................");
+//        Log.d("timetest", "ampm: " + ampm);
+//        Log.d("timetest", "clockHourInt: " + clockHourInt);
+//        Log.d("timetest", "goalHourInMins: " + goalHourInMins/60);
+//        Log.d("timetest", "goalMinute: " + goalMinute);
+//        Log.d("timetest", "goalHourInMins: " + goalHourInMins);
+//        Log.d("timetest", "............................................................");
+//        Log.d("timetest", "alarmHour: " + alarmHour);
+//        Log.d("timetest", "alarmMinutes: " + alarmMinutes);
+//        Log.d("timetest", "alarmDayWeight: " + alarmDayWeight);
+//        Log.d("timetest", "currentDaleTime: " + currentDaleTime.toString());
+//        Log.d("timetest", "minutesToAdd: " + minutesToAdd);
+//        Log.d("timetest", "alarmDateTime: " + alarmDateTime);
+//        Log.d("timetest", "alarmDateTime.getDayOfWeek(): " + alarmDateTime.getDayOfWeek());
+//        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
+//
+//        Log.d("timetest", "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     }
 
     public static String setDisplayTime(String hour, String minute){

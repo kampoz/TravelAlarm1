@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.activity.ClockFaceActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
@@ -47,7 +48,7 @@ public class AlarmDialogFragment extends DialogFragment{
         tvDialogDestinationPoint.setText("do: "+AlarmPOJO.getDestinationPoint());
         tvDialogTransportMode.setText("transport: "+AlarmPOJO.getTransportMode());
         tvDialogGoalTime.setText("arrive time: "+AlarmPOJO.getGoalHourOfDay()+" : "+AlarmPOJO.getGoalMinute());
-        tvDialogPreparingTime.setText("preparig time: "+AlarmPOJO.getPreparingTimeInMins());
+        tvDialogPreparingTime.setText("preparig time: "+AlarmPOJO.getPreparingTimeInMins()+" mins");
         tvDialogTravelTime.setText("travel time: "+AlarmPOJO.getRouteTimeLabel());
 
 
@@ -66,7 +67,10 @@ public class AlarmDialogFragment extends DialogFragment{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                AlarmPOJO.insertAlarmToRealm();
 
+                Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
+                getActivity().startActivity(startAlarmListActivityIntent);
             }
         });
 

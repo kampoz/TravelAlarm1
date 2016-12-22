@@ -34,7 +34,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         // tworzymy źródło danych - tablicę z artykułami
         ArrayList<AlarmRealm> alarms = new ArrayList<>();
 
-        setTestRealmDataBase();
+        //setTestRealmDataBase();
 
         alarms.addAll(
                 Realm.getDefaultInstance().where(AlarmRealm.class).findAll()

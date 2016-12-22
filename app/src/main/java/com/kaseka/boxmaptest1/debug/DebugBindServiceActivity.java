@@ -41,11 +41,11 @@ public class DebugBindServiceActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                try {
-                Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 if (tripAlarmBoundService != null) {
                     routeTime = String.valueOf(tripAlarmBoundService.getRouteTimeInSeconds());
                 }

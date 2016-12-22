@@ -63,10 +63,10 @@ public class TripAlarmStartedService extends IntentService {
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
 
-        try {
+        //try {
             for(int i=0; i<10; i++){
 
-                Thread.sleep(5000);
+                //Thread.sleep(5000);
 
                 String text = intent.getStringExtra(EXTRA_MESSAGE);
                 //showtext(text);
@@ -75,10 +75,10 @@ public class TripAlarmStartedService extends IntentService {
 
                 getRouteTime();
             }
-        } catch (InterruptedException e) {
+        //} catch (InterruptedException e) {
 
-            e.printStackTrace();
-        }
+           // e.printStackTrace();
+//        }
 
     }
 

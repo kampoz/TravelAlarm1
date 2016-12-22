@@ -8,7 +8,7 @@ import io.realm.RealmList;
 
 public class AlarmPOJO {
 
-    private static int id;
+    private static long id;
     private static boolean isOn = false;
     private static boolean isAlarmPeriodic = false;
     private static int alarmHour;
@@ -90,11 +90,11 @@ public class AlarmPOJO {
         AlarmPOJO.destinationPoint = destinationPoint;
     }
 
-    public static int getId() {
+    public static long getId() {
         return id;
     }
 
-    public static void setId(int id) {
+    public static void setId(long id) {
         AlarmPOJO.id = id;
     }
 
@@ -193,10 +193,17 @@ public class AlarmPOJO {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //dodanie nowego alarmu
-    public static void insertAlarm(){
-        Realm.getDefaultInstance().beginTransaction();
-        AlarmRealm alarmRealm = Realm.getDefaultInstance().createObject(AlarmRealm.class);
+    public static void insertAlarmToRealm(){
+//        Realm defaultInstance = Realm.getDefaultInstance();
+//
+//        defaultInstance.beginTransaction();
 
+        final AlarmRealm alarmRealm = new AlarmRealm();
+
+        //int newId = defaultInstance.where(AlarmRealm.class).max("id").intValue() + 1;
+        long newId = 10;
+
+        alarmRealm.setId( newId );
 
         alarmRealm.setAlarmHour(getAlarmHour());
         alarmRealm.setAlarmMinute(getAlarmMinute());
@@ -215,7 +222,16 @@ public class AlarmPOJO {
         alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
         alarmRealm.setGoalMinute(getGoalMinute());
 
-        Realm.getDefaultInstance().commitTransaction();
+        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(alarmRealm);
+            }
+        });
+        Realm.getDefaultInstance().close();
+
+        //defaultInstance.createObject(AlarmRealm.class);
+        //defaultInstance.commitTransaction();
     }
 
 

@@ -2,31 +2,27 @@ package com.kaseka.boxmaptest1.activity;
 
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 //import android.icu.util.Calendar;
 
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
-import com.kaseka.boxmaptest1.helper.DateTimeAsync;
+import com.kaseka.boxmaptest1.helper.FastDateTimeZoneProvider;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 import com.kaseka.boxmaptest1.view.ClockView;
 
 import org.joda.time.DateTime;
@@ -81,11 +77,13 @@ public class ClockFaceActivity extends AppCompatActivity {
     DateTime alarmDateTime;
     int goalHourInMins = 0;
 
-
+    DateTime dateTime1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       //  System.setProperty("org.joda.time.DateTimeZone.Provider", "com.kaseka.boxmaptest1.helper.FastDateTimeZoneProvider");
+
 //        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_clock_face);
         getSupportActionBar().hide();
@@ -93,6 +91,9 @@ public class ClockFaceActivity extends AppCompatActivity {
 //        DateTime dateTime1;
 //        DateTimeAsync async = new DateTimeAsync();
 //        dateTime1 = async.execute();
+
+        MyAsyncTask dateTimeAsyncTask = new MyAsyncTask();
+        dateTimeAsyncTask.execute();
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -219,6 +220,14 @@ public class ClockFaceActivity extends AppCompatActivity {
         });
     }
 
+    private class MyAsyncTask extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            dateTime1 = new DateTime();
+            return null;
+        }
+    }
+
     public void showDialog(View v){
             Log.d("showDialog", "1");
         calculatingAlarmTimeInMillis();
@@ -299,9 +308,12 @@ public class ClockFaceActivity extends AppCompatActivity {
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
 
         Date date = new Date();
+
         Log.d("dupa", "date: "+date.toString());
 
-        DateTime currentDaleTime = new DateTime(date);
+        //DateTime currentDaleTime = new DateTime();
+        DateTime currentDaleTime = dateTime1;
+
         Log.d("dupa", "DateTime().toString: "+currentDaleTime.toString());
         Calendar calendarTime = Calendar.getInstance();
         String c = calendarTime.toString();

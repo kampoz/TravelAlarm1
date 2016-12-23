@@ -2,6 +2,7 @@ package com.kaseka.boxmaptest1.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -39,6 +40,7 @@ import android.widget.Toast;
 
 //+import com.mapbox.services.geocoding.v5.models.GeocodingFeature;
 
+import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleTransportMode transportMode = GoogleTransportMode.driving;
     private String startPoint;
     private String destinationPoint;
+    public static DateTime dateTime1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         //Realm realm = Realm.getDefaultInstance();
         // ... Do something ...
         //realm.close();
+
+        new MyAsyncTask().execute();
 
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
@@ -256,6 +261,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            dateTime1 = new DateTime();
+            return null;
+        }
+    }
+
 
     private void buttonsReaction(ImageButton imageButton){
         ibCar.setBackgroundColor(Color.BLACK);

@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 //import android.icu.util.Calendar;
 
-import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
-import com.kaseka.boxmaptest1.helper.FastDateTimeZoneProvider;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.view.ClockView;
@@ -29,7 +27,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
 import java.util.Calendar;
-import java.util.Date;
 
 //import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -77,7 +74,7 @@ public class ClockFaceActivity extends AppCompatActivity {
     DateTime alarmDateTime;
     int goalHourInMins = 0;
 
-    DateTime dateTime1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +89,7 @@ public class ClockFaceActivity extends AppCompatActivity {
 //        DateTimeAsync async = new DateTimeAsync();
 //        dateTime1 = async.execute();
 
-        MyAsyncTask dateTimeAsyncTask = new MyAsyncTask();
-        dateTimeAsyncTask.execute();
+
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -220,13 +216,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         });
     }
 
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void>{
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            dateTime1 = new DateTime();
-            return null;
-        }
-    }
+
 
     public void showDialog(View v){
             Log.d("showDialog", "1");
@@ -266,37 +256,28 @@ public class ClockFaceActivity extends AppCompatActivity {
     private void calculatingAlarmTimeInMillis(){
 
         //dzien budzenia jako liczba 1-7
-        Log.d("dupa", "1");
-
-
         int alarmWeekDay = alarmDayWeight;
 
-        Log.d("dupa", "2");
+
         //Zamiana czasu zegarka na minuty, dla latwiejszych obliczeń
         int ampm = amPm;
 
-        Log.d("dupa", "3");
-        clockHourInt = Integer.parseInt(clockHour);
 
-        Log.d("dupa", "4");
+        clockHourInt = Integer.parseInt(clockHour);
         goalHourInMins = clockHourInt*60;
-        Log.d("dupa", "5");
+
         if(ampm ==1){
-            Log.d("dupa", "6");
             goalHourInMins = (clockHourInt + 12)*60 ;
-            Log.d("dupa", "7");
         }
 
-        Log.d("dupa", "8");
+
         int goalMinute = Integer.parseInt(clockMinute);
-        Log.d("dupa", "9");
         int goalTimeInMins = goalHourInMins + goalMinute;
-        Log.d("dupa", "10");
+
 
         //int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
         //routeTimeInMinutes = routeTimeInSeconds / 60;
         routeTimeInMinutes = 15;
-        Log.d("dupa", "11");
 
         //czas przygotowania
         //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
@@ -306,13 +287,9 @@ public class ClockFaceActivity extends AppCompatActivity {
 
 
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
-
-        Date date = new Date();
-
-        Log.d("dupa", "date: "+date.toString());
-
         //DateTime currentDaleTime = new DateTime();
-        DateTime currentDaleTime = dateTime1;
+        DateTime currentDaleTime = MainActivity.dateTime1;
+
 
         Log.d("dupa", "DateTime().toString: "+currentDaleTime.toString());
         Calendar calendarTime = Calendar.getInstance();
@@ -322,27 +299,25 @@ public class ClockFaceActivity extends AppCompatActivity {
 
         Log.d("dupa", "13");
         int minuteOfHour = currentDaleTime.getMinuteOfHour();
-        Log.d("dupa", "14");
+
         int hourOfDay = currentDaleTime.getHourOfDay();
-        Log.d("dupa", "15");
+
         int dayOfWeek = currentDaleTime.getDayOfWeek();
 
-        Log.d("dupa", "16");
+
         int currentDayTimeInMinutes = hourOfDay*60 + minuteOfHour;
 
-        Log.d("dupa", "17");
+
         int minutesToAdd = 1440*((alarmWeekDay - dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
 
-        Log.d("dupa", "18");
-        alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
-        Log.d("dupa", "19");
-        alarmHour = alarmDateTime.getHourOfDay();
-        Log.d("dupa", "20");
-        alarmMinutes = alarmDateTime.getMinuteOfHour();
-        Log.d("dupa", "21");
-        this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
 
-        Log.d("dupa", "22");
+        alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
+
+        alarmHour = alarmDateTime.getHourOfDay();
+
+        alarmMinutes = alarmDateTime.getMinuteOfHour();
+
+        this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
         //currentDaleTime.getMinuteOfHour();
 
 

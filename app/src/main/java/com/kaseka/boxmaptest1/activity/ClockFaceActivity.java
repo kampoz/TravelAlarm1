@@ -287,8 +287,8 @@ public class ClockFaceActivity extends AppCompatActivity {
 
 
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
-        //DateTime currentDaleTime = new DateTime();
-        DateTime currentDaleTime = MainActivity.dateTime1;
+        DateTime currentDaleTime = new DateTime();
+        //DateTime currentDaleTime = MainActivity.dateTime1;
 
 
         Log.d("dupa", "DateTime().toString: "+currentDaleTime.toString());

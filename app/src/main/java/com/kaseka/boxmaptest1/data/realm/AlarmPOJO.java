@@ -204,7 +204,6 @@ public class AlarmPOJO {
         long newId = 10;
 
         alarmRealm.setId( newId );
-
         alarmRealm.setAlarmHour(getAlarmHour());
         alarmRealm.setAlarmMinute(getAlarmMinute());
         alarmRealm.setAmPm(getAmPm());

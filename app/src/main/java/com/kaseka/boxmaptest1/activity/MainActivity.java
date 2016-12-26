@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         ibPublicTransport.setBackgroundColor(Color.BLACK);
         ibBicycle.setBackgroundColor(Color.BLACK);
         ibWalk.setBackgroundColor(Color.BLACK);
-        imageButton.setBackgroundColor(Color.YELLOW);
+        imageButton.setBackgroundColor(Color.GREEN);
     }
 
     private void setRequest(){

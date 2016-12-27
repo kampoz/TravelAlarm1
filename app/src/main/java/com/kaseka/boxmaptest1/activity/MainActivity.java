@@ -277,7 +277,13 @@ public class MainActivity extends AppCompatActivity {
         ibPublicTransport.setBackgroundColor(Color.BLACK);
         ibBicycle.setBackgroundColor(Color.BLACK);
         ibWalk.setBackgroundColor(Color.BLACK);
-        imageButton.setBackgroundColor(Color.GREEN);
+        ibCar.setColorFilter(null);
+        ibPublicTransport.setColorFilter(null);;
+        ibBicycle.setColorFilter(null);;
+        ibWalk.setColorFilter(null);
+        //imageButton.setBackgroundColor(Color.GREEN);
+        //imageButton.setBackgroundColor(0xFF00FF00);
+        imageButton.setColorFilter(getResources().getColor(R.color.colorMyLightGreen));
     }
 
     private void setRequest(){

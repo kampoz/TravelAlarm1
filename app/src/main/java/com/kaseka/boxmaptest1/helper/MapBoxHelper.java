@@ -53,7 +53,7 @@ public class MapBoxHelper {
 
         map.addPolyline(new PolylineOptions()
                 .add(pointsArray)
-                .color(Color.parseColor("#ff0000"))
+                .color(Color.parseColor("#42f474"))
                 .alpha(0.65f)
                 .width(5));
         String firtsPolyPoint = points.get(0).toString();

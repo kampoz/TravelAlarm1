@@ -372,13 +372,14 @@ public class ClockFaceActivity extends AppCompatActivity {
         bFriday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
         bSaturday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
         bSunday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
-        button.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyLightGreen));
+        button.setBackgroundResource(R.drawable.light_green_button_shape);
+        //button.setTextColor(ContextCompat.getColor(this, R.color.colorMyBlack));
     }
 
     private void buttonsAmPmReaction(Button button){
         bAm.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
         bPm.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyBlack));
-        button.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMyYellow));
+        button.setBackgroundResource(R.drawable.light_green_button_shape);
     }
 
     private String getDayName(int dayOfWeekNumber){

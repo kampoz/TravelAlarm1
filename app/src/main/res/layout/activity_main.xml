@@ -118,7 +118,7 @@
                         android:id="@+id/bStart"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Get rout"
+                        android:text="Set rout"
                         android:background="@color/colorMyLightGreen"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -160,7 +160,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
-                    android:hint="Czas przejazdu:"
+                    android:hint="Route time:"
                     android:id="@+id/tvRouteTime" />
 
 

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.activity.MainActivity;
 
 
 public class CustomAutocompleteFragment extends PlaceAutocompleteFragment {
@@ -19,12 +20,12 @@ public class CustomAutocompleteFragment extends PlaceAutocompleteFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View var4 = super.onCreateView(inflater, container, savedInstanceState);
-        var4.setBackground(getResources().getDrawable(R.drawable.search_box_shape));
+        var4.setBackground(getResources().getDrawable(R.drawable.google_search_box_shape));
+
 
         etInput = (EditText)var4.findViewById(com.google.android.gms.R.id.place_autocomplete_search_input);
-        etInput.setHintTextColor(getResources().getColor(R.color.colorMyLightGrey));
-        etInput.setTextColor(getResources().getColor(R.color.colorMyLightGreen));
-
+        etInput.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorMyLightGrey));
+        etInput.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorMyLightGreen));
         return var4;
     }
 

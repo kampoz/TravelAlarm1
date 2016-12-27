@@ -2,11 +2,10 @@ package com.kaseka.boxmaptest1.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.adapter.MyAdapter;
+import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 
 import java.util.ArrayList;
@@ -40,9 +39,11 @@ public class AlarmsListActivity extends AppCompatActivity {
                 Realm.getDefaultInstance().where(AlarmRealm.class).findAll()
         );
         // tworzymy adapter oraz łączymy go z RecyclerView
-        recyclerView.setAdapter(new MyAdapter(alarms, recyclerView));
+        recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
     }
 
+
+    //tworzenie probnych alarmów do wczytania na liste
     private void setTestRealmDataBase() {
         for (int i = 0; i < 10; ++i) {
             final AlarmRealm alarmRealm = new AlarmRealm();

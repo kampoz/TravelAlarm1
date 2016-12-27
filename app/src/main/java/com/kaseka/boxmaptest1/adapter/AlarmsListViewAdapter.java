@@ -1,17 +1,20 @@
 package com.kaseka.boxmaptest1.adapter;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class AlarmsListViewAdapter extends RecyclerView.Adapter {
 
     // źródło danych
     private ArrayList<AlarmRealm> alarms = new ArrayList<>();
@@ -26,18 +29,22 @@ public class MyAdapter extends RecyclerView.Adapter {
         public TextView tvAlarmHour;
         public TextView tvAlarmDay;
         public TextView tvDestinaitonPoint;
+        public TextView tvDestinaitonHour;
+        public Button bEdit;
 
 
         public MyViewHolder(View pItem) {
             super(pItem);
             tvAlarmHour = (TextView) pItem.findViewById(R.id.tvAlarmMhour);
             tvAlarmDay = (TextView) pItem.findViewById(R.id.tvAlarmDay);
-            tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
+//            tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
+//            tvDestinaitonHour = (TextView) pItem.findViewById(R.id.tvDestinationHour);
+            //bEdit = (Button) pItem.findViewById(R.id.bEdit);
         }
     }
 
     // konstruktor adaptera
-    public MyAdapter(ArrayList<AlarmRealm> mAlarms, RecyclerView pRecyclerView){
+    public AlarmsListViewAdapter(ArrayList<AlarmRealm> mAlarms, RecyclerView pRecyclerView){
         alarms = mAlarms;
         mRecyclerView = pRecyclerView;
     }
@@ -70,9 +77,12 @@ public class MyAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
         // uzupełniamy layout alarmu
         AlarmRealm alarmRealm = alarms.get(i);
-        ((MyViewHolder) viewHolder).tvAlarmHour.setText(String.valueOf(alarmRealm.getAlarmHour()));
+        ((MyViewHolder) viewHolder).tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(
+                String.valueOf(alarmRealm.getAlarmHour()), String.valueOf(alarmRealm.getAlarmMinute())));
         ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());
-        ((MyViewHolder) viewHolder).tvDestinaitonPoint.setText(alarmRealm.getDestinationPoint());
+//        ((MyViewHolder) viewHolder).tvDestinaitonPoint.setText("to: "+alarmRealm.getDestinationPoint());
+//        ((MyViewHolder) viewHolder).tvDestinaitonHour.setText("arrive: "+MyDisplayTimeHelper.setDisplayTime(
+//                String.valueOf(alarmRealm.getGoalHourOfDay()), String.valueOf(alarmRealm.getGoalMinute())));
     }
 
     @Override

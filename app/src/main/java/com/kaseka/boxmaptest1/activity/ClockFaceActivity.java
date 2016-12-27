@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
+import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.view.ClockView;
@@ -118,10 +119,7 @@ public class ClockFaceActivity extends AppCompatActivity {
                 clockMinute = clockView.getMinute(clockView.getIvMinuteHand().getRotation()).toString();
 
                 ivHourDisplay.setText(
-                        setDisplayTime(
-                                clockHour,
-                                clockMinute
-                        )
+                        MyDisplayTimeHelper.setDisplayTime(clockHour, clockMinute)
                 );
             }
         });

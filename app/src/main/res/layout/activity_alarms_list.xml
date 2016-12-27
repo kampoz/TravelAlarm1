@@ -11,10 +11,11 @@
         android:id="@+id/tvLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alarmy"
+        android:text="Alarms"
         android:textColor="@color/colorMyWhite"
         android:textSize="30dp"
         android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
         />
 
     <android.support.v7.widget.RecyclerView

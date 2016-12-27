@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         //realm.close();
 
         new MyAsyncTask().execute();
+        //dateTime1 = null;
 
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);

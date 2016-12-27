@@ -1,6 +1,7 @@
 package com.kaseka.boxmaptest1.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class CustomAutocompleteFragment extends PlaceAutocompleteFragment {
 
         etInput = (EditText)var4.findViewById(com.google.android.gms.R.id.place_autocomplete_search_input);
         etInput.setHintTextColor(getResources().getColor(R.color.colorMyLightGrey));
-        etInput.setTextColor(getResources().getColor(R.color.colorMyYellow));
+        etInput.setTextColor(getResources().getColor(R.color.colorMyLightGreen));
 
         return var4;
     }

@@ -18,6 +18,7 @@ import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.activity.ClockFaceActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
+import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 public class AlarmDialogFragment extends DialogFragment{
 
@@ -42,12 +43,14 @@ public class AlarmDialogFragment extends DialogFragment{
         final TextView tvDialogTravelTime = (TextView) view.findViewById(R.id.tvDialogTravelTime);
 
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
-        tvAlarmHour.setText(ClockFaceActivity.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
+        tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
         tvDialogWeekDay.setText("Alarm day: "+AlarmPOJO.getAlarmDayOfWeek());
         tvDialogStartPoint.setText("z: "+AlarmPOJO.getStartPoint());
         tvDialogDestinationPoint.setText("do: "+AlarmPOJO.getDestinationPoint());
         tvDialogTransportMode.setText("transport: "+AlarmPOJO.getTransportMode());
         tvDialogGoalTime.setText("arrive time: "+AlarmPOJO.getGoalHourOfDay()+" : "+AlarmPOJO.getGoalMinute());
+        tvDialogGoalTime.setText("arrive time: "+MyDisplayTimeHelper
+                .setDisplayTime(String.valueOf(AlarmPOJO.getGoalHourOfDay()),String.valueOf(AlarmPOJO.getGoalMinute())));
         tvDialogPreparingTime.setText("preparig time: "+AlarmPOJO.getPreparingTimeInMins()+" mins");
         tvDialogTravelTime.setText("travel time: "+AlarmPOJO.getRouteTimeLabel());
 

@@ -70,6 +70,7 @@ public class AlarmDialogFragment extends DialogFragment{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 AlarmPOJO.insertAlarmToRealm();
 
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);

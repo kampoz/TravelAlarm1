@@ -1,9 +1,12 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
+import android.util.Log;
+
 import org.joda.time.DateTime;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 
 public class AlarmPOJO {
@@ -27,7 +30,6 @@ public class AlarmPOJO {
     private static String transportMode;
     private static String goalHourOfDay;
     private static String goalMinute;
-
 
 
     public static String getAlarmDayOfWeek() {
@@ -139,8 +141,6 @@ public class AlarmPOJO {
     }
 
 
-
-
     public static int getRouteTimeInSeconds() {
         return routeTimeInSeconds;
     }
@@ -193,17 +193,19 @@ public class AlarmPOJO {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //dodanie nowego alarmu
-    public static void insertAlarmToRealm(){
-//        Realm defaultInstance = Realm.getDefaultInstance();
-//
-//        defaultInstance.beginTransaction();
+    public static void insertAlarmToRealm() {
 
         final AlarmRealm alarmRealm = new AlarmRealm();
+        long newId;
 
-        //int newId = defaultInstance.where(AlarmRealm.class).max("id").intValue() + 1;
-        long newId = 10;
+        Realm defaultInstance = Realm.getDefaultInstance();
+        Number oldMaxId = defaultInstance.where(AlarmRealm.class).max("id");
 
-        alarmRealm.setId( newId );
+        Log.d("defaultInstanceID", "max id: " + oldMaxId.toString());
+        newId = oldMaxId.intValue() + 1;
+        Log.d("defaultInstanceID", "newId: " + newId);
+
+        alarmRealm.setId(newId);
         alarmRealm.setAlarmHour(getAlarmHour());
         alarmRealm.setAlarmMinute(getAlarmMinute());
         alarmRealm.setAmPm(getAmPm());
@@ -221,18 +223,13 @@ public class AlarmPOJO {
         alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
         alarmRealm.setGoalMinute(getGoalMinute());
 
-        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+        defaultInstance.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(alarmRealm);
             }
         });
-        Realm.getDefaultInstance().close();
-
-        //defaultInstance.createObject(AlarmRealm.class);
-        //defaultInstance.commitTransaction();
     }
-
 
 
     // aktualizacja alarmu w bazie
@@ -264,7 +261,7 @@ public class AlarmPOJO {
     }
 
 
-    public static void setToNull(){
+    public static void setToNull() {
 
         setId(0);
         setIsOn(false);
@@ -284,7 +281,9 @@ public class AlarmPOJO {
         setAlarmDateTimeData(null);
         setTransportMode(null);
 
-    };
+    }
+
+    ;
 
     //generowanie id
     private int generateId() {

@@ -217,7 +217,6 @@ public class ClockFaceActivity extends AppCompatActivity {
 
 
     public void showDialog(View v){
-
         calculatingAlarmTimeInMillis();
         setAlarmPojoObject();
         FragmentManager manager = getFragmentManager();
@@ -248,18 +247,14 @@ public class ClockFaceActivity extends AppCompatActivity {
         //dzien budzenia jako liczba 1-7
         int alarmWeekDay = alarmDayWeight;
 
-
         //Zamiana czasu zegarka na minuty, dla latwiejszych obliczeń
         int ampm = amPm;
-
-
         clockHourInt = Integer.parseInt(clockHour);
         goalHourInMins = clockHourInt*60;
 
         if(ampm ==1){
             goalHourInMins = (clockHourInt + 12)*60 ;
         }
-
 
         int goalMinute = Integer.parseInt(clockMinute);
         int goalTimeInMins = goalHourInMins + goalMinute;
@@ -273,44 +268,19 @@ public class ClockFaceActivity extends AppCompatActivity {
         //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
         preparingTimeInMins = 15;
 
-        Log.d("dupa", "12");
-
-
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
         DateTime currentDaleTime = new DateTime();
-        //DateTime currentDaleTime = MainActivity.dateTime1;
-
-
-        Log.d("dupa", "DateTime().toString: "+currentDaleTime.toString());
-        Calendar calendarTime = Calendar.getInstance();
-        String c = calendarTime.toString();
-        Log.d("dupa", "Calendar String: "+c);
-
-
-        Log.d("dupa", "13");
         int minuteOfHour = currentDaleTime.getMinuteOfHour();
-
         int hourOfDay = currentDaleTime.getHourOfDay();
-
         int dayOfWeek = currentDaleTime.getDayOfWeek();
-
-
         int currentDayTimeInMinutes = hourOfDay*60 + minuteOfHour;
-
-
         int minutesToAdd = 1440*((alarmWeekDay - dayOfWeek +7)%7) - currentDayTimeInMinutes + goalTimeInMins - routeTimeInMinutes - preparingTimeInMins;
 
-
         alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
-
         alarmHour = alarmDateTime.getHourOfDay();
-
         alarmMinutes = alarmDateTime.getMinuteOfHour();
-
         this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
         //currentDaleTime.getMinuteOfHour();
-
-
 
 //        Log.d("timetest", "######################################################################");
 //        Log.d("timetest", "AlarmPOJO.getRouteTimeLabel(): " + AlarmPOJO.getRouteTimeLabel());

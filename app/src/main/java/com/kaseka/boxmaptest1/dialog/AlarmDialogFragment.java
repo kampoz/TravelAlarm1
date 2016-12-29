@@ -12,12 +12,15 @@ import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.activity.ClockFaceActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
+import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
@@ -42,6 +45,9 @@ public class AlarmDialogFragment extends DialogFragment{
         final TextView tvDialogGoalTime = (TextView) view.findViewById(R.id.tvDialogGoalTime);
         final TextView tvDialogPreparingTime = (TextView) view.findViewById(R.id.tvDialogPreparingTime);
         final TextView tvDialogTravelTime = (TextView) view.findViewById(R.id.tvDialogTravelTime);
+        final ImageButton bDeleteAlarm = (ImageButton) view.findViewById(R.id.ibDeleteAlarm);
+
+
 
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
         tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
@@ -71,18 +77,24 @@ public class AlarmDialogFragment extends DialogFragment{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 AlarmPOJO.insertAlarmToRealm();
-
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
             }
         });
 
+//        bDeleteAlarm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), "CloseAlarm ib", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         Dialog dialog = builder.create();
         return dialog;
+
+
 
     }
 

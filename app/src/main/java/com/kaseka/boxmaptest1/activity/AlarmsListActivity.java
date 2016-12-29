@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
+import android.widget.Toast;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
@@ -66,6 +66,10 @@ public class AlarmsListActivity extends AppCompatActivity {
             Realm.getDefaultInstance().close();
             //alarms.add(alarmRealm);
         }
+    }
+
+    public void setToast(View v){
+        Toast.makeText(v.getContext(), "CloseAlarm ib", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -33,8 +33,8 @@ public class AlarmRealm extends RealmObject{
     private RealmList<LatLngRealm> lngLatPointsRealmList;
     private String alarmDateTimeData;
     private String transportMode;
-    private String goalHourOfDay;
-    private String goalMinute;
+    private int goalHourOfDay;
+    private int goalMinute;
 
 
     //gettery, settery
@@ -196,19 +196,19 @@ public class AlarmRealm extends RealmObject{
     }
 
 
-    public String getGoalHourOfDay() {
+    public int getGoalHourOfDay() {
         return goalHourOfDay;
     }
 
-    public void setGoalHourOfDay(String goalHourOfDay) {
+    public void setGoalHourOfDay(int goalHourOfDay) {
         this.goalHourOfDay = goalHourOfDay;
     }
 
-    public String getGoalMinute() {
+    public int getGoalMinute() {
         return goalMinute;
     }
 
-    public void setGoalMinute(String goalMinute) {
+    public void setGoalMinute(int goalMinute) {
         this.goalMinute = goalMinute;
     }
 

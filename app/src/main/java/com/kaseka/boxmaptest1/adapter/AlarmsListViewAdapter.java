@@ -1,5 +1,7 @@
 package com.kaseka.boxmaptest1.adapter;
 
+import android.app.FragmentManager;
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,14 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
+import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
+
+import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 import java.util.ArrayList;
 
 public class AlarmsListViewAdapter extends RecyclerView.Adapter {
+
 
     // źródło danych
     private ArrayList<AlarmRealm> alarms = new ArrayList<>();
@@ -28,18 +37,31 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
     private class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvAlarmHour;
         public TextView tvAlarmDay;
+        public long id;
         public TextView tvDestinaitonPoint;
         public TextView tvDestinaitonHour;
         public Button bEdit;
+        private AlarmRealm alarmRealm;
+
+
 
 
         public MyViewHolder(View pItem) {
             super(pItem);
+
             tvAlarmHour = (TextView) pItem.findViewById(R.id.tvAlarmMhour);
             tvAlarmDay = (TextView) pItem.findViewById(R.id.tvAlarmDay);
-//            tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
-//            tvDestinaitonHour = (TextView) pItem.findViewById(R.id.tvDestinationHour);
-            //bEdit = (Button) pItem.findViewById(R.id.bEdit);
+
+//           tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
+//           tvDestinaitonHour = (TextView) pItem.findViewById(R.id.tvDestinationHour);
+//           bEdit = (Button) pItem.findViewById(R.id.bEdit);
+//            tvAlarmDay.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(itemView.getContext(), "tvAlarmDay", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
         }
     }
 
@@ -51,17 +73,36 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
-        // tworzymy layout artykułu oraz obiekt ViewHoldera
+        // tworzymy layout itemu oraz obiekt ViewHoldera
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.single_alarm_layout, viewGroup, false);
 
         // dla elementu listy ustawiamy obiekt OnClickListener,
         // który usunie element z listy po kliknięciu na niego
         view.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                Context context = view.getContext();
+
+                int clickedPosition = mRecyclerView.getChildAdapterPosition(view);
+
+                AlarmRealm alarmRealmPosition = alarms.get(clickedPosition);
+
+                long id = alarmRealmPosition.getId();
+                String day = alarmRealmPosition.getAlarmDayOfWeek();
+
+                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealmPosition);
+
+                FragmentManager manager = ((AlarmsListActivity) context).getFragmentManager();
+                AlarmDialogFragment myDialog = new AlarmDialogFragment();
+                myDialog.show(manager, "myDialog");
+
+
+                Toast.makeText(view.getContext(), id+" "+day, Toast.LENGTH_SHORT).show();
                 // odnajdujemy indeks klikniętego elementu
-                //int positionToDelete = mRecyclerView.getChildAdapterPosition(v);
+                //int positionToDelete = mRecyclerView.getChildAdapterPosition(view);
                 // usuwamy element ze źródła danych
                 //alarms.remove(positionToDelete);
                 // poniższa metoda w animowany sposób usunie element z listy
@@ -77,6 +118,8 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
         // uzupełniamy layout alarmu
         AlarmRealm alarmRealm = alarms.get(i);
+
+        long id = alarmRealm.getId();
         ((MyViewHolder) viewHolder).tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(
                 String.valueOf(alarmRealm.getAlarmHour()), String.valueOf(alarmRealm.getAlarmMinute())));
         ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());

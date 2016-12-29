@@ -50,6 +50,7 @@
         android:background="@drawable/edit_button_shape"
         android:layout_gravity="right"
         android:layout_marginLeft="10dp"
+
         />
 
 </LinearLayout>

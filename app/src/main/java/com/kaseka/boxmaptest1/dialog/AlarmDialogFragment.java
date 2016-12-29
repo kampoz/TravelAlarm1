@@ -3,6 +3,7 @@ package com.kaseka.boxmaptest1.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -84,4 +85,6 @@ public class AlarmDialogFragment extends DialogFragment{
         return dialog;
 
     }
+
+
 }

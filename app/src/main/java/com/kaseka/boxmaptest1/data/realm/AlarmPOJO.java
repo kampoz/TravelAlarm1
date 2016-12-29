@@ -28,8 +28,8 @@ public class AlarmPOJO {
     private static RealmList<LatLngRealm> lngLatPointsRealmList = new RealmList<>();
     private static String alarmDateTimeData;
     private static String transportMode;
-    private static String goalHourOfDay;
-    private static String goalMinute;
+    private static int goalHourOfDay;
+    private static int goalMinute;
 
 
     public static String getAlarmDayOfWeek() {
@@ -175,19 +175,19 @@ public class AlarmPOJO {
         AlarmPOJO.transportMode = transportMode;
     }
 
-    public static String getGoalHourOfDay() {
+    public static int getGoalHourOfDay() {
         return goalHourOfDay;
     }
 
-    public static void setGoalHourOfDay(String goalHourOfDay) {
+    public static void setGoalHourOfDay(int goalHourOfDay) {
         AlarmPOJO.goalHourOfDay = goalHourOfDay;
     }
 
-    public static String getGoalMinute() {
+    public static int getGoalMinute() {
         return goalMinute;
     }
 
-    public static void setGoalMinute(String goalMinute) {
+    public static void setGoalMinute(int goalMinute) {
         AlarmPOJO.goalMinute = goalMinute;
     }
 
@@ -201,8 +201,13 @@ public class AlarmPOJO {
         Realm defaultInstance = Realm.getDefaultInstance();
         Number oldMaxId = defaultInstance.where(AlarmRealm.class).max("id");
 
-        Log.d("defaultInstanceID", "max id: " + oldMaxId.toString());
+        if (oldMaxId==null){
+            newId = 1;
+        }
+        else{
         newId = oldMaxId.intValue() + 1;
+        }
+        //Log.d("defaultInstanceID", "max id: " + oldMaxId.toString());
         Log.d("defaultInstanceID", "newId: " + newId);
 
         alarmRealm.setId(newId);
@@ -283,7 +288,27 @@ public class AlarmPOJO {
 
     }
 
-    ;
+    //ma uzupełniać statyczny alarmPOJO pobranymi danymi z obiektu AlarmRealm - do wyswietlenie na AlarmsLIst jako Dialog
+    public static void setAlarmPOJODataFromAlarmRealm(AlarmRealm alarmRealm){
+        setId(alarmRealm.getId());
+        setIsOn(alarmRealm.getIsOn());
+        setAlarmHour(alarmRealm.getAlarmHour());
+        setAlarmMinute(alarmRealm.getAlarmMinute());
+        setAmPm(alarmRealm.getAmPm());
+        setAlarmDayOfWeek(alarmRealm.getAlarmDayOfWeek());
+        setAlarmDayOfWeekAsInt(alarmRealm.getAlarmDayOfWeekAsInt());
+        setStartPoint(alarmRealm.getStartPoint());
+        setDestinationPoint(alarmRealm.getDestinationPoint());
+        setRouteTimeInSeconds(alarmRealm.getRouteTimeInSeconds());
+        setRouteTimeLabel(alarmRealm.getRouteTimeLabel());
+        setPreparingTimeInMins(alarmRealm.getPreparingTimeInMins());
+        setAlarmTimeInMillis(alarmRealm.getAlarmTimeInMillis());
+        setLngLatPointsRealmList(alarmRealm.getLngLatPointsRealmList());
+        setLngLatPointsRealmList(getLngLatPointsRealmList());
+        setAlarmDateTimeData(alarmRealm.getAlarmDateTimeData());
+        setTransportMode(alarmRealm.getTransportMode());
+
+    }
 
     //generowanie id
     private int generateId() {

@@ -1,12 +1,17 @@
 package com.kaseka.boxmaptest1.activity;
 
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
+import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 
 import java.util.ArrayList;
 
@@ -62,4 +67,5 @@ public class AlarmsListActivity extends AppCompatActivity {
             //alarms.add(alarmRealm);
         }
     }
+
 }

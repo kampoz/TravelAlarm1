@@ -217,20 +217,12 @@ public class ClockFaceActivity extends AppCompatActivity {
 
 
     public void showDialog(View v){
-            Log.d("showDialog", "1");
+
         calculatingAlarmTimeInMillis();
-            Log.d("showDialog", "2");
-
         setAlarmPojoObject();
-            Log.d("showDialog", "3");
-
         FragmentManager manager = getFragmentManager();
-            Log.d("showDialog", "4");
         AlarmDialogFragment myDialog = new AlarmDialogFragment();
-            Log.d("showDialog", "5");
         myDialog.show(manager, "myDialog");
-            Log.d("showDialog", "6");
-
     }
 
     private void setAlarmPojoObject(){
@@ -241,8 +233,8 @@ public class ClockFaceActivity extends AppCompatActivity {
         AlarmPOJO.setAmPm(amPm);
         AlarmPOJO.setAlarmTimeInMillis(alarmTimeInMillis);
         AlarmPOJO.setAlarmDateTimeData(alarmDateTime.toString());
-        AlarmPOJO.setGoalHourOfDay(String.valueOf(goalHourInMins/60));
-        AlarmPOJO.setGoalMinute(clockMinute);
+        AlarmPOJO.setGoalHourOfDay(goalHourInMins/60);
+        AlarmPOJO.setGoalMinute(Integer.parseInt(clockMinute));
 
         Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
 

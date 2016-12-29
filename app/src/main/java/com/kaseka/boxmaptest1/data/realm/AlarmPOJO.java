@@ -285,6 +285,8 @@ public class AlarmPOJO {
         lngLatPointsRealmList = new RealmList<>();
         setAlarmDateTimeData(null);
         setTransportMode(null);
+        setGoalHourOfDay(0);
+        setGoalMinute(0);
 
     }
 
@@ -307,7 +309,8 @@ public class AlarmPOJO {
         setLngLatPointsRealmList(getLngLatPointsRealmList());
         setAlarmDateTimeData(alarmRealm.getAlarmDateTimeData());
         setTransportMode(alarmRealm.getTransportMode());
-
+        setGoalHourOfDay(alarmRealm.getGoalHourOfDay());
+        setGoalMinute(alarmRealm.getGoalMinute());
     }
 
     //generowanie id

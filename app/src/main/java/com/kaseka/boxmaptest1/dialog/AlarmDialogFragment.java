@@ -26,12 +26,8 @@ import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 public class AlarmDialogFragment extends DialogFragment{
 
-
-
     @Override
     public Dialog onCreateDialog(Bundle ssvadInstanceState){
-
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();

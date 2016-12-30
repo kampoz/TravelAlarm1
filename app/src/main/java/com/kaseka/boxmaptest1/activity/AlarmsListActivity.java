@@ -1,8 +1,10 @@
 package com.kaseka.boxmaptest1.activity;
 
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,10 +14,13 @@ import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
+import android.app.AlertDialog;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
+
+import static android.R.attr.button;
 
 public class AlarmsListActivity extends AppCompatActivity {
 
@@ -33,7 +38,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // ustawiamy animatora, który odpowiada za animację dodania/usunięcia elementów listy
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // tworzymy źródło danych - tablicę z artykułami
         ArrayList<AlarmRealm> alarms = new ArrayList<>();
@@ -67,6 +72,29 @@ public class AlarmsListActivity extends AppCompatActivity {
             //alarms.add(alarmRealm);
         }
     }
+
+    public void deleteAlarm(View view){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Delete alarm?");
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                            }
+                        });
+
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     public void setToast(View v){
         Toast.makeText(v.getContext(), "CloseAlarm ib", Toast.LENGTH_SHORT).show();

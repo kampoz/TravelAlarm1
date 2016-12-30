@@ -2,12 +2,14 @@ package com.kaseka.boxmaptest1.adapter;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,15 +24,14 @@ import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+
 public class AlarmsListViewAdapter extends RecyclerView.Adapter {
-
-
     // źródło danych
     private ArrayList<AlarmRealm> alarms = new ArrayList<>();
 
     // obiekt listy artykułów
     private RecyclerView mRecyclerView;
-
     // implementacja wzorca ViewHolder
     // każdy obiekt tej klasy przechowuje odniesienie do layoutu elementu listy
     // dzięki temu wywołujemy findViewById() tylko raz dla każdego elementu
@@ -41,6 +42,7 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
         public TextView tvDestinaitonPoint;
         public TextView tvDestinaitonHour;
         public Button bEdit;
+        public ImageButton ibDeleteAlarm;
         private AlarmRealm alarmRealm;
 
 
@@ -51,6 +53,7 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
 
             tvAlarmHour = (TextView) pItem.findViewById(R.id.tvAlarmMhour);
             tvAlarmDay = (TextView) pItem.findViewById(R.id.tvAlarmDay);
+            ibDeleteAlarm = (ImageButton) pItem.findViewById(R.id.ibDeleteAlarm);
 
 //           tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
 //           tvDestinaitonHour = (TextView) pItem.findViewById(R.id.tvDestinationHour);
@@ -78,16 +81,11 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                 .inflate(R.layout.single_alarm_layout, viewGroup, false);
 
         // dla elementu listy ustawiamy obiekt OnClickListener,
-        // który usunie element z listy po kliknięciu na niego
         view.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
-
                 int clickedPosition = mRecyclerView.getChildAdapterPosition(view);
-
                 AlarmRealm alarmRealmPosition = alarms.get(clickedPosition);
 
                 long id = alarmRealmPosition.getId();
@@ -115,14 +113,67 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
         // uzupełniamy layout alarmu
-        AlarmRealm alarmRealm = alarms.get(i);
+        final AlarmRealm alarmRealm = alarms.get(position);
 
-        long id = alarmRealm.getId();
+
+        final long id = alarmRealm.getId();
         ((MyViewHolder) viewHolder).tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(
                 String.valueOf(alarmRealm.getAlarmHour()), String.valueOf(alarmRealm.getAlarmMinute())));
         ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());
+
+        /*((MyViewHolder) viewHolder).tvAlarmHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealm);
+
+                FragmentManager manager = ((AlarmsListActivity) context).getFragmentManager();
+                AlarmDialogFragment myDialog = new AlarmDialogFragment();
+                myDialog.show(manager, "myDialog");
+            }
+        });*/
+
+        ((MyViewHolder) viewHolder).ibDeleteAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(v.getContext());
+                alertDialogBuilder.setMessage("Delete alarm?");
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                alarms.remove(position);
+                                notifyItemRemoved(position);
+                                //usuwanie alarmu w Realma
+                                Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        realm.where(AlarmRealm.class).equalTo("id", id).findFirst().deleteFromRealm();
+                                    }
+                                });
+                                alarms.clear();
+                                alarms.addAll(Realm.getDefaultInstance().where(AlarmRealm.class).findAll());
+                                
+
+                            }
+                        });
+
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
 //        ((MyViewHolder) viewHolder).tvDestinaitonPoint.setText("to: "+alarmRealm.getDestinationPoint());
 //        ((MyViewHolder) viewHolder).tvDestinaitonHour.setText("arrive: "+MyDisplayTimeHelper.setDisplayTime(
 //                String.valueOf(alarmRealm.getGoalHourOfDay()), String.valueOf(alarmRealm.getGoalMinute())));

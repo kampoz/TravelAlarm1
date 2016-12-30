@@ -1,13 +1,16 @@
 package com.kaseka.boxmaptest1.activity;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
@@ -24,11 +27,23 @@ import static android.R.attr.button;
 
 public class AlarmsListActivity extends AppCompatActivity {
 
+    Button bAddAlarm;
+    Context context = AlarmsListActivity.this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarms_list);
         getSupportActionBar().hide();
+
+        bAddAlarm = (Button)findViewById(R.id.bAddAlarm);
+        bAddAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startMainActivityIntent = new Intent(context, MainActivity.class);
+                context.startActivity(startMainActivityIntent);
+            }
+        });
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmsRecyclerView);
         // w celach optymalizacji

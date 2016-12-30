@@ -145,8 +145,8 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                alarms.remove(position);
-                                notifyItemRemoved(position);
+                                //alarms.remove(position);
+                                //notifyItemRemoved(position);
                                 //usuwanie alarmu w Realma
                                 Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
                                     @Override
@@ -156,7 +156,7 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                                 });
                                 alarms.clear();
                                 alarms.addAll(Realm.getDefaultInstance().where(AlarmRealm.class).findAll());
-                                
+                                notifyDataSetChanged();
 
                             }
                         });

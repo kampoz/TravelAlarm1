@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lLsingleAlarm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
     android:background="@color/colorMyDarkGrey"
-    android:gravity="center_vertical"
-    >
-
-    <TextView
-        android:id="@+id/tvAlarmId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorMyWhite"
-        />
+    android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/tvAlarmMhour"
@@ -22,9 +15,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyWhite"/>
 
-
-
-
     <TextView
         android:id="@+id/tvAlarmDay"
         android:layout_width="wrap_content"
@@ -32,7 +22,9 @@
         android:paddingLeft="20dp"
         android:textColor="@color/colorMyWhite"/>
 
-
+    <!--<ImageView-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"/>-->
 
     <View
         android:layout_width="0dp"

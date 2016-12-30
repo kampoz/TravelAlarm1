@@ -37,8 +37,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="4px"
-                    android:background="@color/colorMyDarkGreen" />
+                    android:layout_height="10px"
+                    android:background="@color/colorMyLightGrey" />
 
                 <fragment
                     android:id="@+id/from_autocomplete_fragment"
@@ -47,10 +47,8 @@
                     android:name="com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment"
                     />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/colorMyLightGreen" />
+
+
 
                 <fragment
                     android:id="@+id/to_autocomplete_fragment"
@@ -59,14 +57,12 @@
                     android:name="com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment"
                     />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="4px"
-                    android:background="@color/colorMyDarkGreen" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:orientation="horizontal"
                     android:weightSum="4">
 
@@ -119,7 +115,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="Set rout"
-                        android:background="@drawable/edit_button_shape"
+                        android:background="@drawable/selector_button_gray_pressed"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:padding="5dp"
@@ -132,7 +128,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="Clean"
-                        android:background="@drawable/edit_button_shape"
+                        android:background="@drawable/selector_button_gray_pressed"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:padding="5dp"
@@ -146,7 +142,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="Next"
-                        android:background="@drawable/edit_button_shape"
+                        android:background="@drawable/selector_button_gray_pressed"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:padding="5dp"

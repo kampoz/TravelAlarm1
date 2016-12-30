@@ -3,28 +3,24 @@ package com.kaseka.boxmaptest1.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
-import com.kaseka.boxmaptest1.activity.ClockFaceActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
-import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
-public class AlarmDialogFragment extends DialogFragment{
+public class AlarmOnOffFragment extends DialogFragment{
+
+    boolean isOn = false;
 
     @Override
     public Dialog onCreateDialog(Bundle ssvadInstanceState){
@@ -45,6 +41,7 @@ public class AlarmDialogFragment extends DialogFragment{
 
 
 
+
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
         tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
         tvDialogWeekDay.setText("Alarm day: "+AlarmPOJO.getAlarmDayOfWeek());
@@ -56,28 +53,39 @@ public class AlarmDialogFragment extends DialogFragment{
                 .setDisplayTime(String.valueOf(AlarmPOJO.getGoalHourOfDay()),String.valueOf(AlarmPOJO.getGoalMinute())));
         tvDialogPreparingTime.setText("preparig time: "+AlarmPOJO.getPreparingTimeInMins()+" mins");
         tvDialogTravelTime.setText("travel time: "+AlarmPOJO.getRouteTimeLabel());
+        isOn = AlarmPOJO.getIsOn();
 
+        String onOffButtonLabel = "";
+        if(isOn){
+            onOffButtonLabel = "OFF";
+        }else onOffButtonLabel = "ON";
 
         builder.setView(view);
-        builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(onOffButtonLabel, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlarmPOJO.setToNull();
-                Intent startMainActivityIntent = new Intent(getActivity(), MainActivity.class);
-                getActivity().startActivity(startMainActivityIntent);
-                //         AlarmDialogFragment.this.startActivity(startMainActivityIntent);
+//                if(isOn){
+//                    isOn=false;
+//                    AlarmPOJO.setIsOn(false);
+//                    AlarmPOJO.setIsOntoRealm();
+//
+//                }else {
+//                    isOn=true;
+//                    AlarmPOJO.setIsOn(false);
+//                }
+//                AlarmPOJO.setIsOntoRealm();
             }
         });
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AlarmPOJO.insertAlarmToRealm();
-                Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
-                getActivity().startActivity(startAlarmListActivityIntent);
-            }
-        });
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                AlarmPOJO.insertAlarmToRealm();
+//                Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
+//                getActivity().startActivity(startAlarmListActivityIntent);
+//            }
+//        });
 
 //        bDeleteAlarm.setOnClickListener(new View.OnClickListener() {
 //            @Override

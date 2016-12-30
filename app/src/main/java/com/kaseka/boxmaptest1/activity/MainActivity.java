@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         final CustomAutocompleteFragment fromAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.from_autocomplete_fragment);
-        fromAutocompleteFragment.setHintText("Skąd...");
+        fromAutocompleteFragment.setHintText("From...");
         fromAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
         final CustomAutocompleteFragment toAutocompleteFragment = (CustomAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.to_autocomplete_fragment);
-        toAutocompleteFragment.setHintText("Dokąd...");
+        toAutocompleteFragment.setHintText("To...");
         toAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {

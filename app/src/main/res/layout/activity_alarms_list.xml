@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Alarms"
+        android:layout_marginTop="10dp"
         android:textColor="@color/colorMyWhite"
         android:textSize="30dp"
         android:layout_centerHorizontal="true"
@@ -25,14 +26,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/tvLabel"/>
 
     <Button
         android:id="@+id/bAddAlarm"
         android:text="Add alarm"
         android:textSize="25dp"
-        android:background="@drawable/edit_button_shape"
+        android:background="@drawable/selector_button_gray_pressed"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

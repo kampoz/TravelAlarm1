@@ -208,8 +208,9 @@ public class AlarmPOJO {
         newId = oldMaxId.intValue() + 1;
         }
         //Log.d("defaultInstanceID", "max id: " + oldMaxId.toString());
-        Log.d("defaultInstanceID", "newId: " + newId);
+        //Log.d("defaultInstanceID", "newId: " + newId);
 
+        alarmRealm.setIsOn(getIsOn());
         alarmRealm.setId(newId);
         alarmRealm.setAlarmHour(getAlarmHour());
         alarmRealm.setAlarmMinute(getAlarmMinute());
@@ -313,10 +314,20 @@ public class AlarmPOJO {
         setGoalMinute(alarmRealm.getGoalMinute());
     }
 
-    //generowanie id
-    private int generateId() {
-        return Realm.getDefaultInstance().where(AlarmRealm.class).max("id").intValue() + 1;
+
+    public static void setIsOntoRealm(){
+        final AlarmRealm alarmRealm = new AlarmRealm();
+        Realm defaultInstance = Realm.getDefaultInstance();
+        alarmRealm.setIsOn(getIsOn());
+        defaultInstance.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(alarmRealm);
+            }
+        });
     }
+
+
 
 
 }

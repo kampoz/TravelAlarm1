@@ -37,6 +37,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         bAddAlarm = (Button)findViewById(R.id.bAddAlarm);
+        //bAddAlarm.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_button_gray_pressed));
         bAddAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,29 +88,6 @@ public class AlarmsListActivity extends AppCompatActivity {
             //alarms.add(alarmRealm);
         }
     }
-
-    public void deleteAlarm(View view){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Delete alarm?");
-                alertDialogBuilder.setPositiveButton("yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-
-                            }
-                        });
-
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
 
     public void setToast(View v){
         Toast.makeText(v.getContext(), "CloseAlarm ib", Toast.LENGTH_SHORT).show();

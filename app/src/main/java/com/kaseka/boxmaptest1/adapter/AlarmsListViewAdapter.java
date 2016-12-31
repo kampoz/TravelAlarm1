@@ -137,6 +137,15 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
         final boolean isAlarmOn = alarmRealm.getIsOn();
         ((MyViewHolder) viewHolder).tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(
                 String.valueOf(alarmRealm.getAlarmHour()), String.valueOf(alarmRealm.getAlarmMinute())));
+        ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());
+
+        if(!alarmRealm.getIsOn()) {
+            ((MyViewHolder) viewHolder).ibGreenLight.setBackgroundResource(R.drawable.little_circle_gray_shape);
+        }else{
+            ((MyViewHolder) viewHolder).ibGreenLight.setBackgroundResource(R.drawable.little_circle_shape);
+        }
+
+
         ((MyViewHolder) viewHolder).ibDeleteAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

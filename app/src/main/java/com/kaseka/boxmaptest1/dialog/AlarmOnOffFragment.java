@@ -60,7 +60,7 @@ public class AlarmOnOffFragment extends DialogFragment{
 //            onOffButtonLabel = "OFF";
 //        }else onOffButtonLabel = "ON";
 //
-//        builder.setView(view);
+        builder.setView(view);
 //        builder.setNegativeButton(onOffButtonLabel, new DialogInterface.OnClickListener() {
 //
 //            @Override

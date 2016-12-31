@@ -55,16 +55,16 @@ public class AlarmOnOffFragment extends DialogFragment{
         tvDialogTravelTime.setText("travel time: "+AlarmPOJO.getRouteTimeLabel());
         isOn = AlarmPOJO.getIsOn();
 
-        String onOffButtonLabel = "";
-        if(isOn){
-            onOffButtonLabel = "OFF";
-        }else onOffButtonLabel = "ON";
-
-        builder.setView(view);
-        builder.setNegativeButton(onOffButtonLabel, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+//        String onOffButtonLabel = "";
+//        if(isOn){
+//            onOffButtonLabel = "OFF";
+//        }else onOffButtonLabel = "ON";
+//
+//        builder.setView(view);
+//        builder.setNegativeButton(onOffButtonLabel, new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
 //                if(isOn){
 //                    isOn=false;
 //                    AlarmPOJO.setIsOn(false);
@@ -73,10 +73,11 @@ public class AlarmOnOffFragment extends DialogFragment{
 //                }else {
 //                    isOn=true;
 //                    AlarmPOJO.setIsOn(false);
-//                }
 //                AlarmPOJO.setIsOntoRealm();
-            }
-        });
+//                }
+
+//            }
+//        });
 
 //        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 //            @Override

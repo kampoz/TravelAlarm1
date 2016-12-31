@@ -225,6 +225,7 @@ public class ClockFaceActivity extends AppCompatActivity {
     }
 
     private void setAlarmPojoObject(){
+        AlarmPOJO.setIsOn(true);
         AlarmPOJO.setAlarmHour(alarmHour);
         AlarmPOJO.setAlarmMinute(alarmMinutes);
         AlarmPOJO.setAlarmDayOfWeek(dayOfWeek);

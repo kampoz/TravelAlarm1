@@ -32,7 +32,15 @@
         android:layout_weight="1"
         />
 
-
+    <ImageButton
+        android:id="@+id/ibGreenLight"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:onClick="setToast"
+        android:foregroundGravity="center_vertical"
+        android:background="@drawable/little_circle_shape"
+        android:layout_gravity="right"
+        android:layout_marginLeft="10dp" />
 
     <ImageButton
         android:id="@+id/ibDeleteAlarm"
@@ -42,8 +50,6 @@
         android:foregroundGravity="center_vertical"
         android:background="@drawable/cross_grey"
         android:layout_gravity="right"
-        android:layout_marginLeft="10dp"
-
-        />
+        android:layout_marginLeft="20dp" />
 
 </LinearLayout>

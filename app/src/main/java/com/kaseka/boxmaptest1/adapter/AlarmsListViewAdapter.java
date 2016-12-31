@@ -4,6 +4,9 @@ import android.app.Application;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -49,24 +52,26 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
         public ImageButton ibDeleteAlarm;
         private AlarmRealm alarmRealm;
         private LinearLayout lLsingleAlarm;
+        private ImageButton ibGreenLight;
 
 
 
 
-        public MyViewHolder(View pItem) {
-            super(pItem);
+        public MyViewHolder(View view) {
+            super(view);
 
-            tvAlarmHour = (TextView) pItem.findViewById(R.id.tvAlarmMhour);
-            tvAlarmDay = (TextView) pItem.findViewById(R.id.tvAlarmDay);
-            ibDeleteAlarm = (ImageButton) pItem.findViewById(R.id.ibDeleteAlarm);
-            lLsingleAlarm = (LinearLayout)pItem.findViewById(R.id.lLsingleAlarm);
+            tvAlarmHour = (TextView) view.findViewById(R.id.tvAlarmMhour);
+            tvAlarmDay = (TextView) view.findViewById(R.id.tvAlarmDay);
+            ibDeleteAlarm = (ImageButton) view.findViewById(R.id.ibDeleteAlarm);
+            ibGreenLight = (ImageButton)view.findViewById(R.id.ibGreenLight);
+            //lLsingleAlarm = (LinearLayout)view.findViewById(R.id.lLsingleAlarm);
 
 
 
 
-//           tvDestinaitonPoint = (TextView) pItem.findViewById(R.id.tvDestinationPoint);
-//           tvDestinaitonHour = (TextView) pItem.findViewById(R.id.tvDestinationHour);
-//           bEdit = (Button) pItem.findViewById(R.id.bEdit);
+//           tvDestinaitonPoint = (TextView) view.findViewById(R.id.tvDestinationPoint);
+//           tvDestinaitonHour = (TextView) view.findViewById(R.id.tvDestinationHour);
+//           bEdit = (Button) view.findViewById(R.id.bEdit);
 //            tvAlarmDay.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -128,30 +133,18 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
         // uzupełniamy layout alarmu
         final AlarmRealm alarmRealm = alarms.get(position);
-
-
         final long id = alarmRealm.getId();
         final boolean isAlarmOn = alarmRealm.getIsOn();
         ((MyViewHolder) viewHolder).tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(
                 String.valueOf(alarmRealm.getAlarmHour()), String.valueOf(alarmRealm.getAlarmMinute())));
         ((MyViewHolder) viewHolder).tvAlarmDay.setText(alarmRealm.getAlarmDayOfWeek());
 
-        if(isAlarmOn) {
-            ((MyViewHolder) viewHolder).lLsingleAlarm.setBackgroundResource(R.color.colorMyDarkGreen);
+        if(!alarmRealm.getIsOn()) {
+            ((MyViewHolder) viewHolder).ibGreenLight.setBackgroundResource(R.drawable.little_circle_gray_shape);
+        }else{
+            ((MyViewHolder) viewHolder).ibGreenLight.setBackgroundResource(R.drawable.little_circle_shape);
         }
 
-
-        /*((MyViewHolder) viewHolder).tvAlarmHour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealm);
-
-                FragmentManager manager = ((AlarmsListActivity) context).getFragmentManager();
-                AlarmDialogFragment myDialog = new AlarmDialogFragment();
-                myDialog.show(manager, "myDialog");
-            }
-        });*/
 
         ((MyViewHolder) viewHolder).ibDeleteAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +182,27 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
 
                 android.app.AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+            }
+        });
+
+        ((MyViewHolder) viewHolder).ibGreenLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final boolean alarmRealmisOn = alarmRealm.getIsOn();
+                //
+                Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.where(AlarmRealm.class).equalTo("id", id).findFirst().setIsOn(!alarmRealmisOn);
+                        Toast.makeText(((MyViewHolder) viewHolder).ibGreenLight.getContext(), "isOn Realm status: "+alarmRealm.getIsOn(),
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                alarms.clear();
+                alarms.addAll(Realm.getDefaultInstance().where(AlarmRealm.class).findAll());
+                //notifyItemRemoved(position);
+                notifyDataSetChanged();
             }
         });
 

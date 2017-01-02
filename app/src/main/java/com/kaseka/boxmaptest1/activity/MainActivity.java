@@ -291,31 +291,33 @@ public class MainActivity extends AppCompatActivity {
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("Wykonana metoda","onSuccess");
-                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
-                routeTime= Parser.parseWholeRouteTime(response);
-                routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
+                Log.d("Wykonana metoda", "onSuccess");
+                String stringRoutePoints = Parser.parseRoutePoints(response);
+                if (!stringRoutePoints.isEmpty())
+                {
 
-                MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
+                    responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
+                    routeTime = Parser.parseWholeRouteTime(response);
+                    routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
 
-//                MarkerViewOptions markerFrom = new MarkerViewOptions()
-//                        .position(responsePoints.get(0));
-//                MarkerViewOptions markerTo = new MarkerViewOptions()
-//                        .position(responsePoints.get(responsePoints.size()-1));
+                    MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
 
-                //4 linijki - ustawienie pinów:
-                markerViewFrom.setPosition(responsePoints.get(0));  //pozycja poczatkowa trasy
-                markerViewFrom.setAnchor(0.5f,1.0f);
-                markerViewTo.setPosition(responsePoints.get(responsePoints.size()-1)); //pozycja koncowa
-                markerViewTo.setAnchor(0.5f,1.0f);
-                //mapBoxHelper.drawSimplify(responsePoints, map);
-                mapBoxHelper.drawBeforeSimplify(responsePoints);
-                tvRouteTime.setText("Czas: "+routeTime);
+    //                MarkerViewOptions markerFrom = new MarkerViewOptions()
+    //                        .position(responsePoints.get(0));
+    //                MarkerViewOptions markerTo = new MarkerViewOptions()
+    //                        .position(responsePoints.get(responsePoints.size()-1));
 
-                mapBoxHelper.fitZoom(markerViewFrom.getPosition(),markerViewTo.getPosition());
+                    //4 linijki - ustawienie pinów:
+                    markerViewFrom.setPosition(responsePoints.get(0));  //pozycja poczatkowa trasy
+                    markerViewFrom.setAnchor(0.5f, 1.0f);
+                    markerViewTo.setPosition(responsePoints.get(responsePoints.size() - 1)); //pozycja koncowa
+                    markerViewTo.setAnchor(0.5f, 1.0f);
+                    //mapBoxHelper.drawSimplify(responsePoints, map);
+                    mapBoxHelper.drawBeforeSimplify(responsePoints);
+                    tvRouteTime.setText("Czas: " + routeTime);
 
-
-                //Uzupelnianie AlarmPOJO 4 z 8 pol
+                    mapBoxHelper.fitZoom(markerViewFrom.getPosition(), markerViewTo.getPosition());
+            }
 
 
             }

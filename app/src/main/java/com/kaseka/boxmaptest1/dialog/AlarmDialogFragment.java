@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AlertDialog;
@@ -23,8 +24,11 @@ import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
+import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 
 public class AlarmDialogFragment extends DialogFragment{
+
+    private Context context;
 
     @Override
     public Dialog onCreateDialog(Bundle ssvadInstanceState){
@@ -76,6 +80,14 @@ public class AlarmDialogFragment extends DialogFragment{
                 AlarmPOJO.insertAlarmToRealm();
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
+
+                Intent intent = new Intent(getActivity(), TripAlarmStartedService.class);
+                intent.putExtra(TripAlarmStartedService.EXTRA_MESSAGE, "extra message");
+
+                //context.startService(intent);
+
+               getDialog().getContext().startService(intent);
+
             }
         });
 
@@ -94,5 +106,7 @@ public class AlarmDialogFragment extends DialogFragment{
 
     }
 
-
+    public void setContext(Context context) {
+        this.context = context;
+    }
 }

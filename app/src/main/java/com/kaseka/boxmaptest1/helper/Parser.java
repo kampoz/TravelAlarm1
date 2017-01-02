@@ -1,18 +1,23 @@
 package com.kaseka.boxmaptest1.helper;
 
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.kaseka.boxmaptest1.application.MyApplication;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class Parser {
+
+    static Context context;
+
     public static ArrayList<LatLng> parseDirections(JSONObject response){
 
         ArrayList<LatLng> points = new ArrayList<>();
@@ -38,9 +43,15 @@ public class Parser {
     public static String parseRoutePoints(JSONObject response){
         ArrayList<LatLng> points = new ArrayList<>();
         JSONArray routes = response.optJSONArray("routes");
-        JSONObject overviewPolyline = routes.optJSONObject(0).optJSONObject("overview_polyline");
-        String wayPoints = overviewPolyline.optString("points");
-        return wayPoints;
+        if (routes.length()>0){
+            JSONObject overviewPolyline = routes.optJSONObject(0).optJSONObject("overview_polyline");
+            String wayPoints = overviewPolyline.optString("points");
+            return wayPoints;
+        }else{
+            Toast.makeText(MyApplication.getAppContext(), "No data", Toast.LENGTH_SHORT).show();
+            return "";
+        }
+
     }
 
 

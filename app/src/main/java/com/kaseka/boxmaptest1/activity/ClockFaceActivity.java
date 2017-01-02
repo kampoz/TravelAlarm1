@@ -207,12 +207,12 @@ public class ClockFaceActivity extends AppCompatActivity {
     }
 
 
-
     public void showDialog(View v){
         calculatingAlarmTimeInMillis();
         setAlarmPojoObject();
         FragmentManager manager = getFragmentManager();
         AlarmDialogFragment myDialog = new AlarmDialogFragment();
+        myDialog.setContext(this);
         myDialog.show(manager, "myDialog");
     }
 

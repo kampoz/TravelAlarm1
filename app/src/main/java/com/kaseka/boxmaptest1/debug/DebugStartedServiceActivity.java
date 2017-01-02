@@ -8,7 +8,7 @@ import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
 
 public class DebugStartedServiceActivity extends AppCompatActivity {
-    Intent mServiceIntent;
+
     TripAlarmStartedService tripAlarmService;
     boolean bound = false;
 

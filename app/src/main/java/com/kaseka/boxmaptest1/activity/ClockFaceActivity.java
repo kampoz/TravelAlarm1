@@ -80,17 +80,9 @@ public class ClockFaceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       //  System.setProperty("org.joda.time.DateTimeZone.Provider", "com.kaseka.boxmaptest1.helper.FastDateTimeZoneProvider");
 
-//        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_clock_face);
         getSupportActionBar().hide();
-
-//        DateTime dateTime1;
-//        DateTimeAsync async = new DateTimeAsync();
-//        dateTime1 = async.execute();
-
-
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);

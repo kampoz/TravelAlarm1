@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // ... Do something ...
         //realm.close();
 
-        new MyAsyncTask().execute();
+
         //dateTime1 = null;
 
         MapboxAccountManager.start(this, getString(R.string.accessToken));
@@ -261,6 +261,9 @@ public class MainActivity extends AppCompatActivity {
                 toAutocompleteFragment.setText("");
             }
         });
+
+        new MyAsyncTask().execute();
+
     }
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {

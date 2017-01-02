@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.activity.AlarmActivity;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
@@ -18,6 +19,9 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class TripAlarmStartedService extends IntentService {
 
@@ -50,35 +54,32 @@ public class TripAlarmStartedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        //------startowanie activity
-        //próne uśnpienie startu na 5s.
-//        try {
-//            Thread.sleep(8000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
+        try {
+            Thread.sleep(5000);
+            final RealmResults<AlarmRealm> alarmsTurnedOn = Realm.getDefaultInstance().where(AlarmRealm.class).equalTo("isOn",true).findAll();
+            for(AlarmRealm alarmRealm : alarmsTurnedOn){
+                //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+                long curentSystemTimeInMillis = System.currentTimeMillis();
+                long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
+                long x = alarmTimeInMillis- curentSystemTimeInMillis;
 
-        Intent dialogIntent = new Intent(TripAlarmStartedService.this, AlarmActivity.class);
-        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(dialogIntent);
-
-        //try {
-            for(int i=0; i<10; i++){
-
-                //Thread.sleep(5000);
-
-                String text = intent.getStringExtra(EXTRA_MESSAGE);
-                //showtext(text);
-                //setRequest();
-                Log.d("Service1","onHandleIntent()"+i);
-
-                getRouteTime();
+                if(alarmTimeInMillis>=curentSystemTimeInMillis){
+                    startAlarmActivity();
+                }
             }
-        //} catch (InterruptedException e) {
 
-           // e.printStackTrace();
-//        }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void startAlarmActivity(){
+        //Właczenie ALarmActivity
+        Intent alarmActivityIntent = new Intent(TripAlarmStartedService.this, AlarmActivity.class);
+        alarmActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(alarmActivityIntent);
 
     }
 

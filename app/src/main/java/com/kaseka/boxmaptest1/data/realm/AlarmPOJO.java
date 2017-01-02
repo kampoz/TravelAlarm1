@@ -288,7 +288,6 @@ public class AlarmPOJO {
         setTransportMode(null);
         setGoalHourOfDay(0);
         setGoalMinute(0);
-
     }
 
     //ma uzupełniać statyczny alarmPOJO pobranymi danymi z obiektu AlarmRealm - do wyswietlenie na AlarmsLIst jako Dialog
@@ -326,8 +325,5 @@ public class AlarmPOJO {
             }
         });
     }
-
-
-
 
 }

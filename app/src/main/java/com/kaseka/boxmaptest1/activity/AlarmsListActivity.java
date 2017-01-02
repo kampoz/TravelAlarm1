@@ -34,7 +34,7 @@ public class AlarmsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarms_list);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         bAddAlarm = (Button)findViewById(R.id.bAddAlarm);
         //bAddAlarm.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_button_gray_pressed));

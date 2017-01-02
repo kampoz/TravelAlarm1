@@ -25,7 +25,7 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         bCloseAlarm = (ImageButton) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
@@ -62,6 +62,7 @@ public class AlarmActivity extends AppCompatActivity {
                 //bCloseAlarm.setFocusable(false);
                 mMediaPlayer.stop();
                 pulse1.cancel();
+                finish();
 
             }
         });

@@ -82,7 +82,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_clock_face);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);

@@ -64,8 +64,10 @@ public class TripAlarmStartedService extends IntentService {
                 long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
                 long x = alarmTimeInMillis- curentSystemTimeInMillis;
 
+                //zmienic status alarmu na nieaktywny???
                 if(alarmTimeInMillis>=curentSystemTimeInMillis){
                     startAlarmActivity();
+                    //break;
                 }
             }
 

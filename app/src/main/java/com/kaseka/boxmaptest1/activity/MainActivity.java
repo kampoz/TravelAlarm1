@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         MapboxAccountManager.start(this, getString(R.string.accessToken));
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
 
 //        // "https://maps.googleapis.com/maps/api/" +

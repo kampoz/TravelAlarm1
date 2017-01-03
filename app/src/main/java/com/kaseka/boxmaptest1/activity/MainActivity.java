@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private MarkerView markerViewFrom;
     private MarkerView markerViewTo;
     private Button bStart;
-    private Button bDalej;
+    private Button bNext;
     private Button bClean;
     private TextView tvRouteTime;
     private String fromLocationId = "";
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 //                "ChIJncLRe9ZZIkcRtBg-8THvidU&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU"
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         bStart = (Button) findViewById(R.id.bStart);
-        bDalej = (Button) findViewById(R.id.bDalej);
+        bNext = (Button) findViewById(R.id.bDalej);
         bClean= (Button) findViewById(R.id.bClean);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
@@ -237,19 +237,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bDalej.setOnClickListener(new View.OnClickListener() {
+        bNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //Uzupelnianie AlarmPOJO 4 z 8 pol
                 setAlarmPOJOData();
-
                 setPointsListInAlarmPOJO(responsePoints);
-
-
                 Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
+
                 //startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
                 MainActivity.this.startActivity(startAlarmClockActivityIntent);
+                finish();
             }
         });
 

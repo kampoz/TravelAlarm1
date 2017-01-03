@@ -10,6 +10,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class AlarmsListActivity extends AppCompatActivity {
 
     Button bAddAlarm;
     Context context = AlarmsListActivity.this;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class AlarmsListActivity extends AppCompatActivity {
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(myToolbar);
         //getSupportActionBar().hide();
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar.setTitle("Alarms");
+        setSupportActionBar(toolbar);
 
         bAddAlarm = (Button)findViewById(R.id.bAddAlarm);
         //bAddAlarm.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_button_gray_pressed));
@@ -71,6 +77,18 @@ public class AlarmsListActivity extends AppCompatActivity {
         recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     //tworzenie probnych alarmów do wczytania na liste
     private void setTestRealmDataBase() {

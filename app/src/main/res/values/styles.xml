@@ -1,6 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorMyDarkGrey</item>
         <item name="colorPrimaryDark">@color/colorMyDarkGrey</item>
@@ -8,6 +7,9 @@
     </style>
 
 
+    <style name="MyCustomDarkToolBarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/colorMyDarkGrey</item>
+    </style>
 
     <!--<style name="AppTheme.NoActionBar"  parent="AppTheme">-->
         <!--<item name="android:windowActionBar">true</item>-->

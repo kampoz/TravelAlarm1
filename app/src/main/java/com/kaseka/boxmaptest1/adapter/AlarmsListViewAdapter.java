@@ -149,7 +149,6 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
         ((MyViewHolder) viewHolder).ibDeleteAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setMessage("Delete alarm?");
                 alertDialogBuilder.setPositiveButton("Yes",

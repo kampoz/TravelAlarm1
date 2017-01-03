@@ -2,6 +2,10 @@
     <string name="app_name">Trip Alarm</string>
     <string name="accessToken">sk.eyJ1Ijoia2FtcG96IiwiYSI6ImNpdDF1NTA1aTAwYWsyeXBkcXJ1YjE0NnQifQ._LxovDvbArQg2_RGyc0Q6w</string>
     <string name="googleToken">AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU</string>
+    <string name="settings">Settings</string>
+    <string name="add_alarm">Add alarm</string>
+    <string name="alarms_list">Alarms list</string>
+    <string name="about">About</string>
     <!--<string name="googleToken">AIzaSyB1Lkeazd9vuDEM3WeZDZe8tVdrk9fplSs</string>-->
 
 </resources>

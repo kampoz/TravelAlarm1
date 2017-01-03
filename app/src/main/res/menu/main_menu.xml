@@ -5,23 +5,23 @@
 
     <item
         android:id="@+id/action_add_alarm"
-        android:title="Add alarm"
+        android:title="@string/add_alarm"
         app:showAsAction="collapseActionView"/>
 
     <item
         android:id="@+id/action_show_alarms_list"
-        android:title="Alarms list"
+        android:title="@string/alarms_list"
         app:showAsAction="collapseActionView"/>
 
     <item
         android:id="@+id/action_setting"
-        android:title="Settings"
+        android:title="@string/settings"
         app:showAsAction="collapseActionView"/>
 
 
     <item
         android:id="@+id/action_about"
-        android:title="About"
+        android:title="@string/about"
         app:showAsAction="collapseActionView"/>
 
 </menu>

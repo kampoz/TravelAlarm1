@@ -52,6 +52,7 @@ public class AlarmsListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startMainActivityIntent = new Intent(context, MainActivity.class);
                 context.startActivity(startMainActivityIntent);
+                finish();
             }
         });
 
@@ -87,6 +88,35 @@ public class AlarmsListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.action_add_alarm){
+            Intent startMainActivityIntent = new Intent(context, MainActivity.class);
+            context.startActivity(startMainActivityIntent);
+            finish();
+        }
+
+        if (id==R.id.action_show_alarms_list){
+
+        }
+
+        if (id==R.id.action_setting){
+
+        }
+
+        if (id==R.id.action_about){
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(AlarmsListActivity.this);
+            alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
+            alertDialogBuilder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int arg1) {
+                            dialog.dismiss();
+                        }
+                    });
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

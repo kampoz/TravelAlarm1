@@ -1,12 +1,15 @@
 package com.kaseka.boxmaptest1.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+
+import org.joda.time.DateTime;
 
 import java.util.Arrays;
 
@@ -24,8 +27,6 @@ public class SplashActivity extends AppCompatActivity {
         Realm.getDefaultInstance().deleteAll();
         Realm.getDefaultInstance().commitTransaction();
 
-        setTestRealmDataBase();
-
         Realm realm = Realm.getDefaultInstance();
 
         if(realm.where(AlarmRealm.class).count() > 0){
@@ -39,24 +40,16 @@ public class SplashActivity extends AppCompatActivity {
             Intent startMainActivityIntent = new Intent(this, MainActivity.class);
             this.startActivity(startMainActivityIntent);
         }
+
+        new MyAsyncTask().execute();
     }
 
-    private void setTestRealmDataBase() {
-        for (int i = 0; i < 10; ++i) {
-            final AlarmRealm alarmRealm = new AlarmRealm();
-            alarmRealm.setId(i);
-            alarmRealm.setAlarmDayOfWeek(String.valueOf(i));
-            alarmRealm.setAlarmHour(15);
-            alarmRealm.setDestinationPoint("do Lublina");
-
-            Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.copyToRealmOrUpdate(alarmRealm);
-                }
-            });
-            Realm.getDefaultInstance().close();
-            //alarms.add(alarmRealm);
+    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            DateTime dateTime1 = new DateTime();
+            return null;
         }
     }
+
 }

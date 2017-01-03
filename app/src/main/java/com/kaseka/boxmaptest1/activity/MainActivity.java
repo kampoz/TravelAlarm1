@@ -263,7 +263,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         new MyAsyncTask().execute();
-
     }
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {

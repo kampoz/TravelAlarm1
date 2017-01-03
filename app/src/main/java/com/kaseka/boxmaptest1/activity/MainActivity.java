@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private String startPoint;
     private String destinationPoint;
     public static DateTime dateTime1;
-    public Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("Set Route");
-
         setSupportActionBar(toolbar);
 
         //getSupportActionBar().hide();
@@ -295,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_about){
-            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
             alertDialogBuilder.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {

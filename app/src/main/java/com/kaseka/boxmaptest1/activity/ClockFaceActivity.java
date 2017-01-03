@@ -7,10 +7,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 //import android.icu.util.Calendar;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,14 +80,16 @@ public class ClockFaceActivity extends AppCompatActivity {
     DateTime alarmDateTime;
     int goalHourInMins = 0;
 
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_clock_face);
-        //getSupportActionBar().hide();
+
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar.setTitle("Set arrive time");
+        setSupportActionBar(toolbar);
 
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
@@ -204,6 +211,50 @@ public class ClockFaceActivity extends AppCompatActivity {
                 amPm = DateTimeConstants.PM;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.action_add_alarm){
+            Intent startAlarmsListActivityIntent = new Intent(this, MainActivity.class);
+            this.startActivity(startAlarmsListActivityIntent);
+            this.finish();
+        }
+
+        if (id==R.id.action_show_alarms_list){
+            Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
+            this.startActivity(startAlarmsListActivityIntent);
+            this.finish();
+        }
+
+        if (id==R.id.action_setting){
+
+        }
+
+        if (id==R.id.action_about){
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
+            alertDialogBuilder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int arg1) {
+                            dialog.dismiss();
+                        }
+                    });
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

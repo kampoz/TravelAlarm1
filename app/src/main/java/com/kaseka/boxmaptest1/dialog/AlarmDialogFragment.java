@@ -86,7 +86,8 @@ public class AlarmDialogFragment extends DialogFragment{
 
                 //context.startService(intent);
 
-               getDialog().getContext().startService(intent);
+                getDialog().getContext().startService(intent);
+                getActivity().finish();
 
             }
         });

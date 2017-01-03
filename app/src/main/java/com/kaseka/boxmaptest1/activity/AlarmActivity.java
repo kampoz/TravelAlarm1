@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -15,7 +16,7 @@ import com.kaseka.boxmaptest1.R;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    ImageButton bCloseAlarm;
+    Button bCloseAlarm;
     MediaPlayer mMediaPlayer;
     View circleWaveView;
     Animation pulse1;
@@ -27,7 +28,7 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
         //getSupportActionBar().hide();
 
-        bCloseAlarm = (ImageButton) findViewById(R.id.bCloseAlarm);
+        bCloseAlarm = (Button) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
 
         mMediaPlayer = new MediaPlayer();
@@ -51,7 +52,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
         public void addListenerOnButton(){
-        bCloseAlarm = (ImageButton) findViewById(R.id.bCloseAlarm);
+        //bCloseAlarm = (ImageButton) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

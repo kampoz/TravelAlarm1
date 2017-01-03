@@ -24,13 +24,15 @@
             />
 
 
-        <ImageButton
+        <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/bCloseAlarm"
             android:layout_gravity="center"
-            android:src="@drawable/little_circle_shape"
-            android:background="@null"
+            android:background="@drawable/little_circle_shape"
+            android:text="X"
+            android:textSize="50dp"
+            android:textAllCaps="false"
             />
 
         <TextView

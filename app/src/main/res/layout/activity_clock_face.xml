@@ -4,159 +4,175 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context="com.kaseka.boxmaptest1.activity.ClockFaceActivity">
 
-    <include android:id="@+id/app_bar"
-        layout="@layout/app_bar"/>
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
     <com.kaseka.boxmaptest1.view.ClockView
         android:id="@+id/rlClockParent"
         android:layout_width="200dp"
-        android:layout_height="200dp">
-    </com.kaseka.boxmaptest1.view.ClockView>
+        android:layout_height="200dp"></com.kaseka.boxmaptest1.view.ClockView>
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7">
-            <Button
-                android:id="@+id/bMonday"
-                android:text="M"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bTuesday"
-                android:text="T"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bWensday"
-                android:text="W"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bThursday"
-                android:text="Th"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bFriday"
-                android:text="F"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bSaturday"
-                android:text="Sa"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/bSunday"
-                android:text="Su"
-                android:textAllCaps="false"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#000000"
-                android:textColor="#ffffff"/>
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <Button
+                    android:id="@+id/bMonday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="M"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bTuesday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="T"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bWensday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="W"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bThursday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="Th"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bFriday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="F"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bSaturday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="Sa"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bSunday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:text="Su"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvHourDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="20dp"
+                    android:text="--00:00--"
+                    android:textColor="#cccccc"
+                    android:textSize="20dp" />
+
+                <Button
+                    android:id="@+id/bAM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    android:text="AM"
+                    android:textColor="#ffffff"
+
+                    />
+
+                <Button
+                    android:id="@+id/bPM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    android:text="PM"
+                    android:textColor="#ffffff" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etPreparingTimeInMins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:hint="Preparing time (min)"
+                    android:inputType="number"
+                    android:textColor="#fff"
+                    android:textColorHint="#777"
+                    android:textSize="18dp" />
+
+
+                <Button
+                    android:id="@+id/bSetAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_button_shape"
+                    android:onClick="showDialog"
+                    android:text="Set alarm"
+                    android:padding="10dp"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:text="--00:00--"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvHourDisplay"
-                android:paddingRight="20dp"
-                android:textColor="#cccccc"
-                android:textSize="20dp"/>
-
-            <Button
-                android:id="@+id/bAM"
-                android:text="AM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#000000"
-                android:textColor="#ffffff"
-
-                />
-
-            <Button
-                android:id="@+id/bPM"
-                android:text="PM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#000000"
-                android:textColor="#ffffff"
-                />
-
-        </LinearLayout>
-
-
-            <EditText
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textColor="#fff"
-                android:textSize="25dp"
-                android:hint="Preparing time (min)"
-                android:textColorHint="#777"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/etPreparingTimeInMins" />
-
-
-    <Button
-        android:text="Set alarm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bSetAlarm"
-        android:onClick="showDialog"
-        android:background="@drawable/edit_button_shape"/>
-    </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                     markerViewTo.setAnchor(0.5f, 1.0f);
                     //mapBoxHelper.drawSimplify(responsePoints, map);
                     mapBoxHelper.drawBeforeSimplify(responsePoints);
-                    tvRouteTime.setText("Czas: " + routeTime);
+                    tvRouteTime.setText("Travel time: " + routeTime);
 
                     mapBoxHelper.fitZoom(markerViewFrom.getPosition(), markerViewTo.getPosition());
             }

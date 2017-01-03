@@ -39,8 +39,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10px"
-                    android:background="@color/colorMyLightGrey" />
+                    android:layout_height="2px"
+                    android:background="@color/colorMyLightGreen" />
 
                 <fragment
                     android:id="@+id/from_autocomplete_fragment"
@@ -158,9 +158,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/colorMyLightGrey"
                     android:textColor="@color/white"
-                    android:hint="Route time:"
+                    android:hint="..."
                     android:id="@+id/tvRouteTime" />
 
 

@@ -13,8 +13,6 @@
     <color name="colorMyLightGreen">#42f474</color>
     <color name="colorMyBlack">#000000</color>
     <color name="colorMyWhite">#ffffff</color>
-    <color name="colorMyDarkGrey">#302929</color>
+    <color name="colorMyDarkMain">#004D40</color>
     <color name="colorTimePickerText">#ffffff</color>
-
-
 </resources>

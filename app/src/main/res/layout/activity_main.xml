@@ -37,10 +37,10 @@
                 android:orientation="vertical"
                 android:background="@android:color/black">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/colorMyLightGreen" />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="2px"-->
+                    <!--android:background="@color/colorMyLightGreen" />-->
 
                 <fragment
                     android:id="@+id/from_autocomplete_fragment"
@@ -123,6 +123,7 @@
                         android:padding="5dp"
                         android:textAllCaps="false"
                         android:layout_weight="1"
+                        android:layout_marginRight="3dp"
                         />
 
                     <Button
@@ -136,7 +137,8 @@
                         android:padding="5dp"
                         android:textAllCaps="false"
                         android:layout_weight="1"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         />
 
                     <Button
@@ -150,7 +152,8 @@
                         android:padding="5dp"
                         android:textAllCaps="false"
                         android:layout_weight="1"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="3dp"
+
                         />
                 </LinearLayout>
 

@@ -1,6 +1,5 @@
 package com.kaseka.boxmaptest1.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,9 +30,9 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v7.widget.Toolbar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private MapboxMap map;
     private MarkerView markerViewFrom;
     private MarkerView markerViewTo;
-    private Button bStart;
+    private Button bSetRoute;
     private Button bNext;
     private Button bClean;
     private TextView tvRouteTime;
@@ -101,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
 //        "directions/json?origin=place_id:ChIJ8b5DJgJaIkcRqtOAYilxmD4&destination=place_id:" +
 //                "ChIJncLRe9ZZIkcRtBg-8THvidU&key=AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU"
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
-        bStart = (Button) findViewById(R.id.bStart);
-        bNext = (Button) findViewById(R.id.bDalej);
-        bClean= (Button) findViewById(R.id.bClean);
+        bSetRoute = (Button) findViewById(R.id.bSetRoute);
+        bNext = (Button) findViewById(R.id.bNext);
+        bClean = (Button) findViewById(R.id.bClean);
         mapView = (MapView) findViewById(R.id.mapview);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS);
         tvRouteTime = (TextView) findViewById(R.id.tvRouteTime);
@@ -224,18 +223,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bStart.setOnClickListener(new View.OnClickListener() {
+        bSetRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!fromLocationId.isEmpty() && !toLocationId.isEmpty() )
-                {
+                if (!fromLocationId.isEmpty() && !toLocationId.isEmpty()) {
                     setRequest();
 
                     //Parser parser = new Parser();
                     //ArrayList<LatLng> points = parser.parseRoutePoints();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Brak lokalizacji", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Brak lokalizacji", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -246,13 +244,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Uzupelnianie AlarmPOJO 4 z 8 pol
-                setAlarmPOJOData();
-                setPointsListInAlarmPOJO(responsePoints);
-                Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
+                if (routeTimeInSeconds > 0) {
 
-                //startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
-                MainActivity.this.startActivity(startAlarmClockActivityIntent);
-                finish();
+                    setAlarmPOJOData();
+                    setPointsListInAlarmPOJO(responsePoints);
+                    Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
+
+                    //startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
+                    MainActivity.this.startActivity(startAlarmClockActivityIntent);
+                    finish();
+                } else {
+                    Toast.makeText(MainActivity.this, "Did you set route?", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -279,21 +282,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id==R.id.action_add_alarm){
+        if (id == R.id.action_add_alarm) {
 
         }
 
-        if (id==R.id.action_show_alarms_list){
+        if (id == R.id.action_show_alarms_list) {
             Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
             this.finish();
         }
 
-        if (id==R.id.action_setting){
+        if (id == R.id.action_setting) {
 
         }
 
-        if (id==R.id.action_about){
+        if (id == R.id.action_about) {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
             alertDialogBuilder.setPositiveButton("OK",
@@ -319,29 +322,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void buttonsReaction(ImageButton imageButton){
+    private void buttonsReaction(ImageButton imageButton) {
         ibCar.setBackgroundColor(Color.BLACK);
         ibPublicTransport.setBackgroundColor(Color.BLACK);
         ibBicycle.setBackgroundColor(Color.BLACK);
         ibWalk.setBackgroundColor(Color.BLACK);
         ibCar.setColorFilter(null);
-        ibPublicTransport.setColorFilter(null);;
-        ibBicycle.setColorFilter(null);;
+        ibPublicTransport.setColorFilter(null);
+        ;
+        ibBicycle.setColorFilter(null);
+        ;
         ibWalk.setColorFilter(null);
         //imageButton.setBackgroundColor(Color.GREEN);
         //imageButton.setBackgroundColor(0xFF00FF00);
         imageButton.setColorFilter(getResources().getColor(R.color.colorMyLightGreen));
     }
 
-    private void setRequest(){
+    private void setRequest() {
         getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, transportMode);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
                 Log.d("Wykonana metoda", "onSuccess");
                 String stringRoutePoints = Parser.parseRoutePoints(response);
-                if (!stringRoutePoints.isEmpty())
-                {
+                if (!stringRoutePoints.isEmpty()) {
 
                     responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
                     routeTime = Parser.parseWholeRouteTime(response);
@@ -349,10 +353,10 @@ public class MainActivity extends AppCompatActivity {
 
                     MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
 
-    //                MarkerViewOptions markerFrom = new MarkerViewOptions()
-    //                        .position(responsePoints.get(0));
-    //                MarkerViewOptions markerTo = new MarkerViewOptions()
-    //                        .position(responsePoints.get(responsePoints.size()-1));
+                    //                MarkerViewOptions markerFrom = new MarkerViewOptions()
+                    //                        .position(responsePoints.get(0));
+                    //                MarkerViewOptions markerTo = new MarkerViewOptions()
+                    //                        .position(responsePoints.get(responsePoints.size()-1));
 
                     //4 linijki - ustawienie pinów:
                     markerViewFrom.setPosition(responsePoints.get(0));  //pozycja poczatkowa trasy
@@ -364,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
                     tvRouteTime.setText("Travel time: " + routeTime);
 
                     mapBoxHelper.fitZoom(markerViewFrom.getPosition(), markerViewTo.getPosition());
-            }
+                }
 
 
             }
@@ -372,15 +376,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure() {
-                Log.d("INTERFEJS","ERROR");
+                Log.d("INTERFEJS", "ERROR");
             }
         });
         getRouteDetailsRequest.execute();
     }
 
     // AlarmPOJO przypisanie responsePoints na latLngRealm
-    private void setPointsListInAlarmPOJO(ArrayList<LatLng> responsePoints){
-        for (int i=0; i<AlarmPOJO.getLngLatPointsRealmList().size(); i++){
+    private void setPointsListInAlarmPOJO(ArrayList<LatLng> responsePoints) {
+        for (int i = 0; i < AlarmPOJO.getLngLatPointsRealmList().size(); i++) {
             LatLngRealm latLngRealm = new LatLngRealm();
             double latitude = responsePoints.get(i).getLatitude();
             double longitude = responsePoints.get(i).getLongitude();
@@ -390,12 +394,12 @@ public class MainActivity extends AppCompatActivity {
             AlarmPOJO.getLngLatPointsRealmList().add(i, latLngRealm);
 
             //AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
-            Log.d("AlarmPOJOListSize", "setPointsListInAlarmPOJO.size():"+AlarmPOJO.getLngLatPointsRealmList().size());
+            Log.d("AlarmPOJOListSize", "setPointsListInAlarmPOJO.size():" + AlarmPOJO.getLngLatPointsRealmList().size());
         }
     }
 
 
-    private void setAlarmPOJOData(){
+    private void setAlarmPOJOData() {
         AlarmPOJO.setRouteTimeLabel(routeTime);
         AlarmPOJO.setRouteTimeInSeconds(routeTimeInSeconds);
         AlarmPOJO.setStartPoint(startPoint);
@@ -404,9 +408,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
-    public void onPause()  {
+    public void onPause() {
         super.onPause();
         mapView.onPause();
     }
@@ -437,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
         mapView.onLowMemory();
     }
 
-    public void setCameraPosition(double latitude, double longitude){
+    public void setCameraPosition(double latitude, double longitude) {
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)) // Sets the new camera position
                 .build(); // Creates a CameraPosition from the builder

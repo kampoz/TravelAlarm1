@@ -22,7 +22,7 @@ public class AlarmPOJO {
     private static String startPoint;
     private static String destinationPoint;
     private static String routeTimeLabel;
-    private static int routeTimeInSeconds;
+    private static int routeTimeInSeconds = 0;
     private static Integer preparingTimeInMins;
     private static Long alarmTimeInMillis;
     private static RealmList<LatLngRealm> lngLatPointsRealmList = new RealmList<>();

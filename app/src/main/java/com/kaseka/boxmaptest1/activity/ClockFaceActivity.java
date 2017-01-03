@@ -253,13 +253,13 @@ public class ClockFaceActivity extends AppCompatActivity {
         int goalTimeInMins = goalHourInMins + goalMinute;
 
 
-        //int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
-        //routeTimeInMinutes = routeTimeInSeconds / 60;
-        routeTimeInMinutes = 15;
+        int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
+        routeTimeInMinutes = routeTimeInSeconds / 60;
+        //routeTimeInMinutes = 15;
 
         //czas przygotowania
-        //preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
-        preparingTimeInMins = 15;
+        preparingTimeInMins = Integer.parseInt(etPreparingTimeInMins.getText().toString());
+        //preparingTimeInMins = 15;
 
         ///////////////////////METODA II BIBL. JODA-TIME///////////////////////
         DateTime currentDaleTime = new DateTime();

@@ -46,16 +46,8 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
         public TextView tvAlarmHour;
         public TextView tvAlarmDay;
         public long id;
-        public TextView tvDestinaitonPoint;
-        public TextView tvDestinaitonHour;
-        public Button bEdit;
         public ImageButton ibDeleteAlarm;
-        private AlarmRealm alarmRealm;
-        private LinearLayout lLsingleAlarm;
         private ImageButton ibGreenLight;
-
-
-
 
         public MyViewHolder(View view) {
             super(view);

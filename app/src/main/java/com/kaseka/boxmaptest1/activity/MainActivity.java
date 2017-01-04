@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     //ArrayList<LatLng> points = parser.parseRoutePoints();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Brak lokalizacji", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "No location", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.startActivity(startAlarmClockActivityIntent);
                     finish();
                 } else {
-                    Toast.makeText(MainActivity.this, "Did you set route?", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Route is not set", Toast.LENGTH_LONG).show();
                 }
             }
         });

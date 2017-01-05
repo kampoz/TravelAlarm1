@@ -92,8 +92,8 @@ public class AlarmStartedService extends IntentService {
             /*
             Dla każego aktywnego alaramu z bazy
               pobranie bieżacego czasu podrózy
-              i zapisanie transakcja do bazy danych
-            */
+              i zapisanie transakcja do bazy danych*/
+
             for (final AlarmRealm oldAlarmRealm : alarmsTurnedOnResults) {
 
                 final Realm defaultInstance = Realm.getDefaultInstance();

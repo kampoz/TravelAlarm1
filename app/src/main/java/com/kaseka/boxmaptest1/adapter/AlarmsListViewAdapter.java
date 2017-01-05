@@ -97,7 +97,7 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                 long id = alarmRealmPosition.getId();
                 String day = alarmRealmPosition.getAlarmDayOfWeek();
 
-                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealmPosition);
+//                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealmPosition);
 
 //                FragmentManager manager = ((AlarmsListActivity) context).getFragmentManager();
 //                AlarmDialogFragment myDialog = new AlarmDialogFragment();

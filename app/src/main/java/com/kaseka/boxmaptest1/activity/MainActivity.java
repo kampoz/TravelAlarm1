@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.LatLngRealm;
 import com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment;
+import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.networking.GetRouteDetailsRequest;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
 import com.kaseka.boxmaptest1.global.GoogleTransportMode;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvRouteTime;
     private String fromLocationId = "";
     private String toLocationId = "";
-    String routeTime;
+    String routeTimeLabel;
     int routeTimeInSeconds = 0;
     GetRouteDetailsRequest getRouteDetailsRequest;
     private ImageButton ibCar;
@@ -246,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
                 //Uzupelnianie AlarmPOJO 4 z 8 pol
                 if (routeTimeInSeconds > 0) {
 
-                    setAlarmPOJOData();
-                    setPointsListInAlarmPOJO(responsePoints);
+                    setAlarmPOJOData(responsePoints);
+
                     Intent startAlarmClockActivityIntent = new Intent(MainActivity.this, ClockFaceActivity.class);
 
                     //startAlarmClockActivityIntent.putExtra("travelTimeInSeconds", routeTimeInSeconds);
@@ -347,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!stringRoutePoints.isEmpty()) {
 
                     responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
-                    routeTime = Parser.parseWholeRouteTime(response);
+                    routeTimeLabel = Parser.parseWholeRouteTime(response);
                     routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
 
                     MapBoxHelper mapBoxHelper = new MapBoxHelper(map);
@@ -364,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                     markerViewTo.setAnchor(0.5f, 1.0f);
                     //mapBoxHelper.drawSimplify(responsePoints, map);
                     mapBoxHelper.drawBeforeSimplify(responsePoints);
-                    tvRouteTime.setText("Travel time: " + routeTime);
+                    tvRouteTime.setText("Travel time: " + routeTimeLabel);
 
                     mapBoxHelper.fitZoom(markerViewFrom.getPosition(), markerViewTo.getPosition());
                 }
@@ -382,30 +383,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // AlarmPOJO przypisanie responsePoints na latLngRealm
-    private void setPointsListInAlarmPOJO(ArrayList<LatLng> responsePoints) {
-        for (int i = 0; i < AlarmPOJO.getLngLatPointsRealmList().size(); i++) {
+    private void createPointsListForTravel(ArrayList<LatLng> responsePoints) {
+
+        for (int i = 0; i < Cache.getAlarmPOJO().getLngLatPointsRealmList().size(); i++) {
             LatLngRealm latLngRealm = new LatLngRealm();
             double latitude = responsePoints.get(i).getLatitude();
             double longitude = responsePoints.get(i).getLongitude();
             latLngRealm.setLatitude(latitude);
             latLngRealm.setLongitude(longitude);
 
-            AlarmPOJO.getLngLatPointsRealmList().add(i, latLngRealm);
+            //alarmPOJO.getLngLatPointsRealmList().add(i, latLngRealm);
 
             //AlarmPOJO.LngLatPointsRealmList.add(i, latLngRealm);
-            Log.d("AlarmPOJOListSize", "setPointsListInAlarmPOJO.size():" + AlarmPOJO.getLngLatPointsRealmList().size());
+
         }
     }
 
 
-    private void setAlarmPOJOData() {
-        AlarmPOJO.setRouteTimeLabel(routeTime);
-        AlarmPOJO.setRouteTimeInSeconds(routeTimeInSeconds);
-        AlarmPOJO.setStartPoint(startPoint);
-        AlarmPOJO.setDestinationPoint(destinationPoint);
-        AlarmPOJO.setTransportMode(transportMode.toString());
-        AlarmPOJO.setFromLocationId(fromLocationId);
-        AlarmPOJO.setToLocationId(toLocationId);
+    private void setAlarmPOJOData(ArrayList<LatLng> responsePoints) {
+        AlarmPOJO alarmPOJO = Cache.clearAlarmPOJO();
+
+        alarmPOJO.setFirstPhaseData(
+                routeTimeLabel,
+                routeTimeInSeconds,
+                startPoint,
+                destinationPoint,
+                transportMode.toString(),
+                fromLocationId,
+                toLocationId
+        );
+        createPointsListForTravel(responsePoints);
     }
 
 

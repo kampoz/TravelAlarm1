@@ -1,218 +1,241 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
-import android.util.Log;
-
-import org.joda.time.DateTime;
-
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmList;
+
 
 public class AlarmPOJO {
 
-    private static long id;
-    private static boolean isOn = false;
-    private static boolean isAlarmPeriodic = false;
-    private static int alarmHour;
-    private static int alarmMinute;
-    private static int amPm;
-    private static String alarmDayOfWeek;
-    private static int alarmDayOfWeekAsInt;
-    private static String startPoint;
-    private static String destinationPoint;
-    private static String routeTimeLabel;
-    private static int routeTimeInSeconds = 0;
-    private static Integer preparingTimeInMins;
-    private static Long alarmTimeInMillis;
-    private static RealmList<LatLngRealm> lngLatPointsRealmList = new RealmList<>();
-    private static String alarmDateTimeData;
-    private static String transportMode;
-    private static int goalHourOfDay;
-    private static int goalMinute;
-    private static String fromLocationId;
-    private static String toLocationId;
+    private long id;
+    private boolean isOn = false;
+    private boolean isAlarmPeriodic = false;
+    private int alarmHour;
+    private int alarmMinute;
+    private int amPm;
+    private String alarmDayOfWeek;
+    private int alarmDayOfWeekAsInt;
+    private String startPoint;
+    private String destinationPoint;
+    private String routeTimeLabel;
+    private int routeTimeInSeconds = 0;
+    private Integer preparingTimeInMins;
+    private Long alarmTimeInMillis;
+    private RealmList<LatLngRealm> lngLatPointsRealmList = new RealmList<>();
+    private String alarmDateTimeData;
+    private String transportMode;
+    private int goalHourOfDay;
+    private int goalMinute;
+    private String fromLocationId;
+    private String toLocationId;
+
+    public void setFirstPhaseData(String routeTimeLabel, int routeTimeInSeconds,
+                                  String startPoint,
+                                  String destinationPoint, String transportMode,
+                                  String fromLocationId, String toLocationId){
+        setRouteTimeLabel(routeTimeLabel);
+        setRouteTimeInSeconds(routeTimeInSeconds);
+        setStartPoint(startPoint);
+        setDestinationPoint(destinationPoint);
+        setTransportMode(transportMode.toString());
+        setFromLocationId(fromLocationId);
+        setToLocationId(toLocationId);
+    }
+
+    public void setSecondPhaseData (int alarmHour, int alarmMinute, String alarmDayOfWeek, Integer preparingTimeInMins,
+                                    int amPm, Long alarmTimeInMillis, String alarmDateTimeData, int goalHourOfDay, int goalMinute){
+        setIsOn(true);
+        setAlarmHour(alarmHour);
+        setAlarmMinute(alarmMinute);
+        setAlarmDayOfWeek(alarmDayOfWeek);
+        setPreparingTimeInMins(preparingTimeInMins);
+        setAmPm(amPm);
+        setAlarmTimeInMillis(alarmTimeInMillis);
+        setAlarmDateTimeData(alarmDateTimeData.toString());
+        setGoalHourOfDay(goalHourOfDay);
+        setGoalMinute(goalMinute);
+    }
 
 
-    public static String getAlarmDayOfWeek() {
+    public String getAlarmDayOfWeek() {
         return alarmDayOfWeek;
     }
 
-    public static void setAlarmDayOfWeek(String alarmDayOfWeek) {
-        AlarmPOJO.alarmDayOfWeek = alarmDayOfWeek;
+    private void setAlarmDayOfWeek(String alarmDayOfWeek) {
+        this.alarmDayOfWeek = alarmDayOfWeek;
     }
 
-    public static boolean isOn() {
+    public boolean isOn() {
         return isOn;
     }
 
-    public static boolean isAlarmPeriodic() {
+    public boolean isAlarmPeriodic() {
         return isAlarmPeriodic;
     }
 
-    public static void setIsAlarmPeriodic(boolean isAlarmPeriodic) {
-        AlarmPOJO.isAlarmPeriodic = isAlarmPeriodic;
+    public void setIsAlarmPeriodic(boolean isAlarmPeriodic) {
+        this.isAlarmPeriodic = isAlarmPeriodic;
     }
 
-    public static int getAlarmHour() {
+    public int getAlarmHour() {
         return alarmHour;
     }
 
-    public static void setAlarmHour(int alarmHour) {
-        AlarmPOJO.alarmHour = alarmHour;
+    private void setAlarmHour(int alarmHour) {
+        this.alarmHour = alarmHour;
     }
 
-    public static int getAlarmMinute() {
+    public int getAlarmMinute() {
         return alarmMinute;
     }
 
-    public static void setAlarmMinute(int alarmMinute) {
-        AlarmPOJO.alarmMinute = alarmMinute;
+    private void setAlarmMinute(int alarmMinute) {
+        this.alarmMinute = alarmMinute;
     }
 
-    public static Long getAlarmTimeInMillis() {
+    public Long getAlarmTimeInMillis() {
         return alarmTimeInMillis;
     }
 
-    public static void setAlarmTimeInMillis(Long alarmTimeInMillis) {
-        AlarmPOJO.alarmTimeInMillis = alarmTimeInMillis;
+    private void setAlarmTimeInMillis(Long alarmTimeInMillis) {
+        this.alarmTimeInMillis = alarmTimeInMillis;
     }
 
-    public static int getAmPm() {
+    public int getAmPm() {
         return amPm;
     }
 
-    public static void setAmPm(int amPm) {
-        AlarmPOJO.amPm = amPm;
+    private void setAmPm(int amPm) {
+        this.amPm = amPm;
     }
 
-    public static String getDestinationPoint() {
+    public String getDestinationPoint() {
         return destinationPoint;
     }
 
-    public static void setDestinationPoint(String destinationPoint) {
-        AlarmPOJO.destinationPoint = destinationPoint;
+    private void setDestinationPoint(String destinationPoint) {
+        this.destinationPoint = destinationPoint;
     }
 
-    public static long getId() {
+    public long getId() {
         return id;
     }
 
-    public static void setId(long id) {
-        AlarmPOJO.id = id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public static boolean getIsOn() {
+    public boolean getIsOn() {
         return isOn;
     }
 
-    public static void setIsOn(boolean isOn) {
-        AlarmPOJO.isOn = isOn;
+    private void setIsOn(boolean isOn) {
+        this.isOn = isOn;
     }
 
-    public static RealmList<LatLngRealm> getLngLatPointsRealmList() {
+    public RealmList<LatLngRealm> getLngLatPointsRealmList() {
         return lngLatPointsRealmList;
     }
 
-    public static void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
-        AlarmPOJO.lngLatPointsRealmList = lngLatPointsRealmList;
+    public void setLngLatPointsRealmList(RealmList<LatLngRealm> lngLatPointsRealmList) {
+        this.lngLatPointsRealmList = lngLatPointsRealmList;
     }
 
-    public static Integer getPreparingTimeInMins() {
+    public Integer getPreparingTimeInMins() {
         return preparingTimeInMins;
     }
 
-    public static void setPreparingTimeInMins(Integer preparingTimeInMins) {
-        AlarmPOJO.preparingTimeInMins = preparingTimeInMins;
+    private void setPreparingTimeInMins(Integer preparingTimeInMins) {
+        this.preparingTimeInMins = preparingTimeInMins;
     }
 
-    public static String getRouteTimeLabel() {
+    public String getRouteTimeLabel() {
         return routeTimeLabel;
     }
 
-    public static void setRouteTimeLabel(String routeTimeLabel) {
-        AlarmPOJO.routeTimeLabel = routeTimeLabel;
+    private void setRouteTimeLabel(String routeTimeLabel) {
+        this.routeTimeLabel = routeTimeLabel;
     }
 
-    public static String getStartPoint() {
+    public String getStartPoint() {
         return startPoint;
     }
 
-    public static void setStartPoint(String startPoint) {
-        AlarmPOJO.startPoint = startPoint;
+    private void setStartPoint(String startPoint) {
+        this.startPoint = startPoint;
     }
 
 
-    public static int getRouteTimeInSeconds() {
+    public int getRouteTimeInSeconds() {
         return routeTimeInSeconds;
     }
 
-    public static void setRouteTimeInSeconds(int routeTimeInSeconds) {
-        AlarmPOJO.routeTimeInSeconds = routeTimeInSeconds;
+    private void setRouteTimeInSeconds(int routeTimeInSeconds) {
+        this.routeTimeInSeconds = routeTimeInSeconds;
     }
 
 
-    public static int getAlarmDayOfWeekAsInt() {
+    public int getAlarmDayOfWeekAsInt() {
         return alarmDayOfWeekAsInt;
     }
 
-    public static void setAlarmDayOfWeekAsInt(int alarmDayOfWeekAsInt) {
-        AlarmPOJO.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
+    public void setAlarmDayOfWeekAsInt(int alarmDayOfWeekAsInt) {
+        this.alarmDayOfWeekAsInt = alarmDayOfWeekAsInt;
     }
 
 
-    public static String getAlarmDateTimeData() {
+    public String getAlarmDateTimeData() {
         return alarmDateTimeData;
     }
 
-    public static void setAlarmDateTimeData(String alarmDateTimeData) {
-        AlarmPOJO.alarmDateTimeData = alarmDateTimeData;
+    private void setAlarmDateTimeData(String alarmDateTimeData) {
+        this.alarmDateTimeData = alarmDateTimeData;
     }
 
-    public static String getTransportMode() {
+    public String getTransportMode() {
         return transportMode;
     }
 
-    public static void setTransportMode(String transportMode) {
-        AlarmPOJO.transportMode = transportMode;
+    private void setTransportMode(String transportMode) {
+        this.transportMode = transportMode;
     }
 
-    public static int getGoalHourOfDay() {
+    public int getGoalHourOfDay() {
         return goalHourOfDay;
     }
 
-    public static void setGoalHourOfDay(int goalHourOfDay) {
-        AlarmPOJO.goalHourOfDay = goalHourOfDay;
+    private void setGoalHourOfDay(int goalHourOfDay) {
+        this.goalHourOfDay = goalHourOfDay;
     }
 
-    public static int getGoalMinute() {
+    public int getGoalMinute() {
         return goalMinute;
     }
 
-    public static void setGoalMinute(int goalMinute) {
-        AlarmPOJO.goalMinute = goalMinute;
+    private void setGoalMinute(int goalMinute) {
+        this.goalMinute = goalMinute;
     }
 
 
-    public static String getFromLocationId() {
+    public String getFromLocationId() {
         return fromLocationId;
     }
 
-    public static void setFromLocationId(String fromLocationId) {
-        AlarmPOJO.fromLocationId = fromLocationId;
+    private void setFromLocationId(String fromLocationId) {
+        this.fromLocationId = fromLocationId;
     }
 
-    public static String getToLocationId() {
+    public String getToLocationId() {
         return toLocationId;
     }
 
-    public static void setToLocationId(String toLocationId) {
-        AlarmPOJO.toLocationId = toLocationId;
+    private void setToLocationId(String toLocationId) {
+        this.toLocationId = toLocationId;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //dodanie nowego alarmu
-    public static void insertAlarmToRealm() {
+    public void insertAlarmToRealm() {
 
         final AlarmRealm alarmRealm = new AlarmRealm();
         long newId;
@@ -290,7 +313,7 @@ public class AlarmPOJO {
     }
 
 
-    public static void setToNull() {
+    public void setToNull() {
 
         setId(0);
         setIsOn(false);
@@ -316,7 +339,7 @@ public class AlarmPOJO {
     }
 
     //ma uzupełniać statyczny alarmPOJO pobranymi danymi z obiektu AlarmRealm - do wyswietlenie na AlarmsLIst jako Dialog
-    public static void setAlarmPOJODataFromAlarmRealm(AlarmRealm alarmRealm){
+    public void setAlarmPOJODataFromAlarmRealm(AlarmRealm alarmRealm){
         setId(alarmRealm.getId());
         setIsOn(alarmRealm.getIsOn());
         setAlarmHour(alarmRealm.getAlarmHour());
@@ -341,7 +364,7 @@ public class AlarmPOJO {
     }
 
 
-    public static void setIsOntoRealm(){
+    public void setIsOntoRealm(){
         final AlarmRealm alarmRealm = new AlarmRealm();
         Realm defaultInstance = Realm.getDefaultInstance();
         alarmRealm.setIsOn(getIsOn());

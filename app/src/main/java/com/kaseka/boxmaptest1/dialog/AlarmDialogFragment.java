@@ -17,6 +17,7 @@ import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
+import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 import com.kaseka.boxmaptest1.service.AlarmStartedService;
 
@@ -41,19 +42,19 @@ public class AlarmDialogFragment extends DialogFragment{
         final TextView tvDialogTravelTime = (TextView) view.findViewById(R.id.tvDialogTravelTime);
         final ImageButton bDeleteAlarm = (ImageButton) view.findViewById(R.id.ibDeleteAlarm);
 
-
+        AlarmPOJO alarmPOJO = Cache.getAlarmPOJO();
 
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
-        tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(AlarmPOJO.getAlarmHour()),String.valueOf(AlarmPOJO.getAlarmMinute())));
-        tvDialogWeekDay.setText("Alarm day: "+AlarmPOJO.getAlarmDayOfWeek());
-        tvDialogStartPoint.setText("from: "+AlarmPOJO.getStartPoint());
-        tvDialogDestinationPoint.setText("to: "+AlarmPOJO.getDestinationPoint());
-        tvDialogTransportMode.setText("transport: "+AlarmPOJO.getTransportMode());
-        tvDialogGoalTime.setText("arrive time: "+AlarmPOJO.getGoalHourOfDay()+" : "+AlarmPOJO.getGoalMinute());
+        tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(alarmPOJO.getAlarmHour()),String.valueOf(alarmPOJO.getAlarmMinute())));
+        tvDialogWeekDay.setText("Alarm day: "+alarmPOJO.getAlarmDayOfWeek());
+        tvDialogStartPoint.setText("from: "+alarmPOJO.getStartPoint());
+        tvDialogDestinationPoint.setText("to: "+alarmPOJO.getDestinationPoint());
+        tvDialogTransportMode.setText("transport: "+alarmPOJO.getTransportMode());
+        tvDialogGoalTime.setText("arrive time: "+alarmPOJO.getGoalHourOfDay()+" : "+alarmPOJO.getGoalMinute());
         tvDialogGoalTime.setText("arrive time: "+MyDisplayTimeHelper
-                .setDisplayTime(String.valueOf(AlarmPOJO.getGoalHourOfDay()),String.valueOf(AlarmPOJO.getGoalMinute())));
-        tvDialogPreparingTime.setText("preparig time: "+AlarmPOJO.getPreparingTimeInMins()+" mins");
-        tvDialogTravelTime.setText("travel time: "+AlarmPOJO.getRouteTimeLabel());
+                .setDisplayTime(String.valueOf(alarmPOJO.getGoalHourOfDay()),String.valueOf(alarmPOJO.getGoalMinute())));
+        tvDialogPreparingTime.setText("preparig time: "+alarmPOJO.getPreparingTimeInMins()+" mins");
+        tvDialogTravelTime.setText("travel time: "+alarmPOJO.getRouteTimeLabel());
 
 
         builder.setView(view);
@@ -61,7 +62,8 @@ public class AlarmDialogFragment extends DialogFragment{
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlarmPOJO.setToNull();
+
+
                 Intent startMainActivityIntent = new Intent(getActivity(), MainActivity.class);
                 getActivity().startActivity(startMainActivityIntent);
                 //         AlarmDialogFragment.this.startActivity(startMainActivityIntent);
@@ -71,7 +73,7 @@ public class AlarmDialogFragment extends DialogFragment{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlarmPOJO.insertAlarmToRealm();
+                Cache.getAlarmPOJO().insertAlarmToRealm();
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
 

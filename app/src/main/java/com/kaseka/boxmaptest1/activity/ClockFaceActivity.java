@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
+import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
@@ -268,21 +269,26 @@ public class ClockFaceActivity extends AppCompatActivity {
     }
 
     private void setAlarmPojoObject(){
-        AlarmPOJO.setIsOn(true);
-        AlarmPOJO.setAlarmHour(alarmHour);
-        AlarmPOJO.setAlarmMinute(alarmMinutes);
-        AlarmPOJO.setAlarmDayOfWeek(dayOfWeek);
-        AlarmPOJO.setPreparingTimeInMins(preparingTimeInMins);
-        AlarmPOJO.setAmPm(amPm);
-        AlarmPOJO.setAlarmTimeInMillis(alarmTimeInMillis);
-        AlarmPOJO.setAlarmDateTimeData(alarmDateTime.toString());
-        AlarmPOJO.setGoalHourOfDay(goalHourInMins/60);
-        AlarmPOJO.setGoalMinute(Integer.parseInt(clockMinute));
+        AlarmPOJO alarmPOJO = Cache.getAlarmPOJO();
 
-        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + AlarmPOJO.getAlarmDateTimeData());
+        alarmPOJO.setSecondPhaseData(
+                alarmHour,
+                alarmMinutes,
+                dayOfWeek,
+                preparingTimeInMins,
+                amPm,
+                alarmTimeInMillis,
+                alarmDateTime.toString(),
+                goalHourInMins/60,
+                Integer.parseInt(clockMinute)
+        );
+
+
+
+        Log.d("timetest", "AlarmPOJO.getAlarmDateTimeData(): " + alarmPOJO.getAlarmDateTimeData());
 
         //sprawdzenie parsowania ze Stringa na DateTime
-        DateTime dateTimeParseFromString = DateTime.parse(AlarmPOJO.getAlarmDateTimeData());
+        DateTime dateTimeParseFromString = DateTime.parse(alarmPOJO.getAlarmDateTimeData());
         Log.d("timetest", "dateTimeParseFromString: " + dateTimeParseFromString);
     }
 
@@ -304,7 +310,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         int goalTimeInMins = goalHourInMins + goalMinute;
 
 
-        int routeTimeInSeconds = AlarmPOJO.getRouteTimeInSeconds();
+        int routeTimeInSeconds = Cache.getAlarmPOJO().getRouteTimeInSeconds();
         routeTimeInMinutes = routeTimeInSeconds / 60;
         //routeTimeInMinutes = 15;
 

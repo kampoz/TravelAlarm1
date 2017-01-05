@@ -7,6 +7,10 @@ public class Cache {
 
     private static AlarmPOJO alarmPOJO;
 
+//    public static void setAlarmPOJO( AlarmPOJO alarmPOJO ){
+//        Cache.alarmPOJO = alarmPOJO;
+//    }
+
     public static AlarmPOJO clearAlarmPOJO() {
         Cache.alarmPOJO = new AlarmPOJO();
         return getAlarmPOJO();

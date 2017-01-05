@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 markerViewFrom = map.addMarker(marker);
                 Log.d("punkty", "wspolrzedne z: " + place.getLatLng());
                 fromLocationId = place.getId();
+                Log.d("fromLocationId 1:", fromLocationId);
                 setCameraPosition(place.getLatLng().latitude, place.getLatLng().longitude);
             }
 
@@ -341,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setRequest() {
         getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, transportMode);
+        Log.d("fromLocationId 2:", fromLocationId);
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -412,7 +414,8 @@ public class MainActivity extends AppCompatActivity {
                 fromLocationId,
                 toLocationId
         );
-        createPointsListForTravel(responsePoints);
+        Log.d("fromLocationId 3:", fromLocationId);
+       // createPointsListForTravel(responsePoints);
     }
 
 

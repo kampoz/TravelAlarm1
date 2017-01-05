@@ -27,6 +27,7 @@ import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.dialog.AlarmOnOffFragment;
+import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
 import java.util.ArrayList;
@@ -98,6 +99,8 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                 String day = alarmRealmPosition.getAlarmDayOfWeek();
 
 //                AlarmPOJO.setAlarmPOJODataFromAlarmRealm(alarmRealmPosition);
+
+                Cache.clearAlarmPOJO().setAlarmPOJODataFromAlarmRealm(alarmRealmPosition);
 
 //                FragmentManager manager = ((AlarmsListActivity) context).getFragmentManager();
 //                AlarmDialogFragment myDialog = new AlarmDialogFragment();

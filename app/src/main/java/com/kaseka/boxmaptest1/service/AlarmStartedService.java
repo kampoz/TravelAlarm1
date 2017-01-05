@@ -1,6 +1,7 @@
 package com.kaseka.boxmaptest1.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import org.json.JSONObject;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -39,8 +41,8 @@ public class AlarmStartedService extends IntentService {
     private static final String API_KEY = "AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU";
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
 
-    private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
-    private String toLocationId = "ChIJ36UeUliaI0cR9vky0FB9vlI";
+//    private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
+//    private String toLocationId = "ChIJ36UeUliaI0cR9vky0FB9vlI";
     String routeTime;
     int routeTimeInSeconds = 0;
     GetRouteDetailsRequest getRouteDetailsRequest;
@@ -51,6 +53,7 @@ public class AlarmStartedService extends IntentService {
     private long newAlarmTimeInMillis;
     private long id;
     private AlarmRealm newAlarmRealm;
+    private Context context;
 
 
     public AlarmStartedService() {
@@ -65,7 +68,7 @@ public class AlarmStartedService extends IntentService {
 
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -77,6 +80,8 @@ public class AlarmStartedService extends IntentService {
 
 
             for (AlarmRealm alarmRealm : alarmsTurnedOnResults) {
+                Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
+                Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
                 //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
                 long curentSystemTimeInMillis = System.currentTimeMillis();
                 //long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
@@ -91,15 +96,21 @@ public class AlarmStartedService extends IntentService {
 
             /*
             Dla każego aktywnego alaramu z bazy
-              pobranie bieżacego czasu podrózy
+              pobranie bieżacego czasu podrózyserv1
               i zapisanie transakcja do bazy danych*/
 
             for (final AlarmRealm oldAlarmRealm : alarmsTurnedOnResults) {
 
                 final Realm defaultInstance = Realm.getDefaultInstance();
 
-                getRouteDetailsRequest = new GetRouteDetailsRequest(this, oldAlarmRealm.getFromLocationId(),
-                        oldAlarmRealm.getToLocationId(), oldAlarmRealm.getTransportMode());
+//                Log.d("fromLocationId 1:", fromLocationId);
+                getRouteDetailsRequest = new GetRouteDetailsRequest(
+                        this,
+                        oldAlarmRealm.getFromLocationId(),
+                        oldAlarmRealm.getToLocationId(),
+                        oldAlarmRealm.getTransportMode()
+                );
+
                 getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
                     @Override
                     public void onSuccess(JSONObject response) {
@@ -168,35 +179,35 @@ public class AlarmStartedService extends IntentService {
 
     }
 
-    private void getRouteTime() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                setRequest();
-                Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setRequest() {
-        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, GoogleTransportMode.bicycling);
-        getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                Log.d("AlarmStartedService", "onSuccess");
-                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
-                routeTime = Parser.parseWholeRouteTime(response);
-                Log.d("AlarmStartedService", "czas przejazdu " + routeTime);
-                routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
-            }
-
-            @Override
-            public void onFailure() {
-                Log.d("AlarmStartedService", "bład requesta w setRequest()");
-            }
-        });
-        getRouteDetailsRequest.execute();
-    }
+//    private void getRouteTime() {
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                setRequest();
+//                Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    private void setRequest() {
+//        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, GoogleTransportMode.bicycling);
+//        getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
+//            @Override
+//            public void onSuccess(JSONObject response) {
+//                Log.d("AlarmStartedService", "onSuccess");
+//                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
+//                routeTime = Parser.parseWholeRouteTime(response);
+//                Log.d("AlarmStartedService", "czas przejazdu " + routeTime);
+//                routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
+//            }
+//
+//            @Override
+//            public void onFailure() {
+//                Log.d("AlarmStartedService", "bład requesta w setRequest()");
+//            }
+//        });
+//        getRouteDetailsRequest.execute();
+//    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

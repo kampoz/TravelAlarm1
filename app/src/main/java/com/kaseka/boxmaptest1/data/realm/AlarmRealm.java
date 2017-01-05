@@ -35,6 +35,8 @@ public class AlarmRealm extends RealmObject{
     private String transportMode;
     private int goalHourOfDay;
     private int goalMinute;
+    private String fromLocationId;
+    private String toLocationId;
 
 
     //gettery, settery
@@ -210,6 +212,22 @@ public class AlarmRealm extends RealmObject{
 
     public void setGoalMinute(int goalMinute) {
         this.goalMinute = goalMinute;
+    }
+
+    public String getFromLocationId() {
+        return fromLocationId;
+    }
+
+    public void setFromLocationId(String fromLocationId) {
+        this.fromLocationId = fromLocationId;
+    }
+
+    public String getToLocationId() {
+        return toLocationId;
+    }
+
+    public void setToLocationId(String toLocationId) {
+        this.toLocationId = toLocationId;
     }
 
     //////////////////////////////////////////////////////////////////////////////////

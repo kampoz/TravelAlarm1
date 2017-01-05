@@ -45,7 +45,7 @@
             android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
 
         <service
-            android:name=".service.TripAlarmStartedService"
+            android:name=".service.AlarmStartedService"
             android:exported="false" />
         <service
             android:name=".service.TripAlarmBoundService"

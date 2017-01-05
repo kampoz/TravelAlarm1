@@ -3,28 +3,22 @@ package com.kaseka.boxmaptest1.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
-import com.kaseka.boxmaptest1.activity.ClockFaceActivity;
 import com.kaseka.boxmaptest1.activity.MainActivity;
-import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
-import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
+import com.kaseka.boxmaptest1.service.AlarmStartedService;
 
 public class AlarmDialogFragment extends DialogFragment{
 
@@ -81,8 +75,8 @@ public class AlarmDialogFragment extends DialogFragment{
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
 
-                Intent intent = new Intent(getActivity(), TripAlarmStartedService.class);
-                intent.putExtra(TripAlarmStartedService.EXTRA_MESSAGE, "extra message");
+                Intent intent = new Intent(getActivity(), AlarmStartedService.class);
+                intent.putExtra(AlarmStartedService.EXTRA_MESSAGE, "extra message");
 
                 //context.startService(intent);
 

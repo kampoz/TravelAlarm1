@@ -343,7 +343,6 @@ public class MainActivity extends AppCompatActivity {
         getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("Wykonana metoda", "onSuccess");
                 String stringRoutePoints = Parser.parseRoutePoints(response);
                 if (!stringRoutePoints.isEmpty()) {
 
@@ -405,6 +404,8 @@ public class MainActivity extends AppCompatActivity {
         AlarmPOJO.setStartPoint(startPoint);
         AlarmPOJO.setDestinationPoint(destinationPoint);
         AlarmPOJO.setTransportMode(transportMode.toString());
+        AlarmPOJO.setFromLocationId(fromLocationId);
+        AlarmPOJO.setToLocationId(toLocationId);
     }
 
 

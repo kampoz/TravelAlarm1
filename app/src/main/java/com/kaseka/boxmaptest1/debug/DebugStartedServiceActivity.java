@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.service.TripAlarmStartedService;
+import com.kaseka.boxmaptest1.service.AlarmStartedService;
 
 public class DebugStartedServiceActivity extends AppCompatActivity {
 
-    TripAlarmStartedService tripAlarmService;
+    AlarmStartedService tripAlarmService;
     boolean bound = false;
 
 
@@ -18,8 +18,8 @@ public class DebugStartedServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
 
-        Intent intent = new Intent(this, TripAlarmStartedService.class);
-        intent.putExtra(TripAlarmStartedService.EXTRA_MESSAGE, "extra message");
+        Intent intent = new Intent(this, AlarmStartedService.class);
+        intent.putExtra(AlarmStartedService.EXTRA_MESSAGE, "extra message");
         //bindService(mServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         startService(intent);
 

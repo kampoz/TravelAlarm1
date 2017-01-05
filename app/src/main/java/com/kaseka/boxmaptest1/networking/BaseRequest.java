@@ -40,12 +40,14 @@ public class BaseRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(context, "Błąd requesta", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, "Błąd requesta", Toast.LENGTH_SHORT);
                 toast.show();
                 onResponseListener.onFailure();
                 Log.d("error BaseRequest", error.toString());
             }
         });
+        Log.d("Request1: ", stringRequest.toString());
+
         VolleySingleton.getInstance(context).getRequestQueue().add(stringRequest);
     }
 

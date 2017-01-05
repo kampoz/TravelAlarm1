@@ -30,6 +30,8 @@ public class AlarmPOJO {
     private static String transportMode;
     private static int goalHourOfDay;
     private static int goalMinute;
+    private static String fromLocationId;
+    private static String toLocationId;
 
 
     public static String getAlarmDayOfWeek() {
@@ -191,6 +193,23 @@ public class AlarmPOJO {
         AlarmPOJO.goalMinute = goalMinute;
     }
 
+
+    public static String getFromLocationId() {
+        return fromLocationId;
+    }
+
+    public static void setFromLocationId(String fromLocationId) {
+        AlarmPOJO.fromLocationId = fromLocationId;
+    }
+
+    public static String getToLocationId() {
+        return toLocationId;
+    }
+
+    public static void setToLocationId(String toLocationId) {
+        AlarmPOJO.toLocationId = toLocationId;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     //dodanie nowego alarmu
     public static void insertAlarmToRealm() {
@@ -228,6 +247,8 @@ public class AlarmPOJO {
         alarmRealm.setTransportMode(getTransportMode());
         alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
         alarmRealm.setGoalMinute(getGoalMinute());
+        alarmRealm.setFromLocationId(getFromLocationId());
+        alarmRealm.setToLocationId(getToLocationId());
 
         defaultInstance.executeTransaction(new Realm.Transaction() {
             @Override
@@ -261,6 +282,8 @@ public class AlarmPOJO {
         alarmRealm.setTransportMode(getTransportMode());
         alarmRealm.setGoalHourOfDay(getGoalHourOfDay());
         alarmRealm.setGoalMinute(getGoalMinute());
+        alarmRealm.setFromLocationId(getFromLocationId());
+        alarmRealm.setToLocationId(getToLocationId());
 
         Realm.getDefaultInstance().commitTransaction();
 
@@ -288,6 +311,8 @@ public class AlarmPOJO {
         setTransportMode(null);
         setGoalHourOfDay(0);
         setGoalMinute(0);
+        setFromLocationId(null);
+        setToLocationId(null);
     }
 
     //ma uzupełniać statyczny alarmPOJO pobranymi danymi z obiektu AlarmRealm - do wyswietlenie na AlarmsLIst jako Dialog
@@ -311,6 +336,8 @@ public class AlarmPOJO {
         setTransportMode(alarmRealm.getTransportMode());
         setGoalHourOfDay(alarmRealm.getGoalHourOfDay());
         setGoalMinute(alarmRealm.getGoalMinute());
+        setFromLocationId(alarmRealm.getFromLocationId());
+        setToLocationId(alarmRealm.getToLocationId());
     }
 
 

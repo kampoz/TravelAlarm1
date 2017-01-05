@@ -8,7 +8,6 @@ import com.kaseka.boxmaptest1.global.Constants;
 
 public class GetRouteDetailsRequest extends BaseRequest {
 
-
     private String fromId;
     private String toId;
     private String transportMode;
@@ -18,6 +17,13 @@ public class GetRouteDetailsRequest extends BaseRequest {
         this.fromId = fromId;
         this.toId = toId;
         this.transportMode = transportMode.toString();
+    }
+
+    public GetRouteDetailsRequest(Context context, String fromId, String toId, String transportMode) {
+        super(context);
+        this.fromId = fromId;
+        this.toId = toId;
+        this.transportMode = transportMode;
     }
 
     @Override

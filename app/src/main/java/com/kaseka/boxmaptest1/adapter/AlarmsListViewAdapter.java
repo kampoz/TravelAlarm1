@@ -110,7 +110,7 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                 AlarmOnOffFragment myDialog = new AlarmOnOffFragment();
                 myDialog.show(manager, "myDialog");
 
-                Toast.makeText(view.getContext(), id+" "+day, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), id+" "+day, Toast.LENGTH_SHORT).show();
                 // odnajdujemy indeks klikniętego elementu
                 //int positionToDelete = mRecyclerView.getChildAdapterPosition(view);
                 // usuwamy element ze źródła danych

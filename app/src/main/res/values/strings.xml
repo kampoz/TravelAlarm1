@@ -6,6 +6,9 @@
     <string name="add_alarm">Add alarm</string>
     <string name="alarms_list">Alarms list</string>
     <string name="about">About</string>
-    <!--<string name="googleToken">AIzaSyB1Lkeazd9vuDEM3WeZDZe8tVdrk9fplSs</string>-->
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_preferences">Preferences</string>
+
+
 
 </resources>

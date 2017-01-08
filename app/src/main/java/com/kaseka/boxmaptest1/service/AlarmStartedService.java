@@ -23,6 +23,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class AlarmStartedService extends IntentService {
@@ -63,9 +64,14 @@ public class AlarmStartedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-
         //while (true) {
 
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        final Realm realm = Realm.getInstance(config);
 
             try {
                 Thread.sleep(1000);
@@ -73,7 +79,7 @@ public class AlarmStartedService extends IntentService {
                 e.printStackTrace();
             }
 
-            final RealmResults<AlarmRealm> alarmsTurnedOnResults = Realm.getDefaultInstance().where(AlarmRealm.class).equalTo("isOn", true).findAll();
+            final RealmResults<AlarmRealm> alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
 
             /*Dla każego aktywnego alaramu z bazy sprawdzenie,
              czy juz nadszedł czas wywołania*/
@@ -101,7 +107,7 @@ public class AlarmStartedService extends IntentService {
 
             for (final AlarmRealm oldAlarmRealm : alarmsTurnedOnResults) {
 
-                final Realm defaultInstance = Realm.getDefaultInstance();
+                final long oldAlarmRealmId = oldAlarmRealm.getId();
 
 //                Log.d("fromLocationId 1:", fromLocationId);
                 getRouteDetailsRequest = new GetRouteDetailsRequest(
@@ -116,7 +122,9 @@ public class AlarmStartedService extends IntentService {
                     public void onSuccess(JSONObject response) {
                         String stringRoutePoints = Parser.parseRoutePoints(response);
                         if (!stringRoutePoints.isEmpty()) {
-                            id = oldAlarmRealm.getId();
+
+
+                            AlarmStartedService.this.id = oldAlarmRealm.getId();
 
                             responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
                             routeTime = Parser.parseWholeRouteTime(response);
@@ -154,9 +162,9 @@ public class AlarmStartedService extends IntentService {
                             newAlarmRealm.setToLocationId(oldAlarmRealm.getToLocationId());
 
                             //cd przepisanie pol
-                            defaultInstance.beginTransaction();
-                            defaultInstance.copyToRealmOrUpdate(newAlarmRealm);
-                            defaultInstance.commitTransaction();
+                            realm.beginTransaction();
+                            realm.copyToRealmOrUpdate(newAlarmRealm);
+//                            realm.commitTransaction();
 
                         }
                     }

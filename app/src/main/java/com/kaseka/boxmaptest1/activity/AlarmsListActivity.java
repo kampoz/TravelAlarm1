@@ -4,12 +4,14 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +22,22 @@ import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
+import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
+import com.kaseka.boxmaptest1.helper.Parser;
+import com.kaseka.boxmaptest1.listener.OnResponseListener;
+import com.kaseka.boxmaptest1.networking.GetRouteDetailsRequest;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+
 import android.app.AlertDialog;
+
+import org.joda.time.DateTime;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 import static android.R.attr.button;
 
@@ -33,6 +46,16 @@ public class AlarmsListActivity extends AppCompatActivity {
     Button bAddAlarm;
     Context context = AlarmsListActivity.this;
     private Toolbar toolbar;
+    GetRouteDetailsRequest getRouteDetailsRequest;
+    private AlarmRealm newAlarmRealm;
+    private ArrayList<LatLng> responsePoints = new ArrayList<>();
+    String routeTime;
+    int routeTimeInSeconds = 0;
+    private long id;
+    private long oldAlarmTimeInMillis;
+    private long oldTravelTimeInmillis;
+    private long newTravelTimeInMillis;
+    private long newAlarmTimeInMillis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +99,8 @@ public class AlarmsListActivity extends AppCompatActivity {
         );
         // tworzymy adapter oraz łączymy go z RecyclerView
         recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
+
+         new RealmActualizationAsyncTask(getApplicationContext()).execute();
     }
 
     @Override
@@ -120,28 +145,159 @@ public class AlarmsListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //tworzenie probnych alarmów do wczytania na liste
-    private void setTestRealmDataBase() {
-        for (int i = 0; i < 10; ++i) {
-            final AlarmRealm alarmRealm = new AlarmRealm();
-            alarmRealm.setId(i);
-            alarmRealm.setAlarmDayOfWeek(String.valueOf(i));
-            alarmRealm.setAlarmHour(15);
-            alarmRealm.setDestinationPoint("do Lublina");
 
-            Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.copyToRealmOrUpdate(alarmRealm);
-                }
-            });
-            Realm.getDefaultInstance().close();
-            //alarms.add(alarmRealm);
-        }
-    }
 
     public void setToast(View v){
         Toast.makeText(v.getContext(), "CloseAlarm ib", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private class RealmActualizationAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private Context mContext;
+
+        public RealmActualizationAsyncTask (Context context){
+            mContext = context;
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            //final Realm realm = Realm.getInstance(config);
+//            RealmConfiguration config = new RealmConfiguration
+//                    .Builder()
+//                    .deleteRealmIfMigrationNeeded()
+//                    .build();
+//
+//
+//            Realm realm  = null;
+            Realm realm  = Realm.getDefaultInstance();
+            RealmResults<AlarmRealm> alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
+
+
+
+            /*
+            Dla każego aktywnego alaramu z bazy
+              pobranie bieżacego czasu podrózyserv1
+              i zapisanie transakcja do bazy danych*/
+
+            for (final AlarmRealm oldAlarmRealm : alarmsTurnedOnResults) {
+                final long id = oldAlarmRealm.getId();
+//                Log.d("fromLocationId 1:", fromLocationId);
+                getRouteDetailsRequest = new GetRouteDetailsRequest(
+                        AlarmsListActivity.this,
+                        oldAlarmRealm.getFromLocationId(),
+                        oldAlarmRealm.getToLocationId(),
+                        oldAlarmRealm.getTransportMode()
+                );
+
+                getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+
+                        RealmConfiguration config = new RealmConfiguration
+                                .Builder()
+                                .deleteRealmIfMigrationNeeded()
+                                .build();
+
+                        Realm realm  = null;
+                        realm  = Realm.getInstance(config);
+
+                        AlarmRealm currentAlarmRealm = realm.where(AlarmRealm.class).equalTo("id", id).findFirst();
+
+                        Log.d("currentAlarmRealm", String.valueOf(currentAlarmRealm.getId()));
+
+                        //realm.where(AlarmRealm.class).equalTo("id", id).findFirst();
+
+                        String stringRoutePoints = Parser.parseRoutePoints(response);
+                        if (!stringRoutePoints.isEmpty()) {
+
+
+
+                            responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
+                            routeTime = Parser.parseWholeRouteTime(response);
+                            routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
+
+                            oldAlarmTimeInMillis = currentAlarmRealm.getAlarmTimeInMillis();
+                            oldTravelTimeInmillis = currentAlarmRealm.getRouteTimeInSeconds() * 1000;
+                            newTravelTimeInMillis = routeTimeInSeconds * 1000;
+                            newAlarmTimeInMillis = oldAlarmTimeInMillis - oldTravelTimeInmillis + newTravelTimeInMillis;
+
+                            final AlarmRealm newAlarmRealm = new AlarmRealm();
+
+                            /*Te pola są zmieniane*/
+                            newAlarmRealm.setId(currentAlarmRealm.getId());
+                            newAlarmRealm.setAlarmTimeInMillis(newAlarmTimeInMillis);
+                            newAlarmRealm.setRouteTimeLabel(routeTime);
+
+                            /*Te pola sa przepisywane bez zmian*/
+                            newAlarmRealm.setId(currentAlarmRealm.getId());
+                            newAlarmRealm.setAlarmHour(currentAlarmRealm.getAlarmHour());
+                            newAlarmRealm.setAlarmMinute(currentAlarmRealm.getAlarmMinute());
+                            newAlarmRealm.setAmPm(currentAlarmRealm.getAmPm());
+                            newAlarmRealm.setAlarmDayOfWeek(currentAlarmRealm.getAlarmDayOfWeek());
+                            newAlarmRealm.setAlarmDayOfWeekAsInt(currentAlarmRealm.getAlarmDayOfWeekAsInt());
+                            newAlarmRealm.setStartPoint(currentAlarmRealm.getStartPoint());
+                            newAlarmRealm.setDestinationPoint(currentAlarmRealm.getDestinationPoint());
+                            newAlarmRealm.setRouteTimeInSeconds(currentAlarmRealm.getRouteTimeInSeconds());
+                            newAlarmRealm.setPreparingTimeInMins(currentAlarmRealm.getPreparingTimeInMins());
+                            newAlarmRealm.setLngLatPointsRealmList(currentAlarmRealm.getLngLatPointsRealmList());
+                            newAlarmRealm.setAlarmDateTimeData(currentAlarmRealm.getAlarmDateTimeData());
+                            newAlarmRealm.setTransportMode(currentAlarmRealm.getTransportMode());
+                            newAlarmRealm.setGoalHourOfDay(currentAlarmRealm.getGoalHourOfDay());
+                            newAlarmRealm.setGoalMinute(currentAlarmRealm.getGoalMinute());
+                            newAlarmRealm.setFromLocationId(currentAlarmRealm.getFromLocationId());
+                            newAlarmRealm.setToLocationId(currentAlarmRealm.getToLocationId());
+
+                            Log.d("newAlarmRealm: ", newAlarmRealm.getStartPoint());
+                            Log.d("newAlarmRealm: ", newAlarmRealm.getDestinationPoint());
+                            Log.d("newAlarmRealm: ", newAlarmRealm.getRouteTimeLabel());
+
+                            //cd przepisanie pol
+//                            realm.beginTransaction();
+//                            realm.copyToRealmOrUpdate(newAlarmRealm);
+//                            realm.commitTransaction();
+
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    realm.copyToRealmOrUpdate(newAlarmRealm);
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        Log.d("Request error: ", "ERROR");
+                    }
+                });
+                getRouteDetailsRequest.execute();
+            }
+
+            /*Dla każego aktywnego alaramu z bazy sprawdzenie,
+             czy juz nadszedł czas wywołania*/
+
+            for (AlarmRealm alarmRealm : alarmsTurnedOnResults) {
+                Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
+                Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
+                //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+                long curentSystemTimeInMillis = System.currentTimeMillis();
+                //long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
+                long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+
+                //zmienic status alarmu na nieaktywny???
+                if (alarmTimeInMillis >= curentSystemTimeInMillis) {
+                    //startAlarmActivity();
+                    //break;
+                }
+            }
+
+            return null;
+
+
+        }
     }
 
 }

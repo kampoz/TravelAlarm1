@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -31,9 +30,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-
 import android.support.v7.widget.Toolbar;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,13 +40,13 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.joda.time.DateTime;
+import org.json.JSONObject;
+import java.util.ArrayList;
 
 //+import com.mapbox.services.geocoding.v5.models.GeocodingFeature;
 
-import org.joda.time.DateTime;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -275,9 +272,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -295,7 +290,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_setting) {
-
+            Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(startSettingsActivityIntent);
+            this.finish();
         }
 
         if (id == R.id.action_about) {

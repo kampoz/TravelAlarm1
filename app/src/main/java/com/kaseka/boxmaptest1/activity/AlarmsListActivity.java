@@ -131,12 +131,15 @@ public class AlarmsListActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_setting){
+            Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(startSettingsActivityIntent);
+            this.finish();
 
         }
 
         if (id==R.id.action_about){
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(AlarmsListActivity.this);
-            alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
+            alertDialogBuilder.setMessage(R.string.author_data);
             alertDialogBuilder.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {
                         @Override

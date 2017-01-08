@@ -32,10 +32,10 @@ public class AlarmActivity extends AppCompatActivity {
         bCloseAlarm.setFocusable(true);
 
         mMediaPlayer = new MediaPlayer();
-        mMediaPlayer = MediaPlayer.create(this, R.raw.elephant1);
+        mMediaPlayer = MediaPlayer.create(this, R.raw.sound2);
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setLooping(true);
-        //mMediaPlayer.start();
+        mMediaPlayer.start();
 
         addListenerOnButton();
 

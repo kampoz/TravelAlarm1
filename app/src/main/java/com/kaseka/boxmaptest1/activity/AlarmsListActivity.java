@@ -231,7 +231,7 @@ public class AlarmsListActivity extends AppCompatActivity {
                             newAlarmRealm.setRouteTimeLabel(routeTime);
 
                             /*Te pola sa przepisywane bez zmian*/
-                            newAlarmRealm.setId(currentAlarmRealm.getId());
+                            newAlarmRealm.setIsOn(currentAlarmRealm.getIsOn());
                             newAlarmRealm.setAlarmHour(currentAlarmRealm.getAlarmHour());
                             newAlarmRealm.setAlarmMinute(currentAlarmRealm.getAlarmMinute());
                             newAlarmRealm.setAmPm(currentAlarmRealm.getAmPm());

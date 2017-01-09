@@ -129,8 +129,8 @@ public class AlarmsListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id==R.id.action_add_alarm){
-            Intent startMainActivityIntent = new Intent(context, MainActivity.class);
-            context.startActivity(startMainActivityIntent);
+            Intent startMainActivityIntent = new Intent(this, MainActivity.class);
+            this.startActivity(startMainActivityIntent);
             finish();
         }
 

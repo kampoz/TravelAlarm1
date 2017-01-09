@@ -179,7 +179,9 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add_alarm) {
-            //no action
+            Intent startMainActivityIntent = new Intent(this, MainActivity.class);
+            this.startActivity(startMainActivityIntent);
+            finish();
         }
 
         if (id == R.id.action_show_alarms_list) {

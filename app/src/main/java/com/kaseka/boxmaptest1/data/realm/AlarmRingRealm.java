@@ -10,17 +10,23 @@ import io.realm.annotations.PrimaryKey;
 public class AlarmRingRealm extends RealmObject {
 
     @PrimaryKey
-    long id;
-    String activeAlarmRing;
+    private long id;
+    private int soundId;
 
 
-
-
-    public String getActiveAlarmRing() {
-        return activeAlarmRing;
+    public long getId() {
+        return id;
     }
 
-    public void setActiveAlarmRing(String activeAlarmRing) {
-        this.activeAlarmRing = activeAlarmRing;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getSoundId() {
+        return soundId;
+    }
+
+    public void setSoundId(int soundId) {
+        this.soundId = soundId;
     }
 }

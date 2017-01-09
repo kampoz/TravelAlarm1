@@ -22,6 +22,7 @@ import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
 import com.kaseka.boxmaptest1.helper.Parser;
@@ -80,6 +81,9 @@ public class AlarmsListActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.alarmsRecyclerView);
         // w celach optymalizacji
         recyclerView.setHasFixedSize(true);
@@ -106,7 +110,11 @@ public class AlarmsListActivity extends AppCompatActivity {
         // tworzymy adapter oraz łączymy go z RecyclerView
         recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
 
-         new RealmActualizationAsyncTask(getApplicationContext()).execute();
+        setFirstAlarmInRealm();
+
+        new RealmActualizationAsyncTask(getApplicationContext()).execute();
+
+
     }
 
     @Override
@@ -307,6 +315,23 @@ public class AlarmsListActivity extends AppCompatActivity {
 
 
         }
+    }
+
+        /*
+        dodanie pierwszego alarmu
+        */
+    public void setFirstAlarmInRealm(){
+
+        Realm realm = Realm.getDefaultInstance();
+        final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
+        alarmRingRealm.setId(1);
+        alarmRingRealm.setSoundId(R.raw.sound3);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(alarmRingRealm);
+            }
+        });
     }
 
 }

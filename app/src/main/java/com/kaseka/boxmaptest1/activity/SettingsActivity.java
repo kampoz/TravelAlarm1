@@ -14,8 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
+
+import io.realm.Realm;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -46,6 +50,8 @@ public class SettingsActivity extends AppCompatActivity {
         ibPlaySound1 = (ImageButton) findViewById(R.id.ibPlaySound1);
         ibPlaySound2 = (ImageButton) findViewById(R.id.ibPlaySound2);
         ibPlaySound3 = (ImageButton) findViewById(R.id.ibPlaySound3);
+
+        bSetAlarmSound = (Button) findViewById(R.id.bSetAlarmSound);
 
         rbSound1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +141,32 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-    }
+        bSetAlarmSound.setOnClickListener(new View.OnClickListener() {
+            int soundId;
+            Realm realm = Realm.getDefaultInstance();
+            AlarmRingRealm alarmRingRealm;
+            //alarmRingRealm.setId(1);
 
+            @Override
+            public void onClick(View v) {
+                if(rbSound1.isChecked()){
+                    Toast.makeText(SettingsActivity.this, "Sound 1 set", Toast.LENGTH_LONG).show();
+                }
+                else if(rbSound2.isChecked()){
+                    Toast.makeText(SettingsActivity.this, "Sound 2 set", Toast.LENGTH_LONG).show();
+                }
+                else if(rbSound3.isChecked()){
+                    Toast.makeText(SettingsActivity.this, "Sound 3 set", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(SettingsActivity.this, "No sound selected", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
+    }
 
 
     @Override

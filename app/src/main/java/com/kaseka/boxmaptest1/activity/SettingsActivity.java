@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
+
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 
 import io.realm.Realm;
@@ -144,24 +146,49 @@ public class SettingsActivity extends AppCompatActivity {
         bSetAlarmSound.setOnClickListener(new View.OnClickListener() {
             int soundId;
             Realm realm = Realm.getDefaultInstance();
-            AlarmRingRealm alarmRingRealm;
-            //alarmRingRealm.setId(1);
+            final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
 
             @Override
             public void onClick(View v) {
                 if(rbSound1.isChecked()){
                     Toast.makeText(SettingsActivity.this, "Sound 1 set", Toast.LENGTH_LONG).show();
+
+                    alarmRingRealm.setId(1);
+                    alarmRingRealm.setSoundId(R.raw.sound1);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.copyToRealmOrUpdate(alarmRingRealm);
+                        }
+                    });
                 }
                 else if(rbSound2.isChecked()){
                     Toast.makeText(SettingsActivity.this, "Sound 2 set", Toast.LENGTH_LONG).show();
+                    alarmRingRealm.setId(1);
+                    alarmRingRealm.setSoundId(R.raw.sound2);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.copyToRealmOrUpdate(alarmRingRealm);
+                        }
+                    });
                 }
                 else if(rbSound3.isChecked()){
                     Toast.makeText(SettingsActivity.this, "Sound 3 set", Toast.LENGTH_LONG).show();
+                    alarmRingRealm.setId(1);
+                    alarmRingRealm.setSoundId(R.raw.sound3);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.copyToRealmOrUpdate(alarmRingRealm);
+                        }
+                    });
                 }
                 else{
                     Toast.makeText(SettingsActivity.this, "No sound selected", Toast.LENGTH_LONG).show();
                 }
-
+                AlarmRingRealm currentSound = realm.where(AlarmRingRealm.class).equalTo("id", 1).findFirst();
+                Log.d("currentSound: ", String.valueOf(currentSound.getId()));
 
             }
         });

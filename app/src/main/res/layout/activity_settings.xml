@@ -55,6 +55,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/ibPlaySound1"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
@@ -64,7 +65,7 @@
             </ImageButton>
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rbSound1"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginRight="20dp"
@@ -99,6 +100,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/ibPlaySound2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
@@ -107,7 +109,7 @@
             </ImageButton>
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/rbSound2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
 
@@ -143,6 +145,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/ibPlaySound3"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
@@ -152,7 +155,7 @@
             </ImageButton>
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/rbSound3"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginRight="20dp"

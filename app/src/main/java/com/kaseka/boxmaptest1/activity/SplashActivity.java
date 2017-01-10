@@ -17,8 +17,6 @@ import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 
 import org.joda.time.DateTime;
 
-import java.util.Arrays;
-
 import io.realm.Realm;
 
 public class SplashActivity extends AppCompatActivity {
@@ -36,27 +34,11 @@ public class SplashActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setFirstAlarmInRealm();
-
-        Realm realm = Realm.getDefaultInstance();
-
-
-        if(realm.where(AlarmRealm.class).count() > 0){
-            Log.d("SplashActivity", "IS NOT EMPTY");
-            Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
-            this.startActivity(startAlarmsListActivityIntent);
-        }
-        else
-        {
-            Log.d("SplashActivity", "IS EMPTY");
-            Toast.makeText(this, "No alarms", Toast.LENGTH_LONG).show();
-            Intent startMainActivityIntent = new Intent(this, MainActivity.class);
-            this.startActivity(startMainActivityIntent);
-        }
-
-        new MyAsyncTask().execute();
+        startingCorrectActivity();
+        new startingJodaDateTimeAsyncTask().execute();
     }
 
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class startingJodaDateTimeAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... arg0) {
             DateTime dateTime1 = new DateTime();
@@ -67,9 +49,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -112,8 +92,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /*Ustawienie pierwszego alarmu w bazie danych*/
-    public void setFirstAlarmInRealm(){
-
+    private void setFirstAlarmInRealm(){
         Realm realm = Realm.getDefaultInstance();
         final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
         alarmRingRealm.setId(1);
@@ -125,6 +104,22 @@ public class SplashActivity extends AppCompatActivity {
                 realm.copyToRealmOrUpdate(alarmRingRealm);
             }
         });
+    }
+
+    private void startingCorrectActivity(){
+        Realm realm = Realm.getDefaultInstance();
+        if(realm.where(AlarmRealm.class).count() > 0){
+            Log.d("SplashActivity", "IS NOT EMPTY");
+            Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
+            this.startActivity(startAlarmsListActivityIntent);
+        }
+        else
+        {
+            Log.d("SplashActivity", "IS EMPTY");
+            Toast.makeText(this, "No alarms", Toast.LENGTH_LONG).show();
+            Intent startMainActivityIntent = new Intent(this, MainActivity.class);
+            this.startActivity(startMainActivityIntent);
+        }
     }
 
 }

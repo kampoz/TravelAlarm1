@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new MyAsyncTask().execute();
+        //new MyAsyncTask().execute();
     }
 
     @Override
@@ -312,13 +312,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            dateTime1 = new DateTime();
-            return null;
-        }
-    }
+//    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+//        @Override
+//        protected Void doInBackground(Void... arg0) {
+//            dateTime1 = new DateTime();
+//            return null;
+//        }
+//    }
 
 
     private void buttonsReaction(ImageButton imageButton) {

@@ -9,6 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
@@ -23,6 +28,7 @@ import io.realm.Realm;
 public class SplashActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    Animation anim2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +41,39 @@ public class SplashActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setFirstAlarmInRealm();
-        startingCorrectActivity();
+
 
         Intent intent = new Intent(this, AlarmStartedService.class);
         startService(intent);
+
+        final ImageView startIcon = (ImageView)findViewById(R.id.start_icon_test);
+        ViewTreeObserver vto = startIcon.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                anim2 = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.anim2);
+                startIcon.startAnimation(anim2);
+
+                anim2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        startingCorrectActivity();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+            }
+        });
+
+
 
         new startingJodaDateTimeAsyncTask().execute();
     }

@@ -11,25 +11,36 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <TextView
-        android:id="@+id/tvApplicationTitle"
+
+    <ImageView
+        android:id="@+id/start_icon_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Travel alarm"
-        android:textSize="40dp"
-        android:textColor="@color/colorMyWhite"
+        android:src="@drawable/start_icon_test"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="by Kampoz"
-        android:textSize="20dp"
-        android:textColor="@color/colorMyWhite"
-        android:layout_below="@+id/tvApplicationTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvApplicationTitle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Travel alarm"-->
+        <!--android:textSize="40dp"-->
+        <!--android:textColor="@color/colorMyWhite"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="by Kampoz"-->
+        <!--android:textSize="20dp"-->
+        <!--android:textColor="@color/colorMyWhite"-->
+        <!--android:layout_below="@+id/tvApplicationTitle"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp" />-->
 
 </RelativeLayout>

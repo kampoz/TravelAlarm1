@@ -110,7 +110,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         // tworzymy adapter oraz łączymy go z RecyclerView
         recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
 
-        setFirstAlarmInRealm();
+        //setFirstAlarmInRealm();
 
         new RealmActualizationAsyncTask(getApplicationContext()).execute();
 
@@ -326,6 +326,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
         alarmRingRealm.setId(1);
         alarmRingRealm.setSoundId(R.raw.sound3);
+        alarmRingRealm.setSoundName("Sound 3");
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

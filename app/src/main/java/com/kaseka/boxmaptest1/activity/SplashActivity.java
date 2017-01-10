@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
+import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 
 import org.joda.time.DateTime;
 
@@ -34,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        setFirstAlarmInRealm();
 
         Realm realm = Realm.getDefaultInstance();
 
@@ -87,7 +89,9 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_setting){
-
+            Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(startSettingsActivityIntent);
+            this.finish();
         }
 
         if (id==R.id.action_about){
@@ -105,6 +109,22 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*Ustawienie pierwszego alarmu w bazie danych*/
+    public void setFirstAlarmInRealm(){
+
+        Realm realm = Realm.getDefaultInstance();
+        final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
+        alarmRingRealm.setId(1);
+        alarmRingRealm.setSoundId(R.raw.sound3);
+        alarmRingRealm.setSoundName("Sound 3");
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(alarmRingRealm);
+            }
+        });
     }
 
 }

@@ -12,6 +12,7 @@ public class AlarmRingRealm extends RealmObject {
     @PrimaryKey
     private long id;
     private int soundId;
+    private String soundName = "no name";
 
 
     public long getId() {
@@ -28,5 +29,13 @@ public class AlarmRingRealm extends RealmObject {
 
     public void setSoundId(int soundId) {
         this.soundId = soundId;
+    }
+
+    public String getSoundName() {
+        return soundName;
+    }
+
+    public void setSoundName(String soundName) {
+        this.soundName = soundName;
     }
 }

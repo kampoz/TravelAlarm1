@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -13,6 +14,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
+
+import io.realm.Realm;
 
 public class AlarmActivity extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class AlarmActivity extends AppCompatActivity {
     MediaPlayer mMediaPlayer;
     View circleWaveView;
     Animation pulse1;
+    AlarmRingRealm alarmRingRealm;
 
 
     @Override
@@ -31,8 +36,13 @@ public class AlarmActivity extends AppCompatActivity {
         bCloseAlarm = (Button) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
 
+
+        Realm realm = Realm.getDefaultInstance();
+        int soundId = realm.where(AlarmRingRealm.class).equalTo("id", 1).findFirst().getSoundId();
+        Log.d("currentSound: ", String.valueOf(soundId));
+
         mMediaPlayer = new MediaPlayer();
-        mMediaPlayer = MediaPlayer.create(this, R.raw.sound2);
+        mMediaPlayer = MediaPlayer.create(this, soundId);
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setLooping(true);
         mMediaPlayer.start();

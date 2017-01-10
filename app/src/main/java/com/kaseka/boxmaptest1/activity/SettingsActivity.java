@@ -155,6 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     alarmRingRealm.setId(1);
                     alarmRingRealm.setSoundId(R.raw.sound1);
+                    alarmRingRealm.setSoundName("Sound 1");
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -166,6 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "Sound 2 set", Toast.LENGTH_LONG).show();
                     alarmRingRealm.setId(1);
                     alarmRingRealm.setSoundId(R.raw.sound2);
+                    alarmRingRealm.setSoundName("Sound 2");
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -177,6 +179,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "Sound 3 set", Toast.LENGTH_LONG).show();
                     alarmRingRealm.setId(1);
                     alarmRingRealm.setSoundId(R.raw.sound3);
+                    alarmRingRealm.setSoundName("Sound 3");
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {

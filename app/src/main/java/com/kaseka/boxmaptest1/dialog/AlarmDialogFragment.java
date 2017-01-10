@@ -74,6 +74,7 @@ public class AlarmDialogFragment extends DialogFragment{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Cache.getAlarmPOJO().insertAlarmToRealm();
+
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
 

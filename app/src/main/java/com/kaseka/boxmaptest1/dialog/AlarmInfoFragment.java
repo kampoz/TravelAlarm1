@@ -19,7 +19,7 @@ import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 
-public class AlarmOnOffFragment extends DialogFragment{
+public class AlarmInfoFragment extends DialogFragment{
 
     boolean isOn = false;
 

@@ -191,7 +191,7 @@ public class AlarmStartedService extends IntentService {
 
             //zmienic status alarmu na nieaktywny???
             if (alarmTimeInMillis >= curentSystemTimeInMillis) {
-                //startAlarmActivity();
+                startAlarmActivity();
                 //break;
             }
         }

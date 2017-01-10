@@ -312,8 +312,6 @@ public class AlarmsListActivity extends AppCompatActivity {
             }
 
             return null;
-
-
         }
     }
 

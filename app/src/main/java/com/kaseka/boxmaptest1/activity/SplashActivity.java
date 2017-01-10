@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
+import com.kaseka.boxmaptest1.service.AlarmStartedService;
 
 import org.joda.time.DateTime;
 
@@ -35,6 +36,10 @@ public class SplashActivity extends AppCompatActivity {
 
         setFirstAlarmInRealm();
         startingCorrectActivity();
+
+        Intent intent = new Intent(this, AlarmStartedService.class);
+        startService(intent);
+
         new startingJodaDateTimeAsyncTask().execute();
     }
 

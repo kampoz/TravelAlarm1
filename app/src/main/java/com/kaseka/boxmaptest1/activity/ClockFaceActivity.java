@@ -329,6 +329,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         alarmDateTime = currentDaleTime.plusMinutes(minutesToAdd);
         alarmHour = alarmDateTime.getHourOfDay();
         alarmMinutes = alarmDateTime.getMinuteOfHour();
+        alarmTimeInMillis = alarmDateTime.getMillis();
         this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
         //currentDaleTime.getMinuteOfHour();
 

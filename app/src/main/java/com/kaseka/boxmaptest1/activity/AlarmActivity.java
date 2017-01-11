@@ -1,5 +1,7 @@
 package com.kaseka.boxmaptest1.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,7 @@ public class AlarmActivity extends AppCompatActivity {
     View circleWaveView;
     Animation pulse1;
     AlarmRingRealm alarmRingRealm;
+    Context context = this;
 
 
     @Override
@@ -73,6 +76,8 @@ public class AlarmActivity extends AppCompatActivity {
                 //bCloseAlarm.setFocusable(false);
                 mMediaPlayer.stop();
                 pulse1.cancel();
+                Intent startAlarmsListActivityIntent = new Intent(context, AlarmsListActivity.class);
+                context.startActivity(startAlarmsListActivityIntent);
                 finish();
 
             }

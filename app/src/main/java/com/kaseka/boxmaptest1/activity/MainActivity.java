@@ -3,7 +3,7 @@ package com.kaseka.boxmaptest1.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.android.gms.common.api.Status;
@@ -267,7 +267,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //new MyAsyncTask().execute();
     }
 
     @Override
@@ -312,13 +311,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-//        @Override
-//        protected Void doInBackground(Void... arg0) {
-//            dateTime1 = new DateTime();
-//            return null;
-//        }
-//    }
 
 
     private void buttonsReaction(ImageButton imageButton) {

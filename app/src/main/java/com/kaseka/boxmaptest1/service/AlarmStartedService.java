@@ -2,11 +2,13 @@ package com.kaseka.boxmaptest1.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.activity.AlarmActivity;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
@@ -15,6 +17,7 @@ import com.kaseka.boxmaptest1.listener.OnResponseListener;
 import com.kaseka.boxmaptest1.networking.GetRouteDetailsRequest;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
+import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -51,7 +54,10 @@ public class AlarmStartedService extends IntentService {
     private long newAlarmTimeInMillis;
     private AlarmRealm newAlarmRealm;
     private final long MILLIS_IN_ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
-    private final long SLEEP_TIME = 1000*60*15;
+    //private final long SLEEP_TIME = 1000*60*15;
+    private final long SLEEP_TIME = 1000;
+
+    RealmResults<AlarmRealm> alarmsTurnedOnResults;
 
 
     public AlarmStartedService() {
@@ -61,21 +67,71 @@ public class AlarmStartedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        while (true) {
 
-            updateAlarmsTravelTimesFromGoogle(getActiveAlarms());
-            checkingIfAlarmsShouldBeActivate(getActiveAlarms());
+        while (true) {
+            Realm realm = Realm.getDefaultInstance();
+            alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
+            int size = alarmsTurnedOnResults.size();
+            Log.d("size = ", String.valueOf(size));
+            //updateAlarmsTravelTimesFromGoogle(getActiveAlarms());
+            //checkingIfAlarmsShouldBeActivate(alarmsTurnedOnResults);
+
+
+            for (final AlarmRealm alarmRealm : alarmsTurnedOnResults) {
+//            Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
+//            Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
+
+                //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+                long curentSystemTimeInMillis = System.currentTimeMillis();
+                //final long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
+                final long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+
+                long sum = alarmTimeInMillis - curentSystemTimeInMillis;
+                Log.d("SUM: ", "curentTimeInMillis: "+(curentSystemTimeInMillis));
+                Log.d("SUM: ", "alarmTimeInMillis+ "+String.valueOf(alarmTimeInMillis));
+                Log.d("SUM: ", String.valueOf(sum));
+
+                //zmienic status alarmu na nieaktywny???
+                // uruchomienie alarmu
+
+                if (curentSystemTimeInMillis >= alarmTimeInMillis) {
+
+                    startAlarmActivity();
+
+//                final AlarmRealm alarmRealmToChange = new AlarmRealm();
+//                alarmRealmToChange.setId(alarmRealm.getId());
+//                alarmRealmToChange.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
+
+                    //Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            alarmRealm.setAlarmTimeInMillis(alarmTimeInMillis + 6000);
+                            alarmRealm.setIsOn(false);
+
+                            //realm.copyToRealmOrUpdate(alarmRealmToChange);
+                        }
+                    });
+
+                }
+            }
+
+            alarmsTurnedOnResults = null;
 
             try {
                 Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            realm.close();
         }
+
     }
 
+
     private RealmResults<AlarmRealm> getActiveAlarms() {
-        Realm realm = Realm.getDefaultInstance();
+        Realm realm = null;
+        realm = Realm.getDefaultInstance();
         RealmResults<AlarmRealm> alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
         realm = null;
         return alarmsTurnedOnResults;
@@ -101,8 +157,7 @@ public class AlarmStartedService extends IntentService {
                             .deleteRealmIfMigrationNeeded()
                             .build();
 
-                    Realm realm = null;
-                    realm = Realm.getInstance(config);
+                    Realm realm = Realm.getInstance(config);
                     AlarmRealm currentAlarmRealm = realm.where(AlarmRealm.class).equalTo("id", id).findFirst();
 
                     Log.d("currentAlarmRealm", String.valueOf(currentAlarmRealm.getId()));
@@ -178,29 +233,30 @@ public class AlarmStartedService extends IntentService {
      czy juz nadszedł czas wywołania, jesli tak, to wykonuje
      i nadpisuje czas wykonania w millis na za tydzień*/
     private void checkingIfAlarmsShouldBeActivate(RealmResults<AlarmRealm> alarmsTurnedOnResults) {
-        for (AlarmRealm alarmRealm : alarmsTurnedOnResults) {
-            Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
-            Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
+        for (final AlarmRealm alarmRealm : alarmsTurnedOnResults) {
+//            Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
+//            Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
 
             //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
             long curentSystemTimeInMillis = System.currentTimeMillis();
             //long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
-            long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
+            final long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
 
             //zmienic status alarmu na nieaktywny???
+            // uruchomienie alarmu
             if (alarmTimeInMillis >= curentSystemTimeInMillis) {
                 startAlarmActivity();
 
-                final AlarmRealm alarmRealmToChange = new AlarmRealm();
-                alarmRealmToChange.setId(alarmRealm.getId());
-                alarmRealmToChange.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
+//                final AlarmRealm alarmRealmToChange = new AlarmRealm();
+//                alarmRealmToChange.setId(alarmRealm.getId());
+//                alarmRealmToChange.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
 
-                Realm realm = null;
-                realm = Realm.getDefaultInstance();
+                Realm realm = Realm.getDefaultInstance();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(alarmRealmToChange);
+                        alarmRealm.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
+                        //realm.copyToRealmOrUpdate(alarmRealmToChange);
                     }
                 });
             }
@@ -215,8 +271,15 @@ public class AlarmStartedService extends IntentService {
         startActivity(alarmActivityIntent);
 
         /*zmiana czasu wywołania alarmu; dodanie tygodnia w milisekundach*/
+    }
 
+    private void startAlarmsListActivity() {
+        //Właczenie ALarmActivity
+        Intent alarmsListActivityIntent = new Intent(AlarmStartedService.this,AlarmsListActivity.class);
+        alarmsListActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(alarmsListActivityIntent);
 
+        /*zmiana czasu wywołania alarmu; dodanie tygodnia w milisekundach*/
     }
 
 

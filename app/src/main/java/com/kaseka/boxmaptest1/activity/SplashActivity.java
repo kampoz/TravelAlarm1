@@ -19,7 +19,10 @@ import android.widget.Toast;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
+import com.kaseka.boxmaptest1.global.DayOfWeek;
+import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.service.AlarmStartedService;
+import com.kaseka.boxmaptest1.test.TestClass;
 
 import org.joda.time.DateTime;
 
@@ -40,13 +43,12 @@ public class SplashActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        setFirstAlarmInRealm();
-
+        setFirstAlarmSound();
 
         Intent intent = new Intent(this, AlarmStartedService.class);
         startService(intent);
 
-        final ImageView startIcon = (ImageView)findViewById(R.id.start_icon_test);
+        final ImageView startIcon = (ImageView) findViewById(R.id.start_icon_test);
         ViewTreeObserver vto = startIcon.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -73,8 +75,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-
-
         new startingJodaDateTimeAsyncTask().execute();
     }
 
@@ -96,25 +96,25 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id==R.id.action_add_alarm){
+        if (id == R.id.action_add_alarm) {
             Intent startAlarmsListActivityIntent = new Intent(this, MainActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
-            this.finish();
+
         }
 
-        if (id==R.id.action_show_alarms_list){
+        if (id == R.id.action_show_alarms_list) {
             Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
-            this.finish();
+
         }
 
-        if (id==R.id.action_setting){
+        if (id == R.id.action_setting) {
             Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
             this.startActivity(startSettingsActivityIntent);
-            this.finish();
+
         }
 
-        if (id==R.id.action_about){
+        if (id == R.id.action_about) {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("Copyright \u00a9 2017\nKamil Poznakowski\nkampoznak@gmail.com");
             alertDialogBuilder.setPositiveButton("OK",
@@ -131,39 +131,41 @@ public class SplashActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*Ustawienie pierwszego alarmu w bazie danych*/
-    private void setFirstAlarmInRealm(){
-        Realm realm = Realm.getDefaultInstance();
-        final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
-        alarmRingRealm.setId(1);
-        alarmRingRealm.setSoundId(R.raw.sound3);
-        alarmRingRealm.setSoundName("Sound 3");
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(alarmRingRealm);
-            }
-        });
-    }
 
-    private void startingCorrectActivity(){
+    private void startingCorrectActivity() {
         Realm realm = Realm.getDefaultInstance();
-        if(realm.where(AlarmRealm.class).count() > 0){
+        if (realm.where(AlarmRealm.class).count() > 0) {
             Log.d("SplashActivity", "IS NOT EMPTY");
+
+            //DO USUNIĘCIA
+            TestClass testClass = new TestClass();
+            testClass.createTestalarm();
             Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
-        }
-        else
-        {
+        } else {
             Log.d("SplashActivity", "IS EMPTY");
             Toast.makeText(this, "No alarms", Toast.LENGTH_LONG).show();
             Intent startMainActivityIntent = new Intent(this, MainActivity.class);
             this.startActivity(startMainActivityIntent);
         }
+        realm = null;
     }
 
-    private void createTestalarm(){
-        
+    private void setFirstAlarmSound() {
+        Realm realm = Realm.getDefaultInstance();
+        if (!(realm.where(AlarmRingRealm.class).count() > 0)) {
+            realm = Realm.getDefaultInstance();
+            final AlarmRingRealm alarmRingRealm = new AlarmRingRealm();
+            alarmRingRealm.setId(1);
+            alarmRingRealm.setSoundId(R.raw.sound3);
+            alarmRingRealm.setSoundName("Sound 3");
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.copyToRealmOrUpdate(alarmRingRealm);
+                }
+            });
+            realm = null;
+        }
     }
-
 }

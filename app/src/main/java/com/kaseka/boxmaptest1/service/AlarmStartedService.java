@@ -1,16 +1,13 @@
 package com.kaseka.boxmaptest1.service;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
-import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.activity.AlarmActivity;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
 import com.kaseka.boxmaptest1.helper.Parser;
@@ -20,7 +17,6 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import org.json.JSONObject;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -43,7 +39,7 @@ public class AlarmStartedService extends IntentService {
     private static final String API_KEY = "AIzaSyCFa5n3POS1VSsNgn8NKORx8pGfLSTYBGU";
     private ArrayList<LatLng> responsePoints = new ArrayList<>();
 
-//    private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
+    //    private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
 //    private String toLocationId = "ChIJ36UeUliaI0cR9vky0FB9vlI";
     String routeTime;
     int routeTimeInSeconds = 0;
@@ -53,9 +49,9 @@ public class AlarmStartedService extends IntentService {
     private long oldTravelTimeInmillis;
     private long newTravelTimeInMillis;
     private long newAlarmTimeInMillis;
-    private long id;
     private AlarmRealm newAlarmRealm;
-    private Context context;
+    private final long MILLIS_IN_ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
+    private final long SLEEP_TIME = 1000*60*15;
 
 
     public AlarmStartedService() {
@@ -65,23 +61,27 @@ public class AlarmStartedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        //while (true) {
+        while (true) {
 
-        Realm realm  = Realm.getDefaultInstance();
-        RealmResults<AlarmRealm> alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
+            updateAlarmsTravelTimesFromGoogle(getActiveAlarms());
+            checkingIfAlarmsShouldBeActivate(getActiveAlarms());
 
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-        updateAlarmsTravelTimes(alarmsTurnedOnResults);
-        checkingIfAlarmsShoulBeOn(alarmsTurnedOnResults);
-
+            try {
+                Thread.sleep(SLEEP_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    private void updateAlarmsTravelTimes(RealmResults<AlarmRealm> alarmsTurnedOnResults){
+    private RealmResults<AlarmRealm> getActiveAlarms() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<AlarmRealm> alarmsTurnedOnResults = realm.where(AlarmRealm.class).equalTo("isOn", true).findAll();
+        realm = null;
+        return alarmsTurnedOnResults;
+    }
+
+    private void updateAlarmsTravelTimesFromGoogle(RealmResults<AlarmRealm> alarmsTurnedOnResults) {
         for (final AlarmRealm oldAlarmRealm : alarmsTurnedOnResults) {
             final long id = oldAlarmRealm.getId();
 //                Log.d("fromLocationId 1:", fromLocationId);
@@ -101,9 +101,8 @@ public class AlarmStartedService extends IntentService {
                             .deleteRealmIfMigrationNeeded()
                             .build();
 
-                    Realm realm  = null;
-                    realm  = Realm.getInstance(config);
-
+                    Realm realm = null;
+                    realm = Realm.getInstance(config);
                     AlarmRealm currentAlarmRealm = realm.where(AlarmRealm.class).equalTo("id", id).findFirst();
 
                     Log.d("currentAlarmRealm", String.valueOf(currentAlarmRealm.getId()));
@@ -112,9 +111,6 @@ public class AlarmStartedService extends IntentService {
 
                     String stringRoutePoints = Parser.parseRoutePoints(response);
                     if (!stringRoutePoints.isEmpty()) {
-
-
-
                         responsePoints = GoogleDirectionsHelper.decodePoly(stringRoutePoints);//= Parser.parseDirections(response);
                         routeTime = Parser.parseWholeRouteTime(response);
                         routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
@@ -179,11 +175,13 @@ public class AlarmStartedService extends IntentService {
     }
 
     /*Dla każego aktywnego alaramu z bazy sprawdzenie,
-             czy juz nadszedł czas wywołania*/
-    private void checkingIfAlarmsShoulBeOn(RealmResults<AlarmRealm> alarmsTurnedOnResults){
+     czy juz nadszedł czas wywołania, jesli tak, to wykonuje
+     i nadpisuje czas wykonania w millis na za tydzień*/
+    private void checkingIfAlarmsShouldBeActivate(RealmResults<AlarmRealm> alarmsTurnedOnResults) {
         for (AlarmRealm alarmRealm : alarmsTurnedOnResults) {
             Log.d("ToLocationId serv1: ", alarmRealm.getToLocationId().toString());
             Log.d("fromLocationId serv1: ", alarmRealm.getFromLocationId().toString());
+
             //long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
             long curentSystemTimeInMillis = System.currentTimeMillis();
             //long alarmTimeInMillis = curentSystemTimeInMillis + 5000;
@@ -192,7 +190,19 @@ public class AlarmStartedService extends IntentService {
             //zmienic status alarmu na nieaktywny???
             if (alarmTimeInMillis >= curentSystemTimeInMillis) {
                 startAlarmActivity();
-                //break;
+
+                final AlarmRealm alarmRealmToChange = new AlarmRealm();
+                alarmRealmToChange.setId(alarmRealm.getId());
+                alarmRealmToChange.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
+
+                Realm realm = null;
+                realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(alarmRealmToChange);
+                    }
+                });
             }
         }
     }
@@ -204,17 +214,12 @@ public class AlarmStartedService extends IntentService {
         alarmActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(alarmActivityIntent);
 
+        /*zmiana czasu wywołania alarmu; dodanie tygodnia w milisekundach*/
+
+
     }
 
-//    private void getRouteTime() {
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setRequest();
-//                Toast.makeText(getApplicationContext(), routeTime, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+
 //
 //    private void setRequest() {
 //        getRouteDetailsRequest = new GetRouteDetailsRequest(this, fromLocationId, toLocationId, GoogleTransportMode.bicycling);

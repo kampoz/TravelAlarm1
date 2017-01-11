@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class TripAlarmBoundService extends Service {
+public class AlarmBoundService extends Service {
 
     private String fromLocationId = "ChIJYUAVHhRXIkcRX-no9nruKFU";
     private String toLocationId = "ChIJ36UeUliaI0cR9vky0FB9vlI";
@@ -33,8 +33,8 @@ public class TripAlarmBoundService extends Service {
     private final IBinder binder = new TripAlarmBinder();
 
     public class TripAlarmBinder extends Binder{
-        public TripAlarmBoundService getService(){
-            return TripAlarmBoundService.this;
+        public AlarmBoundService getService(){
+            return AlarmBoundService.this;
         }
     }
 
@@ -42,7 +42,7 @@ public class TripAlarmBoundService extends Service {
     public void onCreate(){
         setRequest();
         //------startowanie activity
-        Intent dialogIntent = new Intent(TripAlarmBoundService.this, MainActivity.class);
+        Intent dialogIntent = new Intent(AlarmBoundService.this, MainActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
 

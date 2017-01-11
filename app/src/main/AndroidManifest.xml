@@ -55,7 +55,7 @@
             android:name=".service.AlarmStartedService"
             android:exported="false" />
         <service
-            android:name=".service.TripAlarmBoundService"
+            android:name=".service.AlarmBoundService"
             android:exported="false" />
 
         <meta-data

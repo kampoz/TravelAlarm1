@@ -12,19 +12,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.service.TripAlarmBoundService;
+import com.kaseka.boxmaptest1.service.AlarmBoundService;
 
 public class DebugBindServiceActivity extends AppCompatActivity {
 
-    private TripAlarmBoundService tripAlarmBoundService;
+    private AlarmBoundService tripAlarmBoundService;
     private boolean bound = false;
     private String routeTime = " wartość zero";
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            TripAlarmBoundService.TripAlarmBinder tripAlarmBinder =
-                    (TripAlarmBoundService.TripAlarmBinder) binder;
+            AlarmBoundService.TripAlarmBinder tripAlarmBinder =
+                    (AlarmBoundService.TripAlarmBinder) binder;
             tripAlarmBoundService = tripAlarmBinder.getService();
             bound = true;
         }
@@ -72,7 +72,7 @@ public class DebugBindServiceActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        Intent intent = new Intent(this, TripAlarmBoundService.class);
+        Intent intent = new Intent(this, AlarmBoundService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 

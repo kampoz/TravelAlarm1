@@ -2,7 +2,6 @@ package com.kaseka.boxmaptest1.service;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Handler;
 import android.util.Log;
@@ -26,7 +25,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-public class AlarmStartedService extends IntentService {
+public class AlarmActivateStartedService extends IntentService {
 
     public static final String EXTENDED_DATA_STATUS = "com.example.android.threadsample.STATUS";
     public static final String BROADCAST_ACTION = "com.example.android.threadsample.BROADCAST";
@@ -60,8 +59,8 @@ public class AlarmStartedService extends IntentService {
     RealmResults<AlarmRealm> alarmsTurnedOnResults;
 
 
-    public AlarmStartedService() {
-        super("AlarmStartedService");
+    public AlarmActivateStartedService() {
+        super("AlarmActivateStartedService");
     }
 
     @Override
@@ -87,8 +86,8 @@ public class AlarmStartedService extends IntentService {
                 final long alarmTimeInMillis = alarmRealm.getAlarmTimeInMillis();
 
                 long sum = alarmTimeInMillis - curentSystemTimeInMillis;
-                Log.d("SUM: ", "curentTimeInMillis: "+(curentSystemTimeInMillis));
-                Log.d("SUM: ", "alarmTimeInMillis+ "+String.valueOf(alarmTimeInMillis));
+                Log.d("SUM: ", "curentTimeInMillis: " + (curentSystemTimeInMillis));
+                Log.d("SUM: ", "alarmTimeInMillis+ " + String.valueOf(alarmTimeInMillis));
                 Log.d("SUM: ", String.valueOf(sum));
 
                 //zmienic status alarmu na nieaktywny???
@@ -108,7 +107,7 @@ public class AlarmStartedService extends IntentService {
                         public void execute(Realm realm) {
                             alarmRealm.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
                             alarmRealm.setIsOn(false);
-                            alarmRealm.setAlarmDateTimeData((new DateTime(alarmTimeInMillis+MILLIS_IN_ONE_WEEK)).toString());
+                            alarmRealm.setAlarmDateTimeData((new DateTime(alarmTimeInMillis + MILLIS_IN_ONE_WEEK)).toString());
 
                             //realm.copyToRealmOrUpdate(alarmRealmToChange);
                         }
@@ -143,7 +142,7 @@ public class AlarmStartedService extends IntentService {
             final long id = oldAlarmRealm.getId();
 //                Log.d("fromLocationId 1:", fromLocationId);
             getRouteDetailsRequest = new GetRouteDetailsRequest(
-                    AlarmStartedService.this,
+                    AlarmActivateStartedService.this,
                     oldAlarmRealm.getFromLocationId(),
                     oldAlarmRealm.getToLocationId(),
                     oldAlarmRealm.getTransportMode()
@@ -267,7 +266,7 @@ public class AlarmStartedService extends IntentService {
 
     private void startAlarmActivity() {
         //Właczenie ALarmActivity
-        Intent alarmActivityIntent = new Intent(AlarmStartedService.this, AlarmActivity.class);
+        Intent alarmActivityIntent = new Intent(AlarmActivateStartedService.this, AlarmActivity.class);
         alarmActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(alarmActivityIntent);
 
@@ -276,7 +275,7 @@ public class AlarmStartedService extends IntentService {
 
     private void startAlarmsListActivity() {
         //Właczenie ALarmActivity
-        Intent alarmsListActivityIntent = new Intent(AlarmStartedService.this,AlarmsListActivity.class);
+        Intent alarmsListActivityIntent = new Intent(AlarmActivateStartedService.this, AlarmsListActivity.class);
         alarmsListActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(alarmsListActivityIntent);
 
@@ -290,16 +289,16 @@ public class AlarmStartedService extends IntentService {
 //        getRouteDetailsRequest.setOnResponseListener(new OnResponseListener() {
 //            @Override
 //            public void onSuccess(JSONObject response) {
-//                Log.d("AlarmStartedService", "onSuccess");
+//                Log.d("AlarmActivateStartedService", "onSuccess");
 //                responsePoints = GoogleDirectionsHelper.decodePoly(Parser.parseRoutePoints(response));//= Parser.parseDirections(response);
 //                routeTime = Parser.parseWholeRouteTime(response);
-//                Log.d("AlarmStartedService", "czas przejazdu " + routeTime);
+//                Log.d("AlarmActivateStartedService", "czas przejazdu " + routeTime);
 //                routeTimeInSeconds = Parser.parseRouteTimeInSekonds(response);
 //            }
 //
 //            @Override
 //            public void onFailure() {
-//                Log.d("AlarmStartedService", "bład requesta w setRequest()");
+//                Log.d("AlarmActivateStartedService", "bład requesta w setRequest()");
 //            }
 //        });
 //        getRouteDetailsRequest.execute();
@@ -325,8 +324,8 @@ public class AlarmStartedService extends IntentService {
     }
 
     public class LocalBinder extends Binder {
-        public AlarmStartedService getService() {
-            return AlarmStartedService.this;
+        public AlarmActivateStartedService getService() {
+            return AlarmActivateStartedService.this;
         }
     }
 }

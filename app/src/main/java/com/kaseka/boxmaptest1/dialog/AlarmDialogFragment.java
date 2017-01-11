@@ -19,7 +19,7 @@ import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
-import com.kaseka.boxmaptest1.service.AlarmStartedService;
+import com.kaseka.boxmaptest1.service.AlarmActivateStartedService;
 
 public class AlarmDialogFragment extends DialogFragment{
 
@@ -78,8 +78,8 @@ public class AlarmDialogFragment extends DialogFragment{
                 Intent startAlarmListActivityIntent = new Intent(getActivity(), AlarmsListActivity.class);
                 getActivity().startActivity(startAlarmListActivityIntent);
 
-                Intent intent = new Intent(getActivity(), AlarmStartedService.class);
-                intent.putExtra(AlarmStartedService.EXTRA_MESSAGE, "extra message");
+                Intent intent = new Intent(getActivity(), AlarmActivateStartedService.class);
+                intent.putExtra(AlarmActivateStartedService.EXTRA_MESSAGE, "extra message");
 
                 //context.startService(intent);
 

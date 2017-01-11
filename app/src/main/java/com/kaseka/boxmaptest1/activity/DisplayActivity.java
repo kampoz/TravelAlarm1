@@ -6,7 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.kaseka.boxmaptest1.receiver.ResponseReceiver;
-import com.kaseka.boxmaptest1.service.AlarmStartedService;
+import com.kaseka.boxmaptest1.service.AlarmActivateStartedService;
 
 public class DisplayActivity extends AppCompatActivity {
 
@@ -16,7 +16,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         // The filter's action is BROADCAST_ACTION
         IntentFilter mStatusIntentFilter = new IntentFilter(
-                AlarmStartedService.BROADCAST_ACTION);
+                AlarmActivateStartedService.BROADCAST_ACTION);
 
         // Adds a data filter for the HTTP scheme
         mStatusIntentFilter.addDataScheme("http");

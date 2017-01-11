@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,9 +18,8 @@ import android.widget.Toast;
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
-import com.kaseka.boxmaptest1.global.DayOfWeek;
-import com.kaseka.boxmaptest1.global.GoogleTransportMode;
-import com.kaseka.boxmaptest1.service.AlarmStartedService;
+import com.kaseka.boxmaptest1.service.AlarmActivateStartedService;
+import com.kaseka.boxmaptest1.service.AlarmsUpdateService;
 import com.kaseka.boxmaptest1.test.TestClass;
 
 import org.joda.time.DateTime;
@@ -45,8 +43,11 @@ public class SplashActivity extends AppCompatActivity {
 
         setFirstAlarmSound();
 
-        Intent intent = new Intent(this, AlarmStartedService.class);
+        Intent intent = new Intent(this, AlarmActivateStartedService.class);
         startService(intent);
+
+        Intent intent2 = new Intent(this, AlarmsUpdateService.class);
+        startService(intent2);
 
         final ImageView startIcon = (ImageView) findViewById(R.id.start_icon_test);
         ViewTreeObserver vto = startIcon.getViewTreeObserver();

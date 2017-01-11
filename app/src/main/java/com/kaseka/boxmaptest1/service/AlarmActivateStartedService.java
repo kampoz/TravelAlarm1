@@ -54,7 +54,7 @@ public class AlarmActivateStartedService extends IntentService {
     private AlarmRealm newAlarmRealm;
     private final long MILLIS_IN_ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
     //private final long SLEEP_TIME = 1000*60*15;
-    private final long SLEEP_TIME = 1000;
+    private final long SLEEP_TIME = 1000*30;
 
     RealmResults<AlarmRealm> alarmsTurnedOnResults;
 

@@ -106,8 +106,9 @@ public class AlarmStartedService extends IntentService {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            alarmRealm.setAlarmTimeInMillis(alarmTimeInMillis + 6000);
+                            alarmRealm.setAlarmTimeInMillis(alarmTimeInMillis + MILLIS_IN_ONE_WEEK);
                             alarmRealm.setIsOn(false);
+                            alarmRealm.setAlarmDateTimeData((new DateTime(alarmTimeInMillis+MILLIS_IN_ONE_WEEK)).toString());
 
                             //realm.copyToRealmOrUpdate(alarmRealmToChange);
                         }

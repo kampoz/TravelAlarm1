@@ -269,6 +269,7 @@ public class AlarmActivateStartedService extends IntentService {
         //Właczenie ALarmActivity
         Intent alarmActivityIntent = new Intent(AlarmActivateStartedService.this, AlarmActivity.class);
         alarmActivityIntent.putExtra("ALARM_DAY_OF_WEEK", alarmRealm.getAlarmDayOfWeek());
+        alarmActivityIntent.putExtra("DESTINATION", alarmRealm.getDestinationPoint());
         alarmActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(alarmActivityIntent);
 

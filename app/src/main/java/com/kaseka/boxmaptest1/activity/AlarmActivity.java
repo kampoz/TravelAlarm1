@@ -39,10 +39,10 @@ public class AlarmActivity extends AppCompatActivity {
         //getSupportActionBar().hide();
 
         Bundle extras = getIntent().getExtras();
-        String alarmDayOfweekFromService = extras.getString("ALARM_DAY_OF_WEEK");
+        String alarmDayOfweekFromService = extras.getString("DESTINATION");
 
         tvAlarmLabel = (TextView)findViewById(R.id.tvAlarmLabel);
-        tvAlarmLabel.setText(alarmDayOfweekFromService);
+        tvAlarmLabel.setText("Time to: "+alarmDayOfweekFromService);
         bCloseAlarm = (Button) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
 

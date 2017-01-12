@@ -32,7 +32,7 @@ public class TestClass {
         alarmRealm.setAlarmDayOfWeek(String.valueOf(DayOfWeek.MONDAY));
         alarmRealm.setAlarmDayOfWeekAsInt(1);
         alarmRealm.setStartPoint("honolulu");
-        alarmRealm.setDestinationPoint("pearl harbour");
+        alarmRealm.setDestinationPoint("Cedynia");
         alarmRealm.setRouteTimeInSeconds(15);
         alarmRealm.setRouteTimeLabel("Label time");
         alarmRealm.setPreparingTimeInMins(6546546);

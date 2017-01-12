@@ -4,7 +4,7 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMyDarkGreen"
+    android:background="@color/colorMyBlack"
     tools:context="com.kaseka.boxmaptest1.activity.SplashActivity">
 
     <include

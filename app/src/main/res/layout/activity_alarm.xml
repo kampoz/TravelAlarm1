@@ -36,6 +36,7 @@
             />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -44,7 +45,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="46dp"
-            android:id="@+id/editText"
+            android:id="@+id/tvAlarmLabel"
             android:text="Alarm time"
             android:textColor="@color/colorMyLightGrey"
             android:textSize="25dp" />

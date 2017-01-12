@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
@@ -28,6 +29,7 @@ public class AlarmActivity extends AppCompatActivity {
     Animation pulse1;
     AlarmRingRealm alarmRingRealm;
     Context context = this;
+    TextView tvAlarmLabel;
 
 
     @Override
@@ -36,6 +38,11 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
         //getSupportActionBar().hide();
 
+        Bundle extras = getIntent().getExtras();
+        String alarmDayOfweekFromService = extras.getString("ALARM_DAY_OF_WEEK");
+
+        tvAlarmLabel = (TextView)findViewById(R.id.tvAlarmLabel);
+        tvAlarmLabel.setText(alarmDayOfweekFromService);
         bCloseAlarm = (Button) findViewById(R.id.bCloseAlarm);
         bCloseAlarm.setFocusable(true);
 

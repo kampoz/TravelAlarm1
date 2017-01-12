@@ -54,7 +54,7 @@ public class AlarmActivateStartedService extends IntentService {
     private AlarmRealm newAlarmRealm;
     private final long MILLIS_IN_ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
     //private final long SLEEP_TIME = 1000*60*15;
-    private final long SLEEP_TIME = 1000*30;
+    private final long SLEEP_TIME = 1000*10;
 
     RealmResults<AlarmRealm> alarmsTurnedOnResults;
 
@@ -95,7 +95,7 @@ public class AlarmActivateStartedService extends IntentService {
 
                 if (curentSystemTimeInMillis >= alarmTimeInMillis) {
 
-                    startAlarmActivity();
+                    startAlarmActivity(alarmRealm);
 
 //                final AlarmRealm alarmRealmToChange = new AlarmRealm();
 //                alarmRealmToChange.setId(alarmRealm.getId());
@@ -123,6 +123,7 @@ public class AlarmActivateStartedService extends IntentService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             realm.close();
         }
 
@@ -245,7 +246,7 @@ public class AlarmActivateStartedService extends IntentService {
             //zmienic status alarmu na nieaktywny???
             // uruchomienie alarmu
             if (alarmTimeInMillis >= curentSystemTimeInMillis) {
-                startAlarmActivity();
+                startAlarmActivity(alarmRealm);
 
 //                final AlarmRealm alarmRealmToChange = new AlarmRealm();
 //                alarmRealmToChange.setId(alarmRealm.getId());
@@ -264,9 +265,10 @@ public class AlarmActivateStartedService extends IntentService {
     }
 
 
-    private void startAlarmActivity() {
+    private void startAlarmActivity(AlarmRealm alarmRealm) {
         //Właczenie ALarmActivity
         Intent alarmActivityIntent = new Intent(AlarmActivateStartedService.this, AlarmActivity.class);
+        alarmActivityIntent.putExtra("ALARM_DAY_OF_WEEK", alarmRealm.getAlarmDayOfWeek());
         alarmActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(alarmActivityIntent);
 

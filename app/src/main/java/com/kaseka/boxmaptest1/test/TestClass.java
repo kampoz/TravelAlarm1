@@ -16,7 +16,7 @@ public class TestClass {
 
     public void createTestalarm(){
         final AlarmRealm alarmRealm = new AlarmRealm();
-        long newId = 99998999;
+        long newId = 999;
 
         DateTime dt = new DateTime();
         long currentTimeMillis = System.currentTimeMillis();
@@ -41,8 +41,8 @@ public class TestClass {
         alarmRealm.setTransportMode(String.valueOf(GoogleTransportMode.bicycling));
         alarmRealm.setGoalHourOfDay(15);
         alarmRealm.setGoalMinute(23);
-        alarmRealm.setFromLocationId(null);
-        alarmRealm.setToLocationId(null);
+        alarmRealm.setFromLocationId("ChIJYUAVHhRXIkcRX-no9nruKFU");
+        alarmRealm.setToLocationId("ChIJ0Z8CIhKfGEcRZNc472Kr49s");
 
         Realm defaultInstance = Realm.getDefaultInstance();
         defaultInstance.executeTransaction(new Realm.Transaction() {
@@ -52,7 +52,7 @@ public class TestClass {
             }
         });
 
-        AlarmRealm currentAlarmRealm = defaultInstance.where(AlarmRealm.class).equalTo("id", 99998999).findFirst();
+        AlarmRealm currentAlarmRealm = defaultInstance.where(AlarmRealm.class).equalTo("id", newId).findFirst();
         //Toast.makeText(SplashActivity.this, String.valueOf(currentAlarmRealm.getId())+" "+String.valueOf(currentAlarmRealm.getAlarmTimeInMillis()), Toast.LENGTH_LONG).show();
         Log.d("createTestalarm","currentAlarmRealm id:" +currentAlarmRealm.getId());
         Log.d("createTestalarm","current time:" +dt.getMillis());

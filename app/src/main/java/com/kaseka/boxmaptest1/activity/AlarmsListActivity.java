@@ -174,9 +174,7 @@ public class AlarmsListActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-
         alarms.clear();
-
         alarms.addAll(
                 Realm.getDefaultInstance().where(AlarmRealm.class).findAll()
         );

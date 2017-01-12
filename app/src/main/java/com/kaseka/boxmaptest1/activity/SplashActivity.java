@@ -61,7 +61,6 @@ public class SplashActivity extends AppCompatActivity {
                 anim2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
                     }
 
                     @Override
@@ -71,7 +70,6 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-
                     }
                 });
             }
@@ -139,13 +137,16 @@ public class SplashActivity extends AppCompatActivity {
         if (realm.where(AlarmRealm.class).count() > 0) {
             Log.d("SplashActivity", "IS NOT EMPTY");
 
-            //DO USUNIĘCIA
+            //Testowy alarm
             TestClass testClass = new TestClass();
             testClass.createTestalarm();
+
             Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
         } else {
             Log.d("SplashActivity", "IS EMPTY");
+            TestClass testClass = new TestClass();
+            testClass.createTestalarm();
             Toast.makeText(this, "No alarms", Toast.LENGTH_LONG).show();
             Intent startMainActivityIntent = new Intent(this, MainActivity.class);
             this.startActivity(startMainActivityIntent);

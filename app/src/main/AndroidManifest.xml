@@ -30,7 +30,8 @@
         <activity
             android:name=".activity.AlarmActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode= "singleInstance"/>
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
@@ -46,12 +47,15 @@
         <activity
             android:name=".activity.AlarmsListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode= "singleInstance"/>
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
         <service
             android:name=".service.AlarmActivateStartedService"
-            android:exported="false" />
+            android:enabled="true"
+            android:exported="false"
+            android:launchMode= "singleInstance"/>
         <service
             android:name=".service.AlarmBoundService"
             android:exported="false" />
@@ -63,7 +67,9 @@
         <service
             android:name=".service.AlarmsUpdateService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:launchMode= "singleInstance">
+        </service>
     </application>
 
 </manifest>

@@ -31,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     private Toolbar toolbar;
     Animation anim2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

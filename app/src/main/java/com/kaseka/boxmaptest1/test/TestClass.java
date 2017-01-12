@@ -10,9 +10,6 @@ import org.joda.time.DateTime;
 
 import io.realm.Realm;
 
-/**
- * Created by wasili on 2017-01-11.
- */
 
 public class TestClass {
 

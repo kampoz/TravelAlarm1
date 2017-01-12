@@ -62,6 +62,9 @@ public class AlarmsListActivity extends AppCompatActivity {
     private long newTravelTimeInMillis;
     private long newAlarmTimeInMillis;
 
+    private AlarmsListViewAdapter alarmsListViewAdapter;
+    ArrayList<AlarmRealm> alarms = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class AlarmsListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("Alarms");
         setSupportActionBar(toolbar);
+
 
         bAddAlarm = (Button)findViewById(R.id.bAddAlarm);
         //bAddAlarm.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_button_gray_pressed));
@@ -103,15 +107,17 @@ public class AlarmsListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // tworzymy źródło danych - tablicę z artykułami
-        ArrayList<AlarmRealm> alarms = new ArrayList<>();
+
 
         //setTestRealmDataBase();
 
+        alarms.clear();
         alarms.addAll(
                 Realm.getDefaultInstance().where(AlarmRealm.class).findAll()
         );
+        alarmsListViewAdapter = new AlarmsListViewAdapter(alarms, recyclerView);
         // tworzymy adapter oraz łączymy go z RecyclerView
-        recyclerView.setAdapter(new AlarmsListViewAdapter(alarms, recyclerView));
+        recyclerView.setAdapter(alarmsListViewAdapter);
 
         //setFirstAlarmInRealm();
 
@@ -163,6 +169,18 @@ public class AlarmsListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        alarms.clear();
+
+        alarms.addAll(
+                Realm.getDefaultInstance().where(AlarmRealm.class).findAll()
+        );
+        alarmsListViewAdapter.notifyDataSetChanged();
     }
 
 }

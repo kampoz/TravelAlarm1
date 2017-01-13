@@ -177,8 +177,9 @@ public class AlarmsListViewAdapter extends RecyclerView.Adapter {
                     @Override
                     public void execute(Realm realm) {
                         realm.where(AlarmRealm.class).equalTo("id", id).findFirst().setIsOn(!alarmRealmisOn);
-                        Toast.makeText(((MyViewHolder) viewHolder).ibGreenLight.getContext(), "isOn Realm status: "+alarmRealm.getIsOn(),
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(((MyViewHolder) viewHolder).ibGreenLight.getContext(), "isOn Realm status: "+alarmRealm.getIsOn(),
+//                                Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 alarms.clear();

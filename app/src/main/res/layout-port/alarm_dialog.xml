@@ -11,15 +11,14 @@
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textColor="@color/colorMyLightGrey"
         android:id="@+id/tvDialogAlarmHour"
-        android:textSize="25dp"
+        android:textSize="28dp"
         android:layout_margin="10dp"/>
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -28,7 +27,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -37,7 +36,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -46,7 +45,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -55,7 +54,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -64,7 +63,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
@@ -73,7 +72,7 @@
 
     <TextView
         android:text="TextView"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"

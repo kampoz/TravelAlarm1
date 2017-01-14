@@ -42,16 +42,16 @@ public class AlarmInfoFragment extends DialogFragment{
 
         AlarmPOJO alarmPOJO = Cache.getAlarmPOJO();
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
-        tvAlarmHour.setText(MyDisplayTimeHelper.setDisplayTime(String.valueOf(alarmPOJO.getAlarmHour()),String.valueOf(alarmPOJO.getAlarmMinute())));
+        tvAlarmHour.setText("ALARM TIME: "+ MyDisplayTimeHelper.setDisplayTime(String.valueOf(alarmPOJO.getAlarmHour()),String.valueOf(alarmPOJO.getAlarmMinute())));
         tvDialogWeekDay.setText("Alarm day: "+alarmPOJO.getAlarmDayOfWeek());
-        tvDialogStartPoint.setText("from: "+alarmPOJO.getStartPoint());
-        tvDialogDestinationPoint.setText("to: "+alarmPOJO.getDestinationPoint());
-        tvDialogTransportMode.setText("transport: "+alarmPOJO.getTransportMode());
-        tvDialogGoalTime.setText("arrive time: "+alarmPOJO.getGoalHourOfDay()+" : "+alarmPOJO.getGoalMinute());
-        tvDialogGoalTime.setText("arrive time: "+MyDisplayTimeHelper
+        tvDialogStartPoint.setText("From: "+alarmPOJO.getStartPoint());
+        tvDialogDestinationPoint.setText("To: "+alarmPOJO.getDestinationPoint());
+        tvDialogTransportMode.setText("Transport: "+alarmPOJO.getTransportMode());
+        //tvDialogGoalTime.setText("arrive time: "+alarmPOJO.getGoalHourOfDay()+" : "+alarmPOJO.getGoalMinute());
+        tvDialogGoalTime.setText("Time of arrival: "+MyDisplayTimeHelper
                 .setDisplayTime(String.valueOf(alarmPOJO.getGoalHourOfDay()),String.valueOf(alarmPOJO.getGoalMinute())));
-        tvDialogPreparingTime.setText("preparig time: "+alarmPOJO.getPreparingTimeInMins()+" mins");
-        tvDialogTravelTime.setText("travel time: "+alarmPOJO.getRouteTimeLabel());
+        tvDialogPreparingTime.setText("Time to prepare: "+alarmPOJO.getPreparingTimeInMins()+" mins");
+        tvDialogTravelTime.setText("Travel time: "+alarmPOJO.getRouteTimeLabel());
         isOn = alarmPOJO.getIsOn();
 
         builder.setView(view);

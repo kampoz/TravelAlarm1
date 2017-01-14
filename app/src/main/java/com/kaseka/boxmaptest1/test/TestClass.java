@@ -35,7 +35,7 @@ public class TestClass {
         alarmRealm.setDestinationPoint("Cedynia");
         alarmRealm.setRouteTimeInSeconds(15);
         alarmRealm.setRouteTimeLabel("Label time");
-        alarmRealm.setPreparingTimeInMins(6546546);
+        alarmRealm.setPreparingTimeInMins(33);
         alarmRealm.setLngLatPointsRealmList(null);
         alarmRealm.setAlarmDateTimeData(null);
         alarmRealm.setTransportMode(String.valueOf(GoogleTransportMode.bicycling));

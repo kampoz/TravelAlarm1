@@ -138,15 +138,15 @@ public class SplashActivity extends AppCompatActivity {
             Log.d("SplashActivity", "IS NOT EMPTY");
 
             //Testowy alarm
-            TestClass testClass = new TestClass();
-            testClass.createTestalarm();
+            //TestClass testClass = new TestClass();
+            //testClass.createTestalarm();
 
             Intent startAlarmsListActivityIntent = new Intent(this, AlarmsListActivity.class);
             this.startActivity(startAlarmsListActivityIntent);
         } else {
             Log.d("SplashActivity", "IS EMPTY");
-            TestClass testClass = new TestClass();
-            testClass.createTestalarm();
+            //TestClass testClass = new TestClass();
+            //testClass.createTestalarm();
             Toast.makeText(this, "No alarms", Toast.LENGTH_LONG).show();
             Intent startMainActivityIntent = new Intent(this, MainActivity.class);
             this.startActivity(startMainActivityIntent);

@@ -152,24 +152,33 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set preparing \ntime in minutes"
+                    android:textColor="@color/colorMyLightGrey"
+                    android:gravity="center_horizontal"
+                    />
+
                 <EditText
                     android:id="@+id/etPreparingTimeInMins"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="0"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:hint="Preparing time (min)"
                     android:inputType="number"
                     android:textColor="#fff"
                     android:textColorHint="#777"
-                    android:textSize="18dp" />
+                    android:textSize="15dp" />
 
 
                 <Button
                     android:id="@+id/bSetAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_button_shape"
+                    android:background="@drawable/selector_button_gray_pressed"
                     android:onClick="showDialog"
                     android:text="Set alarm"
                     android:textSize="20dp"

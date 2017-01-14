@@ -73,7 +73,7 @@ public class ClockFaceActivity extends AppCompatActivity {
     private long alarmTimeInMillis;
 
     private int routeTimeInMinutes;
-    private int preparingTimeInMins;
+    private int preparingTimeInMins = 0;
 
     private int alarmDayWeight = 0;
     private int todayDayWeight = 0;
@@ -82,6 +82,7 @@ public class ClockFaceActivity extends AppCompatActivity {
     int goalHourInMins = 0;
 
     private Toolbar toolbar;
+    private final long ONE_WEEK_IN_MILLIS = 1000*60*60*24*7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class ClockFaceActivity extends AppCompatActivity {
         clockView = (ClockView)findViewById(R.id.rlClockParent);
         ivHourDisplay = (TextView)findViewById(R.id.tvHourDisplay);
         etPreparingTimeInMins = (EditText)findViewById(R.id.etPreparingTimeInMins);
-        etPreparingTimeInMins.setText("0");
+        //etPreparingTimeInMins.setHint("Preparing time");
         bSetAlarm = (Button) findViewById(R.id.bSetAlarm);
 
         bMonday = (Button) findViewById(R.id.bMonday);
@@ -330,7 +331,13 @@ public class ClockFaceActivity extends AppCompatActivity {
         alarmHour = alarmDateTime.getHourOfDay();
         alarmMinutes = alarmDateTime.getMinuteOfHour();
         alarmTimeInMillis = alarmDateTime.getMillis();
+        long currentTimeInMillis = (new DateTime()).getMillis();
+        if(currentTimeInMillis >= alarmTimeInMillis){
+            alarmDateTime = alarmDateTime.plusDays(7);
+            alarmTimeInMillis = alarmDateTime.getMillis();
+        }
         this.dayOfWeek = getDayName(alarmDateTime.getDayOfWeek());
+
         //currentDaleTime.getMinuteOfHour();
 
 //        Log.d("timetest", "######################################################################");

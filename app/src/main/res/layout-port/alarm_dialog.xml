@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorMyLightGrey"
         android:id="@+id/tvDialogAlarmHour"
-        android:textSize="28dp"
+        android:textSize="27dp"
         android:layout_margin="10dp"/>
 
     <TextView

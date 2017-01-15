@@ -45,7 +45,7 @@ public class AlarmDialogFragment extends DialogFragment{
         AlarmPOJO alarmPOJO = Cache.getAlarmPOJO();
 
         //tvAlarmHour.setText(AlarmPOJO.getAlarmHour()+" : "+AlarmPOJO.getAlarmMinute());
-        tvAlarmHour.setText("ALARM TIME: "+ MyDisplayTimeHelper.setDisplayTime(String.valueOf(alarmPOJO.getAlarmHour()),String.valueOf(alarmPOJO.getAlarmMinute())));
+        tvAlarmHour.setText("ALARM TIME "+ MyDisplayTimeHelper.setDisplayTime(String.valueOf(alarmPOJO.getAlarmHour()),String.valueOf(alarmPOJO.getAlarmMinute())));
         tvDialogWeekDay.setText("Alarm day: "+alarmPOJO.getAlarmDayOfWeek());
         tvDialogStartPoint.setText("From: "+alarmPOJO.getStartPoint());
         tvDialogDestinationPoint.setText("To: "+alarmPOJO.getDestinationPoint());

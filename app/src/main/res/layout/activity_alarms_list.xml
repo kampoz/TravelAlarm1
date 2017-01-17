@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorMyBlack"
     android:orientation="vertical"
-    tools:context="com.kaseka.boxmaptest1.activity.AlarmsListActivity">
+    tools:context="com.kampoz.travelalarm.activity.AlarmsListActivity">
 
     <!--<android.support.v7.widget.Toolbar-->
     <!--android:id="@+id/my_toolbar"-->

@@ -46,7 +46,7 @@
                     android:id="@+id/from_autocomplete_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:name="com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment"
+                    android:name="com.kampoz.travelalarm.fragment.CustomAutocompleteFragment"
                     />
 
 
@@ -56,7 +56,7 @@
                     android:id="@+id/to_autocomplete_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:name="com.kaseka.boxmaptest1.fragment.CustomAutocompleteFragment"
+                    android:name="com.kampoz.travelalarm.fragment.CustomAutocompleteFragment"
                     />
 
 
@@ -116,7 +116,7 @@
                         android:id="@+id/bSetRoute"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Set rout"
+                        android:text="Set route"
                         android:background="@drawable/selector_button_gray_pressed"
                         android:textColor="@color/black"
                         android:textSize="20dp"

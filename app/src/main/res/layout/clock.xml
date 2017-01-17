@@ -10,84 +10,84 @@
         android:layout_height="match_parent"
         android:background="@drawable/clock_circle_shape"/>
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine1"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
          />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine2"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine3"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
          />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine4"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
          />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine5"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine6"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine7"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine8"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine9"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine10"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine11"
         android:layout_width="2dp"
         android:layout_height="20dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourLine12"
         android:layout_width="2dp"
         android:layout_height="20dp"
@@ -96,14 +96,14 @@
 
 
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivHourHand"
         android:layout_width="20dp"
         android:layout_height="100dp"
         android:background="@color/colorMyLightGreen"
         />
 
-    <com.kaseka.boxmaptest1.view.ClockHandView
+    <com.kampoz.travelalarm.view.ClockHandView
         android:id="@+id/ivMinuteHand"
         android:layout_width="10dp"
         android:layout_height="150dp"

@@ -6,16 +6,16 @@
     android:background="@color/black"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.kaseka.boxmaptest1.activity.ClockFaceActivity">
+    tools:context="com.kampoz.travelalarm.activity.ClockFaceActivity">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <com.kaseka.boxmaptest1.view.ClockView
+    <com.kampoz.travelalarm.view.ClockView
         android:id="@+id/rlClockParent"
         android:layout_width="200dp"
-        android:layout_height="200dp"></com.kaseka.boxmaptest1.view.ClockView>
+        android:layout_height="200dp"></com.kampoz.travelalarm.view.ClockView>
 
     <ScrollView
         android:layout_width="wrap_content"

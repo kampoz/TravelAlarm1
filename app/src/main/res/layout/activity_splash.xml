@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorMyBlack"
-    tools:context="com.kaseka.boxmaptest1.activity.SplashActivity">
+    tools:context="com.kampoz.travelalarm.activity.SplashActivity">
 
     <include
         android:id="@+id/app_bar"

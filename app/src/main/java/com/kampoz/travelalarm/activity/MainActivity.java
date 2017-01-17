@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.startActivity(startAlarmClockActivityIntent);
                     finish();
                 } else {
-                    Toast.makeText(MainActivity.this, "Route is not set", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "The route is not set", Toast.LENGTH_LONG).show();
                 }
             }
         });

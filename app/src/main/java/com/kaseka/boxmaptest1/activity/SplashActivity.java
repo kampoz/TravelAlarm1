@@ -3,8 +3,8 @@ package com.kaseka.boxmaptest1.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +20,6 @@ import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 import com.kaseka.boxmaptest1.service.AlarmActivateStartedService;
 import com.kaseka.boxmaptest1.service.AlarmsUpdateService;
-import com.kaseka.boxmaptest1.test.TestClass;
 
 import org.joda.time.DateTime;
 

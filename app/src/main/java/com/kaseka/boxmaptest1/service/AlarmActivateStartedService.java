@@ -7,9 +7,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kaseka.boxmaptest1.activity.AlarmActivity;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
-import com.kaseka.boxmaptest1.activity.AlarmActivity;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
 import com.kaseka.boxmaptest1.helper.Parser;
 import com.kaseka.boxmaptest1.listener.OnResponseListener;
@@ -155,7 +155,7 @@ public class AlarmActivateStartedService extends IntentService {
 
                     RealmConfiguration config = new RealmConfiguration
                             .Builder()
-                            .deleteRealmIfMigrationNeeded()
+                            //.deleteRealmIfMigrationNeeded()
                             .build();
 
                     Realm realm = Realm.getInstance(config);

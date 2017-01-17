@@ -3,8 +3,6 @@ package com.kaseka.boxmaptest1.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -13,8 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
-import com.kaseka.boxmaptest1.activity.MainActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;

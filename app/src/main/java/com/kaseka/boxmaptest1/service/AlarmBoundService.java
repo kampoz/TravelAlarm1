@@ -7,8 +7,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.activity.MainActivity;
+import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
 import com.kaseka.boxmaptest1.helper.Parser;
 import com.kaseka.boxmaptest1.listener.OnResponseListener;

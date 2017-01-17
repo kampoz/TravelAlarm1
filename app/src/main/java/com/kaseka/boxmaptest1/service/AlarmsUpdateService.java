@@ -1,11 +1,9 @@
 package com.kaseka.boxmaptest1.service;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
-import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -68,7 +66,7 @@ public class AlarmsUpdateService extends IntentService {
 
                         RealmConfiguration config = new RealmConfiguration
                                 .Builder()
-                                .deleteRealmIfMigrationNeeded()
+                                //.deleteRealmIfMigrationNeeded()
                                 .build();
 
                         Realm realm = Realm.getInstance(config);

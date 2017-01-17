@@ -1,11 +1,8 @@
 package com.kaseka.boxmaptest1.data.realm;
 
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 import io.realm.Realm;
 import io.realm.RealmList;

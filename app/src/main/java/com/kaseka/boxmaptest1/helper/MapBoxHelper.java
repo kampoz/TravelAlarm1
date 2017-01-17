@@ -12,7 +12,6 @@ import com.mapbox.services.commons.models.Position;
 import com.mapbox.services.commons.utils.PolylineUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapBoxHelper {

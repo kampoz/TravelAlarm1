@@ -5,13 +5,11 @@ import android.app.AlarmManager;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Context;
-//import android.icu.util.Calendar;
-
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,19 +19,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
 import com.kaseka.boxmaptest1.global.DayOfWeek;
 import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;
 import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
-import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.view.ClockView;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
-import java.util.Calendar;
+//import android.icu.util.Calendar;
 
 //import net.danlew.android.joda.JodaTimeAndroid;
 

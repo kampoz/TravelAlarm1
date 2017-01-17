@@ -2,8 +2,8 @@ package com.kaseka.boxmaptest1.networking;
 
 import android.content.Context;
 
-import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 import com.kaseka.boxmaptest1.global.Constants;
+import com.kaseka.boxmaptest1.global.GoogleTransportMode;
 
 
 public class GetRouteDetailsRequest extends BaseRequest {

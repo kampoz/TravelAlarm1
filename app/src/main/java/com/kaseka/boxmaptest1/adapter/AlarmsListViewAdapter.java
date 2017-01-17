@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.activity.AlarmsListActivity;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
-
 import com.kaseka.boxmaptest1.dialog.AlarmInfoFragment;
 import com.kaseka.boxmaptest1.helper.Cache;
 import com.kaseka.boxmaptest1.helper.MyDisplayTimeHelper;

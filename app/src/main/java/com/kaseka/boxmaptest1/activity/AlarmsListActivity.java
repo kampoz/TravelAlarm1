@@ -1,50 +1,28 @@
 package com.kaseka.boxmaptest1.activity;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
 import com.kaseka.boxmaptest1.R;
 import com.kaseka.boxmaptest1.adapter.AlarmsListViewAdapter;
-import com.kaseka.boxmaptest1.data.realm.AlarmPOJO;
 import com.kaseka.boxmaptest1.data.realm.AlarmRealm;
-import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
-import com.kaseka.boxmaptest1.dialog.AlarmDialogFragment;
-import com.kaseka.boxmaptest1.global.DayOfWeek;
-import com.kaseka.boxmaptest1.global.GoogleTransportMode;
-import com.kaseka.boxmaptest1.helper.GoogleDirectionsHelper;
-import com.kaseka.boxmaptest1.helper.Parser;
-import com.kaseka.boxmaptest1.listener.OnResponseListener;
 import com.kaseka.boxmaptest1.networking.GetRouteDetailsRequest;
-import com.kaseka.boxmaptest1.test.TestClass;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-
-import android.app.AlertDialog;
-
-import org.joda.time.DateTime;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-
-import static android.R.attr.button;
 
 public class AlarmsListActivity extends AppCompatActivity {
 

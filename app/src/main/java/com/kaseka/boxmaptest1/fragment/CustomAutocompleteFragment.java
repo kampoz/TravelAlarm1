@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.kaseka.boxmaptest1.R;
-import com.kaseka.boxmaptest1.activity.MainActivity;
 
 
 public class CustomAutocompleteFragment extends PlaceAutocompleteFragment {

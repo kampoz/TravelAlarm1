@@ -3,10 +3,9 @@ package com.kaseka.boxmaptest1.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.kaseka.boxmaptest1.R;
-
 import com.kaseka.boxmaptest1.data.realm.AlarmRingRealm;
 
 import io.realm.Realm;

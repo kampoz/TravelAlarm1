@@ -15,8 +15,8 @@ import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 import com.kaseka.boxmaptest1.R;
+import com.kaseka.boxmaptest1.listener.OnClockChangeListener;
 
 public class ClockView extends RelativeLayout implements View.OnClickListener  {
 

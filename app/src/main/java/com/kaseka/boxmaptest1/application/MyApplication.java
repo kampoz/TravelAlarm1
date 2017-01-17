@@ -3,11 +3,8 @@ package com.kaseka.boxmaptest1.application;
 import android.app.Application;
 import android.content.Context;
 
-
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
-
-import org.joda.time.DateTime;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -23,7 +20,7 @@ public class MyApplication extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
-                .deleteRealmIfMigrationNeeded()
+                //.deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
 

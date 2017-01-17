@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 // Customize map with markers, polylines, etc.
                 map = mapboxMap;
                 CameraPosition position = new CameraPosition.Builder()
-                        .target(new LatLng(51.248975, 22.551762)) // Sets the new camera position
+                        .target(new LatLng(51.510170,-0.124139)) // Sets the new camera start position
                         .zoom(8) // Sets the zoom
                         .bearing(0) // Rotate the camera
                         .tilt(0) // Set the camera tilt
